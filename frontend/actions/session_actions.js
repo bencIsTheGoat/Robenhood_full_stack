@@ -24,10 +24,12 @@ export const login = user => dispatch => (
 );
 
 export const signup = user => dispatch => (
-    SessionUtils.signup(user).then(user => dispatch(receiveUser(user)))
+    SessionUtils.signup(user).then(user => dispatch(receiveUser(user)),
+    errors => dispatch(receiveErrors(errors.responseJSON)))
 );
 
 export const logout = () => dispatch => (
-    SessionUtils.logout().then(() => dispatch(removeUser()))
+    SessionUtils.logout().then(() => dispatch(removeUser()),
+    errors => dispatch(receiveErrors(errors.responseJSON)))
 );
 
