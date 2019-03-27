@@ -19,7 +19,8 @@ export const receiveErrors = errors => ({
 });
 
 export const login = user => dispatch => (
-    SessionUtils.login(user).then(user => dispatch(receiveUser(user)))
+    SessionUtils.login(user).then(user => dispatch(receiveUser(user)),
+    errors => dispatch(receiveErrors(errors.responseJSON)))
 );
 
 export const signup = user => dispatch => (

@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Utils from './util/session_api_util';
+import * as Utils from './actions/session_actions';
 import configureStore from './store/store';
+import Root from './components/root';
 
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById("root");
@@ -14,5 +15,5 @@ document.addEventListener("DOMContentLoaded", () => {
     window.dispatch = store.dispatch;
     // TEST
 
-    ReactDOM.render(<h1>Robenhood</h1>, root)
+    ReactDOM.render(<Root store={ store } />, root)
 })
