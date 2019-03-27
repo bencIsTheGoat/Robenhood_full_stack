@@ -1,0 +1,99 @@
+body {
+    font-family: 'Dosis', sans-serif;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+    position: relative;
+}
+
+.nav-container h2 {
+    font-size: 20px;
+    margin-left: 6px;
+}
+
+.nav-container h2:hover {
+    color:  #21ce99;
+    cursor: pointer;
+}
+
+.nav-container h2 i {
+    margin-right: 10px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 27px;
+    font-weight: 1000;
+    color: black;
+    padding: 0 24px;
+}
+
+.login-div a:hover {
+    color:  #21ce99;
+    cursor: pointer;
+}
+
+.signup-div button {
+    padding: 0 24px;
+    background-color: #21ce99;
+    border: 0;
+    color: white;
+    border-radius: 36px;
+    font-weight: 600;
+    height: 48px;
+    font-size: 17px;
+    line-height: 17px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
+    transform: box-shadow 500ms;
+}
+
+.signup-div button:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.login-text {
+    display: flex;
+    flex-direction: column;
+    width: 375px;
+}
+
+.login-text h1 {
+    font-size: 50px;
+    font-weight: 900;
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.login-text p {
+    margin-left: 20px;
+    line-height: 27px;
+}
+
+.body-text-img {
+    display: flex;
+    align-items: center;
+
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.body-text-img img {
+    width: 900px;
+    height: 700px;
+    -webkit-animation: fadein 7s;
+}

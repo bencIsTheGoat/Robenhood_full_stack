@@ -7,8 +7,10 @@ import { Route, Switch } from 'react-router-dom';
 const App = () => (
     <div>
         <header>
-            <h1>Robenhood</h1>
+            <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet"></link>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"></link>
         </header>
+        
         <Switch>
             <Route exact path='/' component={HomeContainer}/>
             <Route exact path='/login' component={LoginFormContainer} />
