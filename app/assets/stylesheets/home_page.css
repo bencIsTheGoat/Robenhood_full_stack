@@ -65,7 +65,7 @@ a {
 .login-text {
     display: flex;
     flex-direction: column;
-    width: 375px;
+    width: 800px;
 }
 
 .login-text h1 {
@@ -74,15 +74,18 @@ a {
     margin-top: 100px;
     margin-left: 20px;
     margin-bottom: 30px;
+    white-space: pre;
 }
 
 .login-text p {
     margin-left: 20px;
     line-height: 27px;
+    white-space: pre;
 }
 
 .body-text-img {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 
 }
@@ -95,5 +98,5 @@ a {
 .body-text-img img {
     width: 900px;
     height: 700px;
-    -webkit-animation: fadein 7s;
+    -webkit-animation: fadein 8s;
 }
