@@ -1,4 +1,4 @@
-import * as SessionUtils from './session_api_util';
+import * as SessionUtils from '../util/session_api_util';
 
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const REMOVE_USER = 'REMOVE_USER';
