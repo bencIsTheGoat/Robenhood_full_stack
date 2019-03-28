@@ -12,6 +12,7 @@ class LoginForm extends React.Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderErrors = this.renderErrors.bind(this);
+        this.demoUser = this.demoUser.bind(this);
     }
 
     handleSubmit (e) {
@@ -45,7 +46,9 @@ class LoginForm extends React.Component {
         }
     }
 
-    render() {
+    demoUser (e) {
+        e.preventDefault();
+        this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/'))
     }
     
     render () {
@@ -65,13 +68,20 @@ class LoginForm extends React.Component {
                             <input 
                                 type="password"
                                 onChange={this.handleChange('password')}/>
-                        <Link to='/'>
-                            Forgot your username/password?
-                        </Link>
+                        <div class='login-button-div'>
+                            <Link to='/'>
+                                Forgot your username/password?
+                            </Link>
+                            Or
+                            <button onClick={this.demoUser}>
+                                Demo Session
+                            </button>
+                        </div>
                         <div className='errors-ul'>
                             {this.renderErrors()}
                         </div>
                         <button>Sign In</button>
+
                     </form>
                 </div>
             </div>
