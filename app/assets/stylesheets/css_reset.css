@@ -6,3 +6,7 @@ html, body, p, div, span, h1, h2, h3, h4, a, ol, ul, li, form, label, article, a
   font: 'Dosis', sans-serif;
   vertical-align: baseline;
 }
+
+input {
+  font-size: 15px;
+}

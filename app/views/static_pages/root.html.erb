@@ -2,4 +2,13 @@
     <script type="text/javascript">
       window.backgroundImage = "<%= image_url('background_login.png') %>"
     </script>
+
+    <% if logged_in? %>
+      <script type="text/javascript">
+        window.currentUser = <%= render(
+        "api/users/user.json.jbuilder",
+        user: current_user
+      ).html_safe %>
+      </script>
+    <% end %>
 </main>

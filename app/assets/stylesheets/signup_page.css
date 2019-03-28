@@ -21,7 +21,7 @@
 
 .headers-div h2 {
     font-size: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
 .signup .names-div {
@@ -31,14 +31,15 @@
 }
 
 .signup .names-div input {
-    width: 45%;
-    height: 30px;
+    width: 280px;;
+    height: 40px;
     border-radius: 3px;
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
     padding-left: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 15px;
 }
 
 .signup .info-div {
@@ -49,13 +50,13 @@
 
 .signup .info-div input {
     width: 98%;
-    height: 30px;
+    height: 40px;
     border-radius: 3px;
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
     padding-left: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .signup input:hover {
@@ -119,13 +120,31 @@
     width: 113px;
 }
 
-.signup-errors-ul {
-    position: absolute;
-    list-style-type: none;
-    padding: 30px;
+.first-name-div {
+    display: flex;
+    flex-direction: column-reverse;
 }
 
-.box-errors-first_name {
+.last-name-div {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.email-div {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.password-div {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.login-form .error-li {
+    margin-bottom: 8px;
+    min-width: 200px;;
+
+/* .box-errors-first_name {
     width: 150px;
     padding: 10px;
     margin-left: 50px auto;
@@ -179,6 +198,6 @@
     border-radius: 3px;
     top: 17px;
     left: 577px
-}
+} */
 
 

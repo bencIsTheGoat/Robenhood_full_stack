@@ -25,18 +25,24 @@ class LoginForm extends React.Component {
         };
     }
 
+    componentWillUnmount () {
+        this.props.clearErrors();
+    }
+
     renderErrors () {
         // include symbol in error list
-        return (<ul>
-            {this.props.errors.map((error, i) => {
-                return(
-                    <li key={i} className='error-li'>
-                        <i className="fas fa-exclamation-circle"></i>
-                        {error}
-                    </li>
-                );
-            })}
-        </ul>)
+        if (this.props.errors !== undefined) {
+            return (<ul>
+                {this.props.errors.map((error, i) => {
+                    return(
+                        <li key={i} className='error-li'>
+                            <i className="fas fa-exclamation-circle"></i>
+                            {error}
+                        </li>
+                    );
+                })}
+            </ul>)
+        }
     }
 
     render() {

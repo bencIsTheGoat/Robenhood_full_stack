@@ -20,20 +20,38 @@ class SignupForm extends React.Component {
         );
     }
 
+    componentWillUnmount () {
+        this.props.clearErrors();
+    }
+
     renderErrors (type) {
         // include symbol in error list
         if (this.props.errors[type] !== undefined) {
             let arr = type.split('_').join(' ');
             return (
-                <ul className='signup-errors-ul'>
-                <div className={`box-errors-${type}`}>
-                    <li className={`li-errors-${type}`}>
+                <ul>
+                    <li className='error-li'>
+                        <i className="fas fa-exclamation-circle"></i>
                         {arr + ' ' + this.props.errors[type]}
                     </li>
-                </div>
             </ul>)
         }
     }
+
+    // renderErrors(type) {
+    //     // include symbol in error list
+    //     if (this.props.errors[type] !== undefined) {
+    //         let arr = type.split('_').join(' ');
+    //         return (
+    //             <ul className='signup-errors-ul'>
+    //                 <div className={`box-errors-${type}`}>
+    //                     <li className={`li-errors-${type}`}>
+    //                         {arr + ' ' + this.props.errors[type]}
+    //                     </li>
+    //                 </div>
+    //             </ul>)
+    //     }
+    // }
 
     render () {
         return (
@@ -49,32 +67,48 @@ class SignupForm extends React.Component {
                     </div>
                     <form onSubmit={this.handleSubmit} className='login-form'>
                         <div className='names-div'>
-                            <input 
-                                type="text" 
-                                placeholder='First name'
-                                value={this.state.first_name}
-                                onChange={this.handleChange('first_name')}/>
-                            {this.renderErrors('first_name')}
-                            <input
-                                type="text"
-                                placeholder="Last name"
-                                value={this.state.last_name}
-                                onChange={this.handleChange('last_name')} />
-                            {this.renderErrors('last_name')}
+                            <div className='first-name-div'>
+                                <input 
+                                    type="text" 
+                                    placeholder='First name'
+                                    value={this.state.first_name}
+                                    onChange={this.handleChange('first_name')}/>
+                                    <div className='errors-ul'>
+                                        {this.renderErrors('first_name')}
+                                    </div>
+                            </div>
+                            <div className='last-name-div'>
+                                <input
+                                    type="text"
+                                    placeholder="Last name"
+                                    value={this.state.last_name}
+                                    onChange={this.handleChange('last_name')} />
+                                <div className='errors-ul'>
+                                    {this.renderErrors('last_name')}
+                                </div>
+                            </div>
                         </div>
                         <div className='info-div'>
-                            <input
-                                type="text"
-                                placeholder="Email address"
-                                value={this.state.email}
-                                onChange={this.handleChange('email')} />
-                            {this.renderErrors('email')}
-                            <input
-                                type="password"
-                                placeholder="Password (min. 6 characters)"
-                                value={this.state.password}
-                                onChange={this.handleChange('password')} />
-                            {this.renderErrors('password')}
+                            <div className='email-div'>
+                                <input
+                                    type="text"
+                                    placeholder="Email address"
+                                    value={this.state.email}
+                                    onChange={this.handleChange('email')} />
+                                <div className='errors-ul'>
+                                    {this.renderErrors('email')}
+                                </div>
+                            </div>
+                            <div className='password-div'>
+                                <input
+                                    type="password"
+                                    placeholder="Password (min. 6 characters)"
+                                    value={this.state.password}
+                                    onChange={this.handleChange('password')} />
+                                <div className='errors-ul'>
+                                    {this.renderErrors('password')}
+                                </div>
+                            </div>
                         </div>
                         <button>Continue</button>
                         <div className='login-link'>

@@ -58,6 +58,7 @@
     border: 0;
     background-color: #e8f0fe;
     padding-left: 20px;
+    font: 'Dosis', sans-serif;
 }
 
 .form-div input:hover {
