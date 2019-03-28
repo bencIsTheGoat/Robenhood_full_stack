@@ -38,26 +38,33 @@ class LoginForm extends React.Component {
         </ul>)
     }
 
+    render() {
+    }
+    
     render () {
         return (
-            <div className='login-form-div'>
-                {/* <img src="/assets/login_background-700d662356e95aa2caae79b2bfccf62e30b546786b2dc49aa9c383d5a2d4250a.png" alt="background"/> */}
-                <form onSubmit={this.handleSubmit} className='form-div'>
-                <h2>Welcome to Robenhood</h2>
-                    <label>Email or Username</label>
-                        <input 
-                            type="text" 
-                            onChange={this.handleChange('email')}/>
-                    <label>Password</label>
-                        <input 
-                            type="password"
-                            onChange={this.handleChange('password')}/>
-                    <Link to='/'>
-                        Forgot your username/password?
-                    </Link>
-                    {this.renderErrors()}
-                    <button>Sign In</button>
-                </form>
+            <div className='login-page'>
+                <div className='background-image'>
+                    <img src = {window.backgroundImage}/>;
+                </div>
+                <div className='login-form-div'>
+                    <form onSubmit={this.handleSubmit} className='form-div'>
+                    <h2>Welcome to Robenhood</h2>
+                        <label>Email or Username</label>
+                            <input 
+                                type="text" 
+                                onChange={this.handleChange('email')}/>
+                        <label>Password</label>
+                            <input 
+                                type="password"
+                                onChange={this.handleChange('password')}/>
+                        <Link to='/'>
+                            Forgot your username/password?
+                        </Link>
+                        {this.renderErrors()}
+                        <button>Sign In</button>
+                    </form>
+                </div>
             </div>
         );
     }
