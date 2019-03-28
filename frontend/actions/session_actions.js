@@ -23,11 +23,10 @@ export const clearErrors = () => ({
     type: CLEAR_ERRORS
 });
 
-export const login = user => dispatch => {
-    debugger;
-    return SessionUtils.login(user).then(user => dispatch(receiveUser(user)),
+export const login = user => dispatch => (
+    SessionUtils.login(user).then(user => dispatch(receiveUser(user)),
     errors => dispatch(receiveErrors(errors.responseJSON)))
-};
+);
 
 export const signup = user => dispatch => (
     SessionUtils.signup(user).then(user => dispatch(receiveUser(user)),

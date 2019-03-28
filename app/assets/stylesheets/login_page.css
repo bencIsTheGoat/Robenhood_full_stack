@@ -15,10 +15,9 @@
 .form-div {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    float: right;
-    margin-left: auto;
-    margin-right: 10%;
+    align-content: space-around;
+    margin-right: auto;
+    padding: 30px;
 }
 
 .form-div label {
@@ -33,7 +32,7 @@
     font-weight: 900;
 }
 
-.form-div button {
+.form-div .signin {
     padding: 0 24px;
     background-color: #21ce99;
     border: 0;
@@ -46,7 +45,7 @@
     margin-top: 50px;
 }
 
-.form-div button:hover {
+.form-div .signin:hover {
     background-color: #1febae;
     cursor: pointer;
 }
@@ -78,12 +77,13 @@
 }
 
 .background-image {
-    widows: 50vw;;
+    widows: 100vw;;
     height: 100vh;
 }
 
 .background-image img {
     max-width:100%;
+    min-width: 200px;
     height:100%;
     max-height:100%;
 }
@@ -108,3 +108,35 @@
 .errors-ul ul li i {
     margin-right: 5px;
 }
+
+.login-button-div {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-button-div .link-button {
+    color: #21ce99;
+    background-color: white;
+    font-weight: 600;
+    font-size: 11px;
+    width: 47%;
+    text-align: left;
+    border: none;
+    padding: 0px;
+    margin: 5px;
+}
+
+.login-button-div .link-button:hover {
+    color: #0fa779;
+    cursor: pointer;
+}
+
+.login-button-div .link-p {
+    color: #0fa779;
+    font-size: 11px;
+    font-weight: 900;
+    margin: 5px;
+}
+
+

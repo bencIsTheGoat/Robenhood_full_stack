@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import logo from '../../../app/assets/images/login_background.png'
+import { Redirect } from 'react-router-dom';
 
 class LoginForm extends React.Component {
     
@@ -13,6 +12,7 @@ class LoginForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderErrors = this.renderErrors.bind(this);
         this.demoUser = this.demoUser.bind(this);
+        this.forgotInfo = this.forgotInfo.bind(this);
     }
 
     handleSubmit (e) {
@@ -50,6 +50,11 @@ class LoginForm extends React.Component {
         e.preventDefault();
         this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/'))
     }
+
+    forgotInfo (e) {
+        e.preventDefault()
+        this.props.history.push('/')
+    }
     
     render () {
         return (
@@ -68,19 +73,21 @@ class LoginForm extends React.Component {
                             <input 
                                 type="password"
                                 onChange={this.handleChange('password')}/>
-                        <div class='login-button-div'>
-                            <Link to='/'>
+                        <div className='login-button-div'>
+                            <button onClick={this.forgotInfo} className='link-button'>
                                 Forgot your username/password?
-                            </Link>
-                            Or
-                            <button onClick={this.demoUser}>
-                                Demo Session
+                            </button>
+                            <p class='link-p'>
+                                or
+                            </p>
+                            <button onClick={this.demoUser} className='link-button'>
+                                Try Out a Demo Session!
                             </button>
                         </div>
                         <div className='errors-ul'>
                             {this.renderErrors()}
                         </div>
-                        <button>Sign In</button>
+                        <button className='signin'>Sign In</button>
 
                     </form>
                 </div>
