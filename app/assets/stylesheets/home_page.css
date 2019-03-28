@@ -10,17 +10,17 @@ body {
     position: relative;
 }
 
-.nav-container h2 {
+.robenhood-h2 {
     font-size: 20px;
     margin-left: 6px;
 }
 
-.nav-container h2:hover {
+.robenhood-h2:hover {
     color:  #21ce99;
     cursor: pointer;
 }
 
-.nav-container h2 i {
+.robenhood-h2 i {
     margin-right: 10px;
 }
 

@@ -90,3 +90,20 @@
 .login-page {
     display: flex;
 }
+
+.errors-ul {
+    position: absolute;
+    margin-top: -70px;
+}
+
+.errors-ul ul {
+    list-style-type: none;
+}
+
+.errors-ul ul li {
+    font-weight: 900;
+}
+
+.errors-ul ul li i {
+    margin-right: 5px;
+}

@@ -31,6 +31,7 @@ class LoginForm extends React.Component {
             {this.props.errors.map((error, i) => {
                 return(
                     <li key={i} className='error-li'>
+                        <i className="fas fa-exclamation-circle"></i>
                         {error}
                     </li>
                 );
@@ -61,7 +62,9 @@ class LoginForm extends React.Component {
                         <Link to='/'>
                             Forgot your username/password?
                         </Link>
-                        {this.renderErrors()}
+                        <div className='errors-ul'>
+                            {this.renderErrors()}
+                        </div>
                         <button>Sign In</button>
                     </form>
                 </div>
