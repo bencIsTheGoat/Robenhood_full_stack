@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// import logo from '../../../app/assets/images/login_background.png'
 
 class LoginForm extends React.Component {
     
@@ -40,19 +41,17 @@ class LoginForm extends React.Component {
     render () {
         return (
             <div className='login-form-div'>
+                {/* <img src="/assets/login_background-700d662356e95aa2caae79b2bfccf62e30b546786b2dc49aa9c383d5a2d4250a.png" alt="background"/> */}
+                <form onSubmit={this.handleSubmit} className='form-div'>
                 <h2>Welcome to Robenhood</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <label>Email or Username
+                    <label>Email or Username</label>
                         <input 
                             type="text" 
                             onChange={this.handleChange('email')}/>
-                    </label>
-                    <br/>
-                    <label>Password
+                    <label>Password</label>
                         <input 
                             type="password"
                             onChange={this.handleChange('password')}/>
-                    </label>
                     <Link to='/'>
                         Forgot your username/password?
                     </Link>
