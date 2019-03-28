@@ -38,21 +38,6 @@ class SignupForm extends React.Component {
         }
     }
 
-    // renderErrors(type) {
-    //     // include symbol in error list
-    //     if (this.props.errors[type] !== undefined) {
-    //         let arr = type.split('_').join(' ');
-    //         return (
-    //             <ul className='signup-errors-ul'>
-    //                 <div className={`box-errors-${type}`}>
-    //                     <li className={`li-errors-${type}`}>
-    //                         {arr + ' ' + this.props.errors[type]}
-    //                     </li>
-    //                 </div>
-    //             </ul>)
-    //     }
-    // }
-
     render () {
         return (
             <div className='total'>

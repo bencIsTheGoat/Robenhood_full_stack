@@ -14,9 +14,21 @@
     margin-right: auto;
 }
 
+@keyframes topFade{
+    0%{
+        transform: translateY(-100px);
+        opacity: 0;
+        }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+        }
+}
+
 .headers-div h1 {
     font-size: 50px;
     margin-bottom: 10px;
+    animation: topFade 3s 1 0s ease-out;
 }
 
 .headers-div h2 {
