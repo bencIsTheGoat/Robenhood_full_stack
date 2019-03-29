@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Utils from './actions/session_actions';
+import * as TransUtils from './actions/transaction_actions';
+import * as CompUtils from './actions/company_actions';
 import configureStore from './store/store';
 import Root from './components/root';
 
@@ -20,9 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
         store = configureStore();
     }
     // TEST
-    window.login = Utils.login;
-    window.signup = Utils.signup;
-    window.logout = Utils.logout;
+    window.createTransaction = TransUtils.createTransaction;
+    window.fetchTransactions = TransUtils.fetchTransactions;
+    window.fetchCompany = CompUtils.fetchCompany;
+    window.createCompany = CompUtils.createCompany;
     window.getState = store.getState;
     window.dispatch = store.dispatch;
     // TEST

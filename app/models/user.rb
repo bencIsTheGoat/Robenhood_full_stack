@@ -6,6 +6,12 @@ class User < ApplicationRecord
     attr_reader :password
 
     after_initialize :ensure_session_token
+
+    has_many :transactions
+
+    has_many :companies,
+        through: :transactions,
+        source: :company
     
     def password=(password)
         @password = password
