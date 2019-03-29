@@ -117,8 +117,11 @@
     list-style-type: none;
 }
 
-.errors-ul ul li {
+.errors-ul ul .error-li {
+    position: absolute;
     font-weight: 900;
+    top: 318px;
+    width: 200px;
 }
 
 .errors-ul ul li i {
@@ -129,6 +132,7 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
 }
 
 .login-button-div .link-button {
@@ -141,6 +145,7 @@
     border: none;
     padding: 0px;
     margin: 5px;
+
 }
 
 .login-button-div .link-button:hover {
