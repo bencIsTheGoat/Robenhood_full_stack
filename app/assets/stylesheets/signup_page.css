@@ -156,4 +156,19 @@
     margin-bottom: 8px;
     min-width: 200px;
     top: 200px;
+    
+}
+
+.errors-ul {
+    position: absolute;
+    animation: errorFade 5s 1;
+}
+
+@keyframes errorFade{
+    0%{
+        opacity: 0;
+        }
+    100%{
+        opacity: 1;
+        }
 }
