@@ -5,4 +5,5 @@ json.array!(@transactions) do |trans|
     json.transaction_type trans.transaction_type
     json.price trans.price
     json.shares trans.shares
+    json.date trans.created_at
 end
