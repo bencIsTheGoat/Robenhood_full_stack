@@ -12,3 +12,10 @@ export const createCompany = company => (
         data: {company}
     })
 );
+
+export const getStockData = (ticker, time) => (
+    $.ajax({
+        method: 'GET',
+        url: `https://api.iextrading.com/1.0/stock/${ticker}/chart/${time}`
+    })
+);

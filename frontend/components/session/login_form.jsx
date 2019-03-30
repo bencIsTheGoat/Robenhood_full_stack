@@ -17,7 +17,7 @@ class LoginForm extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault();
-        this.props.login(this.state).then(() => this.props.history.push('/'));
+        this.props.login(this.state).then(() => this.props.history.push('/home'));
     }
 
     handleChange (type) {
@@ -48,12 +48,16 @@ class LoginForm extends React.Component {
 
     demoUser (e) {
         e.preventDefault();
-        this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/'))
+        return (e) => (
+            this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/home'))
+        );
     }
 
     forgotInfo (e) {
-        e.preventDefault()
-        this.props.history.push('/')
+        e.preventDefault();
+        return (e) => (
+            this.props.history.push('/signup')
+        );
     }
     
     render () {
@@ -63,7 +67,7 @@ class LoginForm extends React.Component {
                     <img src = {window.backgroundImage}/>;
                 </div>
                 <div className='login-form-div'>
-                    <form onSubmit={this.handleSubmit} className='form-div'>
+                    <form className='form-div'>
                     <h2>Welcome to Robenhood</h2>
                         <label>Email or Username</label>
                             <input 
@@ -74,7 +78,7 @@ class LoginForm extends React.Component {
                                 type="password"
                                 onChange={this.handleChange('password')}/>
                         <div className='login-button-div'>
-                            <button onClick={this.forgotInfo} className='link-button'>
+                            <button onClick={this.demoUser} className='link-button'>
                                 Forgot your username/password?
                             </button>
                             <p className='link-p'>
@@ -87,7 +91,7 @@ class LoginForm extends React.Component {
                         <div className='errors-ul'>
                             {this.renderErrors()}
                         </div>
-                        <button className='signin'>Sign In</button>
+                        <button className='signin' onClick={this.handleSubmit}>Sign In</button>
 
                     </form>
                 </div>

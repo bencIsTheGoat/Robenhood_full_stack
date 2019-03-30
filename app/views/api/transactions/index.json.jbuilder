@@ -1,3 +1,8 @@
-@transactions.each do |transaction|
-    json.extract! transaction, :id, :user_id, :company_id, :transaction_type, :price, :shares
+json.array!(@transactions) do |trans|
+    json.id trans.id
+    json.user_id trans.user_id
+    json.company_id trans.company_id
+    json.transaction_type trans.transaction_type
+    json.price trans.price
+    json.shares trans.shares
 end

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 
 class SignupForm extends React.Component {
      
@@ -10,8 +10,11 @@ class SignupForm extends React.Component {
     }
 
     handleSubmit (e) {
+        debugger;
         e.preventDefault();
-        this.props.signup(this.state).then(() => this.props.history.push('/'));
+        return (e) => (
+            this.props.signup(this.state).then(() => this.props.history.push('/'))
+        );
     }
 
     handleChange (type) {
@@ -22,6 +25,7 @@ class SignupForm extends React.Component {
 
     componentWillUnmount () {
         this.props.clearErrors();
+        this.props.history.push('/home');
     }
 
     renderErrors (type) {

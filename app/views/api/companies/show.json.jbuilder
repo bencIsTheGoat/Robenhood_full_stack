@@ -1,1 +1,1 @@
-json.extract! @company, :id, :name, :ticker
+json.extract! @company, :id, :name, :ticker, :created_at

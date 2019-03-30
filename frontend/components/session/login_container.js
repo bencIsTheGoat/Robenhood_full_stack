@@ -7,7 +7,10 @@ const msp = (state, ownProps) => ({
 });
 
 const mdp = dispatch => ({
-    login: (user) => dispatch(login(user)),
+    login: (user) => {
+        debugger
+        return dispatch(login(user))
+    },
     clearErrors: () => dispatch(clearErrors())
 });
 
