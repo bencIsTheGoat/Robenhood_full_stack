@@ -5,6 +5,7 @@ import { getStockData } from '../../util/company_api_util';
 class Graph extends React.Component {
 
     constructor(props) {
+        // debugger;
         super(props);
         this.state = {};
         this.getSharesObj = this.getSharesObj.bind(this);
@@ -13,6 +14,7 @@ class Graph extends React.Component {
         this.formatData = this.formatData.bind(this);
         this.uniqueCompanies = this.uniqueCompanies.bind(this);
         this.portValueObj = this.portValueObj.bind(this);
+        
     }
 
     // first adds all transactions made by user to state
@@ -20,10 +22,17 @@ class Graph extends React.Component {
     // then fetches 5yr data and puts into local state then(() => this.getData('5yr'))
 
     componentDidMount() {
+        // debugger;
+        // Promise.all(
+        //     this.props.fetchTransactions(),
+        //     this.props.fetchCompanies(),
+        //     this.getData('5y'),
+        //     this.formatData(this.portValueObj())
+        // )
         this.props.fetchTransactions()
-        .then(() => this.props.fetchCompanies()
-        .then(() => this.getData('5y')
-        .then(() => this.formatData(this.portValueObj()))))
+            .then(() => this.props.fetchCompanies())
+            .then(() => this.getData('5y'))
+            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 300))
     }
 
     // TEST
@@ -116,11 +125,10 @@ class Graph extends React.Component {
 
     getData (time) {
         const tickers = Object.keys(this.uniqueCompanies());
-        const stockData = this.props.getStockData;
+        const stockData = this.props.getStockData
         tickers.forEach(ticker => {
             stockData(ticker, time)
         });
-    
     }
 
     tickerToId () {
@@ -173,6 +181,7 @@ class Graph extends React.Component {
 
 
     render () {
+        // debugger;
         return (
             <div>
                 <div className='line-div'>
