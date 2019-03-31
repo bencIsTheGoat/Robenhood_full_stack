@@ -2,6 +2,7 @@ import * as CompUtils from '../util/company_api_util';
 import {receiveErrors } from './session_actions';
 
 export const RECEIVE_COMPANY = 'RECEIVE_COMPANY';
+export const RECEIVE_COMPANIES = 'RECEIVE_COMPANIES';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const RECEIVE_USER_STOCK_DATA = 'RECEIVE_USER_STOCK_DATA';
 
@@ -10,10 +11,20 @@ export const receiveCompany = company => ({
     company
 });
 
-export const receiveStockData = data => ({
+export const receiveStockData = (ticker, data) => ({
     type: RECEIVE_DATA,
-    data: data
+    data,
+    ticker
 });
+
+export const receiveCompanies = companies => ({
+    type: RECEIVE_COMPANIES,
+    companies
+});
+
+export const fetchCompanies = () => dispatch => (
+    CompUtils.fetchCompanies().then(companies => dispatch(receiveCompanies(companies)))
+);
 
 export const fetchCompany = id => dispatch => (
     CompUtils.fetchCompany(id).then(company => dispatch(receiveCompany(company)), errors => dispatch(receiveErrors(errors)))
@@ -25,9 +36,8 @@ export const createCompany = company => dispatch => (
 );
 
 export const getStockData = (ticker, time) => dispatch => {
-    return CompUtils.getStockData(ticker, time).then(data => {
-        return dispatch(receiveStockData(data));
-    })
+    // ticker = ticker;
+    return CompUtils.getStockData(ticker, time).then(data => dispatch(receiveStockData(ticker, data)))
 };
 
 // Getting portfolio data

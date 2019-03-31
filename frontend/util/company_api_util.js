@@ -19,3 +19,10 @@ export const getStockData = (ticker, time) => (
         url: `https://api.iextrading.com/1.0/stock/${ticker}/chart/${time}`
     })
 );
+
+export const fetchCompanies = () => (
+    $.ajax({
+        method: 'GET',
+        url: 'api/companies',
+    })
+)

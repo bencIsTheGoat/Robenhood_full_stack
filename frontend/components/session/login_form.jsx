@@ -28,6 +28,7 @@ class LoginForm extends React.Component {
 
     componentWillUnmount () {
         this.props.clearErrors();
+        
     }
 
     renderErrors () {
@@ -48,16 +49,12 @@ class LoginForm extends React.Component {
 
     demoUser (e) {
         e.preventDefault();
-        return (e) => (
             this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/home'))
-        );
     }
 
     forgotInfo (e) {
         e.preventDefault();
-        return (e) => (
             this.props.history.push('/signup')
-        );
     }
     
     render () {
