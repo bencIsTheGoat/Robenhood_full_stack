@@ -18,7 +18,7 @@ class Api::UsersController < ApplicationController
         if @user
             render :show
         else
-            render json: ['User does not exit'], status 401
+            render json: ['User does not exit'], status: 401
         end
     end
 

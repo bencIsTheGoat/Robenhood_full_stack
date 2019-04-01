@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line } from 'recharts';
+import { LineChart, Line, Tooltip } from 'recharts';
 import { getStockData } from '../../util/company_api_util';
 
 class Graph extends React.Component {
@@ -22,28 +22,20 @@ class Graph extends React.Component {
     // then fetches 5yr data and puts into local state then(() => this.getData('5yr'))
 
     componentDidMount() {
-        // debugger;
-        // Promise.all(
-        //     this.props.fetchTransactions(),
-        //     this.props.fetchCompanies(),
-        //     this.getData('5y'),
-        //     this.formatData(this.portValueObj())
-        // )
         this.props.fetchTransactions()
             .then(() => this.props.fetchCompanies())
             .then(() => this.getData('5y'))
-            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 300))
+            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 500))
     }
 
     // TEST
 
-    
- 
     dateHelper (date) {
         let today = new Date();
         let past = new Date(date);
         let difference = Math.abs((today - past) / 1000 / 60 / 60 / 24 / 7 / 52 * 5 * 52);
-        return Math.floor(1255);
+        return Math.floor(1257);
+
     }
 
     // gets the transaction for each company { companyIds: [{transactions}, ...]}
@@ -90,26 +82,45 @@ class Graph extends React.Component {
                 }
             });
         });
-        let arr2;
+        let datesObj = {};
         let output = {};
+        let companies = this.props.companies;
+        let tickersObj = this.tickerToId();
         company_ids.forEach(id => {
-            arr2 = numSharesObj[id]['integral'];
+            let companyTicker = tickersObj[id];
+            let datesData = this.props.data[companyTicker];
             arr1 = numSharesObj[id]['rateOfChange'];
-            arr2.forEach((ele, idx) => {
+            arr1.forEach((ele, idx) => {
+                let date = datesData[idx].date;
                 if (idx === 0) {
-                    arr2[idx] = arr1[idx];
+                    datesObj[date] = arr1[idx];
                 } else {
-                    arr2[idx] = arr2[idx - 1] + arr1[idx];
+                    let dateBefore = datesData[idx - 1].date;
+                    datesObj[date] = datesObj[dateBefore] + arr1[idx];
                 }
             })
-            output[id] = arr2;
+            if (output[id] === undefined) {
+                output[id] = datesObj;
+            } else {
+                output[id].push(datesObj)
+            }
+        });
+        Object.keys(output).forEach((companyId) => {
+            let array = Object.keys(output[companyId]).map((ele, idx) => {
+                return { date: ele, shares: output[companyId][ele] }
+            });
+            output[companyId] = array;
         });
         return output;
     }
 
-    // formats data to go in chart
-
-    
+    tickerToId() {
+        let companies = {}
+        this.props.companies.forEach(company => (
+            companies[company.id] = company.ticker
+        ));
+        return companies;
+    }
 
     // gets unique companies from state
 
@@ -131,51 +142,49 @@ class Graph extends React.Component {
         });
     }
 
-    tickerToId () {
-        let companies = {}
-        this.props.companies.forEach(company => (
-            companies[company.id] = company.ticker
-        ));
-        return companies;
-    }
-
     // portfolio value
 
-    // loop thru sharesObj keys to get compnayIDs, id =>
-    // sharesObj[id] = arry need to iterate
-    // for (let i = arry.length - 1; i > 0; i--)
-    // let priceData = this.props.data[tickerToId[id]]
-    // portObj[i] = arry[i] * priceData[priceData.length - i - 1]
+    dateToPrice (ticker) {
+        let priceObj = {};
+        Object.values(this.props.data[ticker]).forEach(data => {
+            priceObj[data.date] = data.close;
+        });
+        return priceObj;
+    }
 
     portValueObj () {
         const companyObj = this.tickerToId();
         const sharesObj = this.getNumShares();
         const data = this.props.data;
         const portObj = {};
-        Object.keys(sharesObj).forEach(id => {
-            let sharesArray = sharesObj[id];
-            let j = 1;
-            for (let i = sharesArray.length - 1; i >= 0; i--) {
-                let priceData = data[companyObj[id]]
-                if (portObj[i] === undefined) {
-                    portObj[i] = sharesArray[i] * priceData[priceData.length - j].close
+        Object.keys(sharesObj).forEach(companyId => {
+            let ticker = companyObj[companyId]
+            let priceData = this.dateToPrice(ticker);
+            Object.values(sharesObj[companyId]).forEach((dataPair, idx) => {
+                if (portObj[dataPair.date] === undefined) {
+                    portObj[dataPair.date] = dataPair.shares * priceData[dataPair.date]
                 } else {
-                    portObj[i] += sharesArray[i] * priceData[priceData.length - j].close
+                    portObj[dataPair.date] += dataPair.shares * priceData[dataPair.date]
                 }
-                j++;
-            }
+            });
+
         });
+        debugger;
         return portObj;
+       
     }
+
+    // turns data into array so line can render and setState with formatted data
 
     formatData(data) {
         let days = Object.keys(data);
-        let newData = days.map(day => {
+        let newData = days.map((day, idx) => {
             return {
                 name: day,
-                uv: data[day]
+                price: data[day]
             }
         })
+        debugger;
         this.setState({data: newData});
     }
 
@@ -185,13 +194,14 @@ class Graph extends React.Component {
         return (
             <div>
                 <div className='line-div'>
-                    <LineChart width={400} height={400} data={this.state.data}>
-                        <Line type='monotone' dataKey='uv' stroke='#21ce99'/>
+                    <LineChart width={676} height={196} data={this.state.data}>
+                        <Line type='monotone' dataKey='price' stroke='#21ce99'/>
+                        <Tooltip />
                     </LineChart>
                 </div>
-                <button onClick={() => this.formatData(this.portValueObj())}>
-                    TEST
-                </button>
+                <div className='graph-button-div'>
+                
+                </div>
             </div>
          
         )
