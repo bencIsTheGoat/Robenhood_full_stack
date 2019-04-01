@@ -230,36 +230,33 @@ class Graph extends React.Component {
                     stroke="white" 
                 >
                
+                    <Label position='insideTopLeft' value='test' position={{ y: -100, x: 50 }}/>
 
                 </YAxis>
                 
-                <Label position='insideLeft' value='test'/>
                 
                 <Tooltip 
+                    className='tooltip'
                     contentStyle={{border: '0', backgroundColor: 'transparent'}}
-                    position={{x: 50, y: 0}}
+                    position={{y: -100, x: 50}}
                     isAnimationActive={false}
+                    labelFormatter={value => <div className='date-div'>{value}</div>}
                     formatter={value => {
                         value = value.toFixed(2);
                         let percent = this.percentChange(value);
                         let money = this.monetaryChange(value);
                         return [
                             <div className='tooltip-value-div'>
-                                <div className='portval-div'>
+                                <p className='portval-p'>
                                     {'$' + new Intl.NumberFormat('en').format(value)}
-                                </div>
+                                </p>
                                 <div className='tooltip-change-div'>
-                                    <div className='percentage-div'>
-                                        {percent}
-                                    </div>
-                                    <div className='money-div'>
-                                        {money}
-                                    </div>
+                                    <p>{percent} {money}</p>
                                 </div>
                             </div>, null
                         ]
                     }}
-                    labelFormatter={value => <div>{value}</div>}
+                    
                 />
                 <Tooltip
 
@@ -310,9 +307,6 @@ class Graph extends React.Component {
     render () {
         return (
             <div className='graph-div'>
-                <div classname='value-div'>
-                    {this.portInfo()}
-                </div>
                 <div className='line-div'>
                     {this.lineRender()}
                 </div>

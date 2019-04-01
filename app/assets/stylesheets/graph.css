@@ -2,6 +2,8 @@
     display: flex;
     padding: 50px;
     flex-direction: column;
+    position: absolute;
+    top: 150px;
 }
 
 .graph-button-div {
@@ -27,6 +29,17 @@
     border-bottom: 2px solid #21ce99;
     outline: none;
 }
+
+.recharts-default-tooltip {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+}
+
+.recharts-tooltip-item-list .portval-p {
+    font-size: 30px !important;
+    font-weight: 900;
+}
+
 
 
 
