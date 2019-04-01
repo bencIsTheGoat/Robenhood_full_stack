@@ -15,6 +15,8 @@ class Graph extends React.Component {
         this.uniqueCompanies = this.uniqueCompanies.bind(this);
         this.portValueObj = this.portValueObj.bind(this);
         this.lineRender = this.lineRender.bind(this);
+        this.monetaryChange = this.monetaryChange.bind(this);
+        this.percentChange = this.percentChange.bind(this);
         
     }
 
@@ -26,7 +28,7 @@ class Graph extends React.Component {
         this.props.fetchTransactions()
             .then(() => this.props.fetchCompanies())
             .then(() => this.getData('5y'))
-            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 600))
+            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 1000))
     }
 
     // TEST
@@ -192,7 +194,23 @@ class Graph extends React.Component {
         this.setState({data: newData, line: newData});
     }
 
-    // timeperiod
+    // performance
+
+    percentChange (currentValue) {
+        let initialPrice = this.state.data[0].Price;
+        let percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
+        return `(${percent}%)`
+    }
+
+    monetaryChange (currentValue) {
+        let initialPrice = this.state.data[0].Price;
+        let change = (currentValue - initialPrice).toFixed(2);
+        if (change > 0) {
+            return `+$${Math.abs(change)}`;
+        } else {
+            return `-$${Math.abs(change)}`;
+        }
+    }
     
 
     lineRender() {
@@ -223,12 +241,23 @@ class Graph extends React.Component {
                     isAnimationActive={false}
                     formatter={value => {
                         value = value.toFixed(2);
-                        return (
-            
-                                ['$' + new Intl.NumberFormat('en').format(value), null]
-                                   
-                             
-                            )
+                        let percent = this.percentChange(value);
+                        let money = this.monetaryChange(value);
+                        return [
+                            <div className='tooltip-value-div'>
+                                <div className='portval-div'>
+                                    {'$' + new Intl.NumberFormat('en').format(value)}
+                                </div>
+                                <div className='tooltip-change-div'>
+                                    <div className='percentage-div'>
+                                        {percent}
+                                    </div>
+                                    <div className='money-div'>
+                                        {money}
+                                    </div>
+                                </div>
+                            </div>, null
+                        ]
                     }}
                     labelFormatter={value => <div>{value}</div>}
                 />
