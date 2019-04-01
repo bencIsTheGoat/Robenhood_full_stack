@@ -1,0 +1,32 @@
+.graph-div {
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+}
+
+.graph-button-div {
+    display: flex;
+    flex-direction: row;
+    margin-left: 62px;
+    min-width: 400px;
+}
+
+.graph-button-div .graph-button {
+    border: none;
+    margin-right: 20px; 
+    font-weight: 900;
+}
+
+.graph-button-div .graph-button:hover {
+   color: #21ce99;
+   cursor: pointer;
+}
+
+.graph-button-div .graph-button:focus {
+    color: #21ce99;
+    border-bottom: 2px solid #21ce99;
+    outline: none;
+}
+
+
+

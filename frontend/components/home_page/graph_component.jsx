@@ -223,7 +223,7 @@ class Graph extends React.Component {
                     dot={false} 
                     strokeWidth={2}
                 />
-                <XAxis dataKey='Date' hide={true}/>
+                <XAxis dataKey='Date' hide={true} width={676}/>
                 <YAxis 
                     type='number' 
                     domain={['dataMin', 'dataMax']} 
@@ -236,8 +236,8 @@ class Graph extends React.Component {
                 <Label position='insideLeft' value='test'/>
                 
                 <Tooltip 
-                    contentStyle={{border: 0}}
-                    position={{x: 0, y: 0}}
+                    contentStyle={{border: '0', backgroundColor: 'transparent'}}
+                    position={{x: 50, y: 0}}
                     isAnimationActive={false}
                     formatter={value => {
                         value = value.toFixed(2);
