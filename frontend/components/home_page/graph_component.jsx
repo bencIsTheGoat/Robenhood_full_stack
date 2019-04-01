@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, Tooltip } from 'recharts';
+import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
 import { getStockData } from '../../util/company_api_util';
 
 class Graph extends React.Component {
@@ -7,13 +7,14 @@ class Graph extends React.Component {
     constructor(props) {
         // debugger;
         super(props);
-        this.state = {};
+        this.state = {data: {}, line: {}};
         this.getSharesObj = this.getSharesObj.bind(this);
         this.dateHelper = this.dateHelper.bind(this);
         this.getNumShares = this.getNumShares.bind(this);
         this.formatData = this.formatData.bind(this);
         this.uniqueCompanies = this.uniqueCompanies.bind(this);
         this.portValueObj = this.portValueObj.bind(this);
+        this.lineRender = this.lineRender.bind(this);
         
     }
 
@@ -25,7 +26,7 @@ class Graph extends React.Component {
         this.props.fetchTransactions()
             .then(() => this.props.fetchCompanies())
             .then(() => this.getData('5y'))
-            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 500))
+            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 600))
     }
 
     // TEST
@@ -169,38 +170,142 @@ class Graph extends React.Component {
             });
 
         });
-        debugger;
         return portObj;
        
     }
 
     // turns data into array so line can render and setState with formatted data
+    // const USD = value => currency(value, {symbol: 'S', precision: 2});
 
     formatData(data) {
         let days = Object.keys(data);
-        let newData = days.map((day, idx) => {
+        let newData = days.map(day => {
+            let jsDate = new Date(day);
+            let dateArr = jsDate.toDateString().slice(4).split(' ');
+            let newDate = dateArr[0] + ' ' + dateArr[1] + ', ' + dateArr[2];
+            
             return {
-                name: day,
-                price: data[day]
+                Date: newDate,
+                Price: data[day]
             }
         })
-        debugger;
-        this.setState({data: newData});
+        this.setState({data: newData, line: newData});
+    }
+
+    // timeperiod
+    
+
+    lineRender() {
+        return (
+            <LineChart width={676} height={196} data={this.state.data}>
+                <Line 
+                    type='monotone' 
+                    dataKey='Price' 
+                    stroke='#21ce99' 
+                    dot={false} 
+                    strokeWidth={2}
+                />
+                <XAxis dataKey='Date' hide={true}/>
+                <YAxis 
+                    type='number' 
+                    domain={['dataMin', 'dataMax']} 
+                    stroke="white" 
+                >
+               
+
+                </YAxis>
+                
+                <Label position='insideLeft' value='test'/>
+                
+                <Tooltip 
+                    contentStyle={{border: 0}}
+                    position={{x: 0, y: 0}}
+                    isAnimationActive={false}
+                    formatter={value => {
+                        value = value.toFixed(2);
+                        return (
+            
+                                ['$' + new Intl.NumberFormat('en').format(value), null]
+                                   
+                             
+                            )
+                    }}
+                    labelFormatter={value => <div>{value}</div>}
+                />
+                <Tooltip
+
+                />
+                
+                
+            </LineChart>
+        )
+    }
+
+    // handles button functionality
+
+    handleClick(timePeriod) {
+        Object.freeze(this.state.line);
+        let data = this.state.line;
+        let line = this.state.line
+        let dataLength = this.state.line.length;
+        let newData;
+        if (timePeriod === '1m') {
+            newData = data.slice(dataLength - 22);
+            this.setState({data: newData, line: line});
+        } else if (timePeriod === '1w') {
+            newData = data.slice(dataLength - 5);
+            this.setState({ data: newData, line: line });
+        } else if (timePeriod === '3m') {
+            newData = data.slice(dataLength - 65);
+            this.setState({ data: newData, line: line });
+        } else if (timePeriod === '1y') {
+            newData = data.slice(dataLength - 260);
+            this.setState({ data: newData, line: line });
+        } else if (timePeriod === '1d') {
+            newData = data.slice(dataLength - 2);
+            this.setState({ data: newData, line: line });
+        } else {
+            newData = data;
+            this.setState({ data: newData, line: line });
+        }
+
+    }
+
+    // handles top component change
+
+    portInfo () {
+
     }
 
 
     render () {
-        // debugger;
         return (
-            <div>
+            <div className='graph-div'>
+                <div classname='value-div'>
+                    {this.portInfo()}
+                </div>
                 <div className='line-div'>
-                    <LineChart width={676} height={196} data={this.state.data}>
-                        <Line type='monotone' dataKey='price' stroke='#21ce99'/>
-                        <Tooltip />
-                    </LineChart>
+                    {this.lineRender()}
                 </div>
                 <div className='graph-button-div'>
-                
+                    <button className='graph-button' onClick={() => this.handleClick('1d')}>
+                        1D
+                    </button>
+                    <button className='graph-button' onClick={() => this.handleClick('1w')}>
+                        1W
+                    </button>
+                    <button className='graph-button' onClick={() => this.handleClick('1m')}>
+                        1M
+                    </button>
+                    <button className='graph-button' onClick={() => this.handleClick('3m')}>
+                        3M
+                    </button>
+                    <button className='graph-button' onClick={() => this.handleClick('1y')}>
+                        1Y
+                    </button>
+                    <button className='graph-button' onClick={() => this.handleClick('all')}>
+                        ALL
+                    </button>
                 </div>
             </div>
          
