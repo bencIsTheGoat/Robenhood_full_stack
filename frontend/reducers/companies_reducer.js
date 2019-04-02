@@ -1,6 +1,6 @@
 import { RECEIVE_COMPANY, RECEIVE_DATA, RECEIVE_USER_STOCK_DATA, RECEIVE_COMPANIES } from '../actions/company_actions';
 
-const companiesReducer = (state = {}, action) => {
+const companiesReducer = (state = [], action) => {
     Object.freeze(state);
     switch (action.type) {
         case (RECEIVE_COMPANY):

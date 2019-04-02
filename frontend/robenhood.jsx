@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as TransUtils from './actions/transaction_actions';
-import * as CompUtils from './actions/company_actions';
 import * as SessUtils from './actions/session_actions';
+import * as NewsUtils from './actions/news_actions';
 import configureStore from './store/store';
 import Root from './components/root';
 
@@ -22,13 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
         store = configureStore();
     }
     // TEST
+    window.fetchNews = NewsUtils.fetchPortfolioNews;
     window.login = SessUtils.login;
     window.logout = SessUtils.logout;
-    window.createTransaction = TransUtils.createTransaction;
-    window.fetchTransactions = TransUtils.fetchTransactions;
-    window.fetchCompany = CompUtils.fetchCompany;
-    window.createCompany = CompUtils.createCompany;
-    window.getStockData = CompUtils.getStockData;
     window.getState = store.getState;
     window.dispatch = store.dispatch;
     // TEST

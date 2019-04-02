@@ -1,5 +1,6 @@
 import React from 'react';
 import GraphContainer from './graph_container';
+import NewsContainer from './news_container';
 
 class HomePage extends React.Component {
     
@@ -11,6 +12,7 @@ class HomePage extends React.Component {
         return (
             <div className='home-page-div'>
                 <GraphContainer />
+                <NewsContainer />
             </div>
         )
     }

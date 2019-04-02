@@ -9,7 +9,7 @@ class Graph extends React.Component {
     constructor(props) {
         // debugger;
         super(props);
-        this.state = {data: {}, line: {}};
+        this.state = {data: [], line: []};
         this.getSharesObj = this.getSharesObj.bind(this);
         this.dateHelper = this.dateHelper.bind(this);
         this.getNumShares = this.getNumShares.bind(this);
@@ -29,8 +29,14 @@ class Graph extends React.Component {
         this.props.fetchTransactions()
             .then(() => this.props.fetchCompanies())
             .then(() => this.getData('5y'))
-            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 1000))
+            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 500))
+           
     }
+
+    componentDidUpdate () {
+        
+    }
+
 
     sendPortData () {
         debugger;
@@ -98,7 +104,6 @@ class Graph extends React.Component {
         });
         let datesObj = {};
         let output = {};
-        let companies = this.props.companies;
         let tickersObj = this.tickerToId();
         company_ids.forEach(id => {
             let companyTicker = tickersObj[id];
@@ -118,6 +123,8 @@ class Graph extends React.Component {
             } else {
                 output[id].push(datesObj)
             }
+        
+
         });
         Object.keys(output).forEach((companyId) => {
             let array = Object.keys(output[companyId]).map((ele, idx) => {
@@ -168,8 +175,8 @@ class Graph extends React.Component {
 
     portValueObj () {
         const companyObj = this.tickerToId();
-        const sharesObj = this.getNumShares();
-        const data = this.props.data;
+        let sharesObj = {}
+        sharesObj = this.getNumShares();
         const portObj = {};
         Object.keys(sharesObj).forEach(companyId => {
             let ticker = companyObj[companyId]
