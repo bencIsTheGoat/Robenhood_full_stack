@@ -10,11 +10,9 @@ class SignupForm extends React.Component {
     }
 
     handleSubmit (e) {
-        debugger;
         e.preventDefault();
-        return (e) => (
-            this.props.signup(this.state).then(() => this.props.history.push('/'))
-        );
+        this.props.signup(this.state).then(() => this.props.history.push('/home'))
+       
     }
 
     handleChange (type) {
@@ -54,7 +52,7 @@ class SignupForm extends React.Component {
                         <h1>Make Your Money Move</h1>
                         <h2>Robenhood lets you invest in companies you love, commission-free.</h2>
                     </div>
-                    <form onSubmit={this.handleSubmit} className='login-form'>
+                    <form className='login-form'>
                         <div className='names-div'>
                             <div className='first-name-div'>
                                 <input 
@@ -99,7 +97,7 @@ class SignupForm extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <button>Continue</button>
+                        <button onClick={this.handleSubmit}>Continue</button>
                         <div className='login-link'>
                             <p className='form-link-p'>Already Started? <Link to='/login'>Log in to complete your application.</Link></p>
                         </div> 

@@ -4,7 +4,7 @@ import LoginFormContainer from './session/login_container';
 import SignupFormContainer from './session/signup_container';
 import HomePageContainer from './home_page/home_page_container';
 import { Route, Switch } from 'react-router-dom';
-import { AuthRoute } from '../util/route_util';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
     <div>
@@ -15,10 +15,10 @@ const App = () => (
         
         <Switch>
             <Route exact path='/' component={HomeContainer}/>
-            <AuthRoute exact path='/login' component={LoginFormContainer} />
             <AuthRoute exact path='/signup' component={SignupFormContainer} />
+            <AuthRoute exact path='/login' component={LoginFormContainer} />
         </Switch>
-        <Route exact path='/home' component={HomePageContainer} />
+        <ProtectedRoute exact path='/home' component={HomePageContainer} />
     </div>
 );
 

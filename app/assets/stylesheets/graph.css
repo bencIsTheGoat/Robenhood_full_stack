@@ -31,12 +31,13 @@
 }
 
 .recharts-default-tooltip {
+    position: absolute !important;
     display: flex !important;
     flex-direction: column-reverse !important;
 }
 
 .recharts-tooltip-item-list .portval-p {
-    font-size: 30px !important;
+    font-size: 35px !important;
     font-weight: 900;
 }
 

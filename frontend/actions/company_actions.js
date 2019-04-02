@@ -5,6 +5,7 @@ export const RECEIVE_COMPANY = 'RECEIVE_COMPANY';
 export const RECEIVE_COMPANIES = 'RECEIVE_COMPANIES';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const RECEIVE_USER_STOCK_DATA = 'RECEIVE_USER_STOCK_DATA';
+export const RECEIVE_PORT_DATA = 'RECEIVE_PORT_DATA';
 
 export const receiveCompany = company => ({
     type: RECEIVE_COMPANY,
@@ -21,6 +22,12 @@ export const receiveCompanies = companies => ({
     type: RECEIVE_COMPANIES,
     companies
 });
+
+export const sendPortData = data => ({
+    type: RECEIVE_PORT_DATA,
+    data
+})
+
 
 export const fetchCompanies = () => dispatch => (
     CompUtils.fetchCompanies().then(companies => dispatch(receiveCompanies(companies)))

@@ -1,6 +1,8 @@
 import React from 'react';
 import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
 import { getStockData } from '../../util/company_api_util';
+import Odometer from 'react-odometerjs';
+import TopInfoComponent from './top_info_component';
 
 class Graph extends React.Component {
 
@@ -17,7 +19,6 @@ class Graph extends React.Component {
         this.lineRender = this.lineRender.bind(this);
         this.monetaryChange = this.monetaryChange.bind(this);
         this.percentChange = this.percentChange.bind(this);
-        
     }
 
     // first adds all transactions made by user to state
@@ -29,6 +30,16 @@ class Graph extends React.Component {
             .then(() => this.props.fetchCompanies())
             .then(() => this.getData('5y'))
             .then(() => setTimeout(() => this.formatData(this.portValueObj()), 1000))
+    }
+
+    sendPortData () {
+        debugger;
+        let currentValue = this.state.data[last].Price;
+        let percent = this.percentChange(currentValue);
+        let gain = this.monetaryChange(currentValue);
+        let portData = { currentValue: currentValue, percent: percent, gain: gain };
+        this.props.sendPortData(portData);
+        this.setState({ data: newData, line: newData, portData: portData });
     }
 
     // TEST
@@ -194,6 +205,8 @@ class Graph extends React.Component {
         this.setState({data: newData, line: newData});
     }
 
+
+
     // performance
 
     percentChange (currentValue) {
@@ -229,8 +242,6 @@ class Graph extends React.Component {
                     domain={['dataMin', 'dataMax']} 
                     stroke="white" 
                 >
-               
-                    <Label position='insideTopLeft' value='test' position={{ y: -100, x: 50 }}/>
 
                 </YAxis>
                 
@@ -241,6 +252,7 @@ class Graph extends React.Component {
                     position={{y: -100, x: 50}}
                     isAnimationActive={false}
                     labelFormatter={value => <div className='date-div'>{value}</div>}
+                    active={true}
                     formatter={value => {
                         value = value.toFixed(2);
                         let percent = this.percentChange(value);
@@ -251,7 +263,7 @@ class Graph extends React.Component {
                                     {'$' + new Intl.NumberFormat('en').format(value)}
                                 </p>
                                 <div className='tooltip-change-div'>
-                                    <p>{percent} {money}</p>
+                                    <p>{money} {percent}</p>
                                 </div>
                             </div>, null
                         ]
@@ -294,19 +306,15 @@ class Graph extends React.Component {
             newData = data;
             this.setState({ data: newData, line: line });
         }
-
     }
 
     // handles top component change
 
-    portInfo () {
-
-    }
-
-
     render () {
+        
         return (
             <div className='graph-div'>
+                
                 <div className='line-div'>
                     {this.lineRender()}
                 </div>
@@ -330,6 +338,7 @@ class Graph extends React.Component {
                         ALL
                     </button>
                 </div>
+               
             </div>
          
         )
