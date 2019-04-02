@@ -23,7 +23,6 @@ class SignupForm extends React.Component {
 
     componentWillUnmount () {
         this.props.clearErrors();
-        this.props.history.push('/home');
     }
 
     renderErrors (type) {
@@ -99,7 +98,7 @@ class SignupForm extends React.Component {
                         </div>
                         <button onClick={this.handleSubmit}>Continue</button>
                         <div className='login-link'>
-                            <p className='form-link-p'>Already Started? <Link to='/login'>Log in to complete your application.</Link></p>
+                            <p className='form-link-p'>Already Started? <Link onClick={() => this.props.clearErrors()}to='/login'>Log in to complete your application.</Link></p>
                         </div> 
                         <div className='login-disclosure'>
                             <p className='form-p1'>All investments involve risk and the past performance of a security, or financial product does not guarantee future results or gainz. Keep in mind that while diversification may help spread risk it does not assure you a yatch, or protect against loss, in a down market. There is always the potential of losing money when you invest in securities, or other financial products. Investors should consider their investment objectives and risks carefully before investing. </p>

@@ -26,3 +26,4 @@ export const fetchCompanies = () => (
         url: 'api/companies',
     })
 )
+

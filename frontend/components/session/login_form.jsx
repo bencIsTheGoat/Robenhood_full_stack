@@ -16,6 +16,7 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit (e) {
+     
         e.preventDefault();
         this.props.login(this.state).then(() => this.props.history.push('/home'));
     }
@@ -28,7 +29,6 @@ class LoginForm extends React.Component {
 
     componentWillUnmount () {
         this.props.clearErrors();
-        
     }
 
     renderErrors () {
@@ -48,16 +48,19 @@ class LoginForm extends React.Component {
     }
 
     demoUser (e) {
+      
         e.preventDefault();
-            this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/home'))
+        this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/home'))
     }
 
     forgotInfo (e) {
+       
         e.preventDefault();
-            this.props.history.push('/signup')
+        this.props.history.push('/signup')
     }
     
     render () {
+        
         return (
             <div className='login-page'>
                 <div className='background-image'>
@@ -75,7 +78,7 @@ class LoginForm extends React.Component {
                                 type="password"
                                 onChange={this.handleChange('password')}/>
                         <div className='login-button-div'>
-                            <button onClick={this.demoUser} className='link-button'>
+                            <button onClick={this.forgotInfo} className='link-button'>
                                 Forgot your username/password?
                             </button>
                             <p className='link-p'>
