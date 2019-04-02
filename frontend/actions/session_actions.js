@@ -4,6 +4,7 @@ export const RECEIVE_USER = 'RECEIVE_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 export const RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const RECEIVE_SHARES_DATA = 'RECEIVE_SHARES_DATA';
 
 export const receiveUser = (user) => ({
     type: RECEIVE_USER,
@@ -37,4 +38,14 @@ export const logout = () => dispatch => (
     SessionUtils.logout().then(() => dispatch(removeUser()),
     errors => dispatch(receiveErrors(errors.responseJSON)))
 );
+
+export const sendSharesData = (output) => {
+    let sharesData = Object.keys(output).map(id => {
+        return { [id]: output[id][output[id].length - 1].shares }
+    });
+    return {
+        type: RECEIVE_SHARES_DATA,
+        numShares: sharesData
+    };
+}
 

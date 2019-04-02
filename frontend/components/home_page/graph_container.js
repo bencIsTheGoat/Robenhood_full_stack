@@ -2,6 +2,7 @@ import { getStockData, fetchCompany, createCompany, fetchCompanies, sendPortData
 import { fetchTransactions } from '../../actions/transaction_actions';
 import { connect } from 'react-redux';
 import Graph from './graph_component';
+import {sendSharesData} from '../../actions/session_actions';
 
 const msp = state => ({
     user: state.entities.users[state.session.id],
@@ -16,7 +17,8 @@ const mdp = dispatch => ({
     createCompany: (company) => dispatch(createCompany(company)),
     fetchTransactions: () => dispatch(fetchTransactions()),
     fetchCompanies: () => dispatch(fetchCompanies()),
-    sendPortData: (data) => dispatch(sendPortData(data))
+    sendPortData: (data) => dispatch(sendPortData(data)),
+    sendSharesData: (numShares) => dispatch(sendSharesData(numShares))
 });
 
 export default connect(msp, mdp)(Graph);

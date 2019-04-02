@@ -1,8 +1,7 @@
 import React from 'react';
 import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
-import { getStockData } from '../../util/company_api_util';
-import Odometer from 'react-odometerjs';
-import TopInfoComponent from './top_info_component';
+
+
 
 class Graph extends React.Component {
 
@@ -132,6 +131,7 @@ class Graph extends React.Component {
             });
             output[companyId] = array;
         });
+        this.props.sendSharesData(output);
         return output;
     }
 

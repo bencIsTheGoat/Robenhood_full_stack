@@ -1,4 +1,4 @@
-import { RECEIVE_COMPANY, RECEIVE_DATA, RECEIVE_USER_STOCK_DATA, RECEIVE_COMPANIES } from '../actions/company_actions';
+import { RECEIVE_COMPANY, RECEIVE_RECENT_STOCK_DATA, RECEIVE_USER_STOCK_DATA, RECEIVE_COMPANIES } from '../actions/company_actions';
 
 const companiesReducer = (state = [], action) => {
     Object.freeze(state);
@@ -14,6 +14,8 @@ const companiesReducer = (state = [], action) => {
                     data: action.data
             }}
             return Object.assign({}, state, newState);
+        case (RECEIVE_RECENT_STOCK_DATA):
+            return Object.assign({}, state, { recentData: action.recentData })
         default:
             return state;
     }

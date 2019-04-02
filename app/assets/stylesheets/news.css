@@ -19,7 +19,7 @@
 .article {
     display: flex;
     flex-direction: row;
-    width: 800px;
+    width: 600px;
     padding-top: 30px;
     padding-bottom: 30px;
 }

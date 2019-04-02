@@ -1,6 +1,7 @@
 import React from 'react';
 import GraphContainer from './graph_container';
 import NewsContainer from './news_container';
+import StockIndexContainer from './stock_index_container'
 
 class HomePage extends React.Component {
     
@@ -13,6 +14,7 @@ class HomePage extends React.Component {
             <div className='home-page-div'>
                 <GraphContainer />
                 <NewsContainer />
+                <StockIndexContainer />
             </div>
         )
     }

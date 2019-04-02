@@ -6,6 +6,7 @@ export const RECEIVE_COMPANIES = 'RECEIVE_COMPANIES';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const RECEIVE_USER_STOCK_DATA = 'RECEIVE_USER_STOCK_DATA';
 export const RECEIVE_PORT_DATA = 'RECEIVE_PORT_DATA';
+export const RECEIVE_RECENT_STOCK_DATA = 'RECEIVE_RECENT_STOCK_DATA';
 
 export const receiveCompany = company => ({
     type: RECEIVE_COMPANY,
@@ -26,7 +27,12 @@ export const receiveCompanies = companies => ({
 export const sendPortData = data => ({
     type: RECEIVE_PORT_DATA,
     data
-})
+});
+
+export const receiveRecentStockData = data => ({
+    type: RECEIVE_RECENT_STOCK_DATA,
+    data
+});
 
 
 export const fetchCompanies = () => dispatch => (
@@ -43,30 +49,11 @@ export const createCompany = company => dispatch => (
 );
 
 export const getStockData = (ticker, time) => dispatch => {
-    // ticker = ticker;
     return CompUtils.getStockData(ticker, time).then(data => dispatch(receiveStockData(ticker, data)))
 };
 
-// Getting portfolio data
+export const getRecentStockData = (ticker, time) => dispatch => {
+    return CompUtils.getStockData(ticker, time).then(data => dispatch(receiveRecentStockData(ticker, data)))
+};
 
-// export const receiveUserStockData = ({ company, data }) => ({
-//     type: RECEIVE_USER_STOCK_DATA,
-//     company,
-//     data
-// })
-
-// let periods = ['5y', '2y', '1y', 'ytd', '6m', '3m', '1m'];
-
-// export const getUserStockData = id => {
-//     return CompUtils.fetchCompany(id).then(company => {
-//         debugger;
-//         let ticker = company.ticker;
-//         debugger;
-//         let data = periods.map(time => {
-//             debugger;
-//             return CompUtils.getStockData(ticker, time).then(res => dispatch(receiveUserStockData(res.responseJSON)));
-//         });
-//         return { company, data };
-//     }).then(result => dispatch(receiveUserStockData(result)))
-// };
 
