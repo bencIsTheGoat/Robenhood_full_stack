@@ -11,7 +11,7 @@ class StockIndex extends React.Component {
         this.state = {
             companies: [],
             numShares: [],
-            prices: {}}
+            prices: []}
         this.renderStocks = this.renderStocks.bind(this);
         this.priceHelper = this.priceHelper.bind(this);
         this.percentHelper = this.percentHelper.bind(this);
@@ -24,24 +24,76 @@ class StockIndex extends React.Component {
         
     }
 
-    ajaxHelper () {
-        fetchCompanies()
-            .then(companies => {
-                
-                this.companies = companies;
-                let tickers = companies.map(comp => {
-                    return comp.ticker
-                });
-                return getMultipleStockData(tickers.join(','), '1d');
-            }).then(data => {
+    // ajaxHelper () {
+    //     fetchCompanies()
+    //     .then(companies => {
+    //             this.companies = companies;
+    //             this.setState({companies: companies})
+    //             return getMultipleStockData(this.formatTickers(), '1d');
+    //         }).then(data => {
           
-                this.prices = data
-                return fetchTransactions();
-            }).then(transactions => {
+    //             this.prices = data
+    //             return fetchTransactions();
+    //         }).then(transactions => {
            
-                this.numShares = this.transactionHelper(transactions);
-                this.setState({ numShares: this.numShares, companies: this.companies, prices: this.prices });
-        });
+    //             this.numShares = this.transactionHelper(transactions);
+    //             this.setState({ numShares: this.numShares, companies: this.companies, prices: this.prices });
+    //     });
+    // }
+
+    ajaxHelper() {
+        fetchTransactions()
+            .then((transactions) => {
+                this.numShares = this.transactionHelper(transactions) 
+                this.setState({ transactions: transactions, numShares: this.numShares })
+            })
+            .then(() => fetchCompanies().then(companies => {
+         
+                this.setState({ companies: this.userCompanies(companies) })
+            }))
+            .then(() => {
+          
+                return getMultipleStockData(this.formatTickers(), '1d').then(data => {
+           
+                    this.setState({ prices: data })
+                })
+            })
+            this.setState();
+
+    }
+
+    userCompanies (companies) {
+        let companiesObj = {};
+        this.state.transactions.forEach(trans => {
+            for (let i = 0; i < companies.length - 1; i++) {
+                if (companies[i].id === trans.company_id) {
+                    companiesObj[companies[i].ticker] = trans.company_id;
+                }
+            }
+        })
+        return companiesObj
+    }
+
+    formatTickers() {
+        let companiesObj = {};
+        this.state.transactions.forEach(trans => {
+
+            let companies = this.state.companies;
+
+            for (let i = 0; i < Object.keys(companies).length; i++) {
+
+                if (companies[Object.keys(companies)[i]] === trans.company_id) {
+                    companiesObj[Object.keys(companies)[i]] = trans.company_id;
+                }
+            }
+        })
+
+        let tickers = Object.keys(companiesObj).map(ticker => {
+            return ticker.toLowerCase();
+        })
+
+        return tickers.join(',')
+
     }
 
     componentWillUnmount () {
@@ -81,7 +133,6 @@ class StockIndex extends React.Component {
     priceHelper (prices) {
         let arr = prices.filter((ele) => ele.close);
         let output = arr[arr.length - 1].close;
-        debugger;
         return (
             <p id='price'>
                 {`$${output.toFixed(2)}`}
@@ -94,7 +145,6 @@ class StockIndex extends React.Component {
         let last = arr[arr.length - 1].close;
         let first = arr[0].close
         let difference = (last - first) / first * 100
-        debugger;
         let percent = difference.toFixed(2);
         return (
             <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
@@ -103,32 +153,44 @@ class StockIndex extends React.Component {
         )
     }
 
+    uniqueCompanies (companies) {
+
+        let companiesObj = {};
+        Object.keys(companies).forEach(comp => {
+            companiesObj[comp] = 1
+        });
+        return companiesObj;
+    }
+
     renderStocks () {
-        if (this.state.companies.length === 0 || Object.keys(this.state.prices).length === 0 || this.state.numShares.length === 0) {
+        let state = this.state;
+        if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
             
             return ''
         } else {
-           
             let companies = this.state.companies;
             let prices = this.state.prices;
             let shares = this.state.numShares;
-            let stocks = Object.keys(companies).map((id, idx) => {
-                let companyId = companies[id].id;
-                let ticker = companies[id].ticker;
+            debugger
+            let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
+                let companyObj = this.uniqueCompanies(this.state.companies);
                 debugger;
+                // let companyId = companies[id].id;
+                let state = this.state;
+                let ticker = id;
                 return (<li className='stock-li' key={idx}>
                     <Link to={`/stocks/${ticker}`}>
                         <div className='shares-ticker-div'>
                             <p className='ticker'>
-                                {companies[id].ticker.toUpperCase()}
+                                {id}
                             </p>
                             <p className='shares'>
-                                {shares[companyId]} Shares
+                                {shares[companies[id]]} Shares
                             </p>
                         </div>
                         <div className='graph-percent-price-div'>
-                            {this.percentHelper(prices[ticker.toUpperCase()].chart)}
-                            {this.priceHelper(prices[ticker.toUpperCase()].chart)}
+                            {this.percentHelper(prices[id].chart)}
+                            {this.priceHelper(prices[id].chart)}
                         </div>
                     </Link>
                 </li>)

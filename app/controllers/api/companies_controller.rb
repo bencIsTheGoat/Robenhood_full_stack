@@ -2,9 +2,10 @@ class Api::CompaniesController < ApplicationController
 
     before_action :ensure_logged_in
 
+
     def index
         if current_user
-            @companies = current_user.companies
+            @companies = Company.all
         else
             render json: ["Please log in to see companies"]
         end

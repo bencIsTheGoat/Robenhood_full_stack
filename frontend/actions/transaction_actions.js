@@ -19,7 +19,7 @@ export const fetchTransactions = () => dispatch => (
     errors => dispatch(receiveErrors(errors.responseJSON)))
 );
 
-export const createTransaction = transaction => dispatch (
+export const createTransaction = transaction => dispatch =>  (
     TransUtils.createTransaction(transaction).then(transaction => dispatch(receiveTransaction(transaction)),
     errors => dispatch(receiveErrors(errors.responseJSON)))
 );

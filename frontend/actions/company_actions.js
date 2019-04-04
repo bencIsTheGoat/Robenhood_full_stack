@@ -44,7 +44,8 @@ export const fetchCompany = id => dispatch => (
 );
 
 export const createCompany = company => dispatch => (
-    CompUtils.createCompany(company).then(company => dispatch(receiveCompany(company)),
+    CompUtils.createCompany(company)
+    .then(company => dispatch(receiveCompany(company)),
     errors => dispatch(receiveErrors(errors)))
 );
 

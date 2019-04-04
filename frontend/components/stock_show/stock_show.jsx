@@ -2,6 +2,7 @@ import React from 'react';
 import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
 import { getStockData, getCompanyInfo, getCompanyStats } from '../../util/company_api_util';
 import NewsContainer from '../home_page/news_container';
+import FormContainer from './form_container';
 
 class StockShow extends React.Component {
     
@@ -278,7 +279,6 @@ class StockShow extends React.Component {
     }
 
     peHelper (low, high) {
-        debugger;
         return ((high + low) / 2).toFixed(2);
     }
 
@@ -286,7 +286,7 @@ class StockShow extends React.Component {
         if (Object.keys(this.state).length === 9) {
             return (
                 <div className='stock-show-div'>
-                    <div clasName='company-name'>
+                    <div className='company-name'>
                         <h1 id='company-name'>
                             {this.state.info.companyName}
                         </h1>
@@ -298,6 +298,9 @@ class StockShow extends React.Component {
                         </div>
                         {this.renderButtons()}
                         {this.renderInfo()}
+                    </div>
+                    <div>
+                        <FormContainer props={this.state} ticker={this.ticker}/>
                     </div>
                     <div className='show-news'>
                         <NewsContainer />

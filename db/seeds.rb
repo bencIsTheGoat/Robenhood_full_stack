@@ -6,3 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'csv'
+
+Company.delete_all
+Transaction.delete_all
+
+csv_text = File.read(Rails.root.join('lib', 'companylist2.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+csv.each do |row|
+    company = Company.create(ticker: row['ticker'], name: row['name'])
+    
+end
+puts Company.count
+
+User.create(email: 'demo@robenhood.com', password: 'robenhood')
+
+Transaction.create(transaction_type: 'buy', company_id: 50086, price: 100, shares: 25)
+
+Transaction.create(transaction_type: 'buy', company_id: 51430, price: 100, shares: 25)

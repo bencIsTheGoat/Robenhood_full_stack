@@ -1,14 +1,17 @@
 import React from 'react';
 import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
+import { getStockData, fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
+import { fetchTransactions } from '../../util/transaction_api_util';
+
+
 
 
 
 class Graph extends React.Component {
 
     constructor(props) {
-        // debugger;
         super(props);
-        this.state = {data: [], line: []};
+        this.state = {data: [], line: [], companies: [], transaction: []};
         this.getSharesObj = this.getSharesObj.bind(this);
         this.dateHelper = this.dateHelper.bind(this);
         this.getNumShares = this.getNumShares.bind(this);
@@ -25,26 +28,49 @@ class Graph extends React.Component {
     // then fetches 5yr data and puts into local state then(() => this.getData('5yr'))
 
     componentDidMount() {
-        this.props.fetchTransactions()
-            .then(() => this.props.fetchCompanies())
-            .then(() => this.getData('5y'))
-            .then(() => setTimeout(() => this.formatData(this.portValueObj()), 500))
-           
+        fetchTransactions()
+        .then((transactions) => {
+            this.setState({transactions: transactions})})
+        .then(() => fetchCompanies().then(companies => {
+            this.setState({companies: companies})}))
+        .then(() => {
+            return getMultipleStockData(this.formatTickers(), '5y').then(data => {
+                this.setState({data: data})
+            })})
+        .then(() => {
+
+            this.formatData(this.portValueObj())})
+          
     }
 
-    componentDidUpdate () {
+    formatTickers() {
+        let companiesObj = {};
+        this.state.transactions.forEach(trans => {
+            let companies = this.state.companies;
+            for (let i = 0; i < companies.length - 1; i++) {
+                if (companies[i].id === trans.company_id) {
+                    companiesObj[companies[i].ticker] = trans.company_id;
+                }
+            }
+        })
+
+        let tickers = Object.keys(companiesObj).map(ticker => {
+            return ticker.toLowerCase();
+        })
+
+        return tickers.join(',')
         
     }
 
 
     sendPortData () {
-        debugger;
-        let currentValue = this.state.data[last].Price;
+
+        let currentValue = this.state.linedata[last].Price;
         let percent = this.percentChange(currentValue);
         let gain = this.monetaryChange(currentValue);
         let portData = { currentValue: currentValue, percent: percent, gain: gain };
         this.props.sendPortData(portData);
-        this.setState({ data: newData, line: newData, portData: portData });
+        this.setState({ linedata: newData, line: newData, portData: portData });
     }
 
     // TEST
@@ -61,7 +87,7 @@ class Graph extends React.Component {
 
     getSharesObj () {
         let sharesObj = {};
-        let transactions = this.props.transactions;
+        let transactions = this.state.transactions;
         transactions.forEach(trans => {
             if (sharesObj[trans.company_id] === undefined) {
                 sharesObj[trans.company_id] = [{ 
@@ -106,14 +132,14 @@ class Graph extends React.Component {
         let tickersObj = this.tickerToId();
         company_ids.forEach(id => {
             let companyTicker = tickersObj[id];
-            let datesData = this.props.data[companyTicker];
+            let datesData = this.state.data[companyTicker];
             arr1 = numSharesObj[id]['rateOfChange'];
             arr1.forEach((ele, idx) => {
-                let date = datesData[idx].date;
+                let date = datesData.chart[idx].date;
                 if (idx === 0) {
                     datesObj[date] = arr1[idx];
                 } else {
-                    let dateBefore = datesData[idx - 1].date;
+                    let dateBefore = datesData.chart[idx - 1].date;
                     datesObj[date] = datesObj[dateBefore] + arr1[idx];
                 }
             })
@@ -137,9 +163,9 @@ class Graph extends React.Component {
 
     tickerToId() {
         let companies = {}
-        this.props.companies.forEach(company => (
+        this.state.companies.forEach(company => {
             companies[company.id] = company.ticker
-        ));
+        });
         return companies;
     }
 
@@ -147,28 +173,20 @@ class Graph extends React.Component {
 
     uniqueCompanies () {
         let companies = {}
-        this.props.companies.forEach(company => (
+        this.state.companies.forEach(company => (
             companies[company.ticker] = company.id
         ));
         return companies;
-    }
-
-    // shoots off external ajax for company price data
-
-    getData (time) {
-        const tickers = Object.keys(this.uniqueCompanies());
-        const stockData = this.props.getStockData
-        tickers.forEach(ticker => {
-            stockData(ticker, time)
-        });
     }
 
     // portfolio value
 
     dateToPrice (ticker) {
         let priceObj = {};
-        Object.values(this.props.data[ticker]).forEach(data => {
-            priceObj[data.date] = data.close;
+        Object.values(this.state.data[ticker]).forEach(data => {
+            data.forEach(dataPoint => {
+                priceObj[dataPoint.date] = dataPoint.close;
+            })
         });
         return priceObj;
     }
@@ -209,7 +227,7 @@ class Graph extends React.Component {
                 Price: data[day]
             }
         })
-        this.setState({data: newData, line: newData});
+        this.setState({linedata: newData, line: newData});
     }
 
 
@@ -217,13 +235,13 @@ class Graph extends React.Component {
     // performance
 
     percentChange (currentValue) {
-        let initialPrice = this.state.data[0].Price;
+        let initialPrice = this.state.linedata[0].Price;
         let percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
         return `(${percent}%)`
     }
 
     monetaryChange (currentValue) {
-        let initialPrice = this.state.data[0].Price;
+        let initialPrice = this.state.linedata[0].Price;
         let change = (currentValue - initialPrice).toFixed(2);
         if (change > 0) {
             return `+$${Math.abs(change)}`;
@@ -235,7 +253,7 @@ class Graph extends React.Component {
 
     lineRender() {
         return (
-            <LineChart width={676} height={196} data={this.state.data}>
+            <LineChart width={676} height={196} data={this.state.linedata}>
                 <Line 
                     type='monotone' 
                     dataKey='Price' 
@@ -296,62 +314,66 @@ class Graph extends React.Component {
         let newData;
         if (timePeriod === '1m') {
             newData = data.slice(dataLength - 22);
-            this.setState({data: newData, line: line});
+            this.setState({linedata: newData, line: line});
         } else if (timePeriod === '1w') {
             newData = data.slice(dataLength - 5);
-            this.setState({ data: newData, line: line });
+            this.setState({ linedata: newData, line: line });
         } else if (timePeriod === '3m') {
             newData = data.slice(dataLength - 65);
-            this.setState({ data: newData, line: line });
+            this.setState({ linedata: newData, line: line });
         } else if (timePeriod === '1y') {
             newData = data.slice(dataLength - 260);
-            this.setState({ data: newData, line: line });
+            this.setState({ linedata: newData, line: line });
         } else if (timePeriod === '1d') {
             newData = data.slice(dataLength - 2);
-            this.setState({ data: newData, line: line });
+            this.setState({ linedata: newData, line: line });
         } else {
             newData = data;
-            this.setState({ data: newData, line: line });
+            this.setState({ linedata: newData, line: line });
         }
     }
 
     // handles top component change
 
     render () {
-        
-        return (
-            <div className='graph-div'>
+        if (this.state.companies.length === 0 || this.state.transactions.length === 0 || this.state.data.length === 0) {
+            return ""
+        } else {
+            return (
+                <div className='graph-div'>
+                    
+                    <div className='line-div'>
+                        {this.lineRender()}
+                    </div>
+                    <div className='graph-button-div'>
+                        <button className='graph-button' onClick={() => this.handleClick('1d')}>
+                            1D
+                        </button>
+                        <button className='graph-button' onClick={() => this.handleClick('1w')}>
+                            1W
+                        </button>
+                        <button className='graph-button' onClick={() => this.handleClick('1m')}>
+                            1M
+                        </button>
+                        <button className='graph-button' onClick={() => this.handleClick('3m')}>
+                            3M
+                        </button>
+                        <button className='graph-button' onClick={() => this.handleClick('1y')}>
+                            1Y
+                        </button>
+                        <button className='graph-button' onClick={() => this.handleClick('all')}>
+                            ALL
+                        </button>
+                    </div>
+                </div>)
+        }
                 
-                <div className='line-div'>
-                    {this.lineRender()}
-                </div>
-                <div className='graph-button-div'>
-                    <button className='graph-button' onClick={() => this.handleClick('1d')}>
-                        1D
-                    </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1w')}>
-                        1W
-                    </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1m')}>
-                        1M
-                    </button>
-                    <button className='graph-button' onClick={() => this.handleClick('3m')}>
-                        3M
-                    </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1y')}>
-                        1Y
-                    </button>
-                    <button className='graph-button' onClick={() => this.handleClick('all')}>
-                        ALL
-                    </button>
-                </div>
-               
-            </div>
          
-        )
-    }
-
+        
 }
+}
+
+
 
 export default Graph;
 

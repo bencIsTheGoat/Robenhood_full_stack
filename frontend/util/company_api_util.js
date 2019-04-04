@@ -48,3 +48,6 @@ export const getCompanyStats = (ticker) => (
     })
 );
 
+
+
+
