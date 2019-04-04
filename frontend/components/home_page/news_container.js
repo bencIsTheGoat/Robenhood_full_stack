@@ -8,7 +8,8 @@ const msp = (state) => {
 };
 
 const mdp = (dispatch) => ({
-    fetchPortfolioNews: () => dispatch(fetchPortfolioNews())
+    fetchPortfolioNews: () => dispatch(fetchPortfolioNews()),
+    fetchCompanyNews: () => dispatch(fetchCompanyNews())
 });
 
 export default connect(msp, mdp)(News);

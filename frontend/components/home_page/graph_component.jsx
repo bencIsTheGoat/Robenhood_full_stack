@@ -256,7 +256,7 @@ class Graph extends React.Component {
                 <Tooltip 
                     className='tooltip'
                     contentStyle={{border: '0', backgroundColor: 'transparent'}}
-                    position={{y: -100, x: 50}}
+                    position={{y: -120, x: 50}}
                     isAnimationActive={false}
                     labelFormatter={value => <div className='date-div'>{value}</div>}
                     active={true}

@@ -1,0 +1,77 @@
+.stock-index-div {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 150px;
+    left: 900px;
+    box-shadow: 0 0 20px lightgray;
+    border-radius: 2px;
+}
+
+.stock-index-div h1 {
+    font-weight: 900;
+    font-size: 20px;
+    padding: 20px;
+    border-bottom: 1px solid rgb(228, 225, 225);
+}
+
+.stock-index-div .stock-index-ul {
+    list-style-type: none;
+  
+}
+
+.stock-index-div .stock-index-ul a {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-decoration: none;
+    align-items: center;
+    color: black;
+    width: 260px;
+}
+
+.stock-index-div .stock-index-ul a:hover {
+    background-color: lightgray;
+}
+
+.stock-index-div .stock-index-ul a .shares-ticker-div {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+
+.shares-ticker-div .ticker {
+    font-weight: 900;
+}
+
+.shares-ticker-div .shares {
+    font-size: 13px;
+}
+
+.graph-percent-price-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.graph-percent-price-div #price {
+     padding: 10px;
+    font-size: 18px;
+}
+
+.graph-percent-price-div #percent-green {
+    padding: 10px;
+    font-size: 18px;
+    color: #21ce99;
+    margin-right: 15px;
+}
+
+.graph-percent-price-div #percent-red {
+    padding: 10px;
+    font-size: 18px;
+    color: red;
+    margin-right: 15px;
+}
+
+
+

@@ -1,0 +1,59 @@
+#company-name {
+    font-weight: 900;
+    font-size: 35px;
+    position: absolute;
+    top: 50px;
+    left: 110px;
+}
+
+.total-info-div {
+    display: flex;
+    flex-direction: column;
+    width: 676px;
+    margin: 65px;
+}
+
+.company-about-div {
+    margin-bottom: 30px;
+}
+
+.company-about-div h1 {
+    font-weight: 900;
+    font-size: 25px;
+}
+
+.stats-info-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-div {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+}
+
+.indi-info-div {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+
+.indi-info-div a {
+    text-decoration: none;
+    color: black
+}
+
+.indi-info-div a:hover {
+    color: #21ce99;
+}
+
+#tag {
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.show-news {
+    position: absolute;
+    top: 350px;
+}

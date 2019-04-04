@@ -19,7 +19,7 @@ class News extends React.Component {
     timeHelper (time) {
         let now = new Date ();
         let articleTime = new Date (time);
-        let difference = Math.floor(now - articleTime) / 1000 / 60;
+        let difference = Math.floor(now - articleTime) / 1000;
         if (difference < 60) {
             return '<1m'
         } else if (difference >= 60 && difference < 3600) {
