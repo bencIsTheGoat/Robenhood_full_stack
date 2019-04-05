@@ -3,9 +3,9 @@
     flex-direction: column;
     position: absolute;
     top: 150px;
-    left: 900px;
+    left: 850px;
     box-shadow: 0 0 20px lightgray;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .stock-index-div h1 {

@@ -1,5 +1,82 @@
-.form-div {
+.form-div-trans {
     position: absolute;
-    left: 700px;
+    left: 850px;
     top: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    box-shadow: 0 0 20px lightgray;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.buy-sell-div {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.form-info-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.indi-form-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buy-sell-div button {
+    border: none;
+    margin-right: 20px; 
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.buy-sell-div button:hover {
+    color: #21ce99;
+    cursor: pointer;
+}
+
+.buy-sell-div button:focus {
+    color: #21ce99;
+    border-bottom: 2px solid #21ce99;
+    outline: none;
+}
+
+.indi-form-info #input-shares {
+    width: 50px;
+    height: 30px;
+}
+
+.form-info-div button {
+    padding: 0 24px;
+    background-color: #21ce99;
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    font-weight: 600;
+    height: 48px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.form-info-div button:hover {
+    background-color: #0cb381;
+    cursor: pointer;
+}
+
+.form-info-div button:focus {
+    outline: none;
+}
+
+.form-info-div p {
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.robenhood-header {
+    padding: 20px;
 }

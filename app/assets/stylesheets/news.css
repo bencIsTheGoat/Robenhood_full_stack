@@ -1,6 +1,6 @@
 .news-div {
     position: absolute;
-    top: 500px;
+    top: 600px;
     left: 100px;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,6 @@
 
 .news-div a {
     text-decoration: none;
-
 }
 
 .article {

@@ -285,25 +285,33 @@ class StockShow extends React.Component {
     render () {
         if (Object.keys(this.state).length === 9) {
             return (
-                <div className='stock-show-div'>
-                    <div className='company-name'>
-                        <h1 id='company-name'>
-                            {this.state.info.companyName}
-                        </h1>
+                <div>
+                    <div className='robenhood-header'>
+                        <h2 className='robenhood-h2'>
+                            <i className="fas fa-feather-alt"></i>
+                            robenhood
+                    </h2>
                     </div>
-                    <div className='graph-div'>
-
-                        <div className='line-div'>
-                            {this.renderStock()}
+                    <div className='stock-show-div'>
+                        <div className='company-name'>
+                            <h1 id='company-name'>
+                                {this.state.info.companyName}
+                            </h1>
                         </div>
-                        {this.renderButtons()}
-                        {this.renderInfo()}
-                    </div>
-                    <div>
-                        <FormContainer props={this.state} ticker={this.ticker}/>
-                    </div>
-                    <div className='show-news'>
-                        <NewsContainer />
+                        <div className='graph-div'>
+
+                            <div className='line-div'>
+                                {this.renderStock()}
+                            </div>
+                            {this.renderButtons()}
+                            {this.renderInfo()}
+                        </div>
+                        <div>
+                            <FormContainer props={this.state} ticker={this.ticker}/>
+                        </div>
+                        <div className='show-news'>
+                            <NewsContainer />
+                        </div>
                     </div>
                 </div>
             )

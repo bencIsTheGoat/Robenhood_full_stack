@@ -171,10 +171,10 @@ class StockIndex extends React.Component {
             let companies = this.state.companies;
             let prices = this.state.prices;
             let shares = this.state.numShares;
-            debugger
+       
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let companyObj = this.uniqueCompanies(this.state.companies);
-                debugger;
+        
                 // let companyId = companies[id].id;
                 let state = this.state;
                 let ticker = id;

@@ -11,10 +11,18 @@ class HomePage extends React.Component {
 
     render () {
         return (
-            <div className='home-page-div'>
-                <GraphContainer />
-                <NewsContainer />
-                <StockIndexContainer />
+            <div>
+                <div className='robenhood-header'>
+                    <h2 className='robenhood-h2'>
+                        <i className="fas fa-feather-alt"></i>
+                        robenhood
+                </h2>
+                </div>
+                <div className='home-page-div'>
+                    <GraphContainer />
+                    <NewsContainer />
+                    <StockIndexContainer />
+                </div>
             </div>
         )
     }

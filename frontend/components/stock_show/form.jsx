@@ -2,6 +2,7 @@ import React from 'react';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { fetchCompanies } from '../../util/company_api_util';
 import { getCompanyInfo } from '../../util/company_api_util';
+import { Redirect } from 'react-router-dom';
 
 class Form extends React.Component {
 
@@ -86,7 +87,7 @@ class Form extends React.Component {
         }
 
         return (
-            <div className='form-div'>
+            <div className='form-div-trans'>
                 <div className='buy-sell-div'>
                     <button className='buy' onClick={this.handleToggle}>
                         Buy {this.state.ticker.toUpperCase()}
@@ -98,11 +99,11 @@ class Form extends React.Component {
                 <div className='form-info-div'>
                     <div className='indi-form-info'>
                         <label>Shares</label>
-                        <input type="text" value={this.state.input} onChange={this.costHelper()}/>
+                        <input id='input-shares' type="text" value={this.state.input} onChange={this.costHelper()}/>
                     </div>
                     <div className='indi-form-info'>
                         <label>Market Price</label>
-                        <p>{this.state.currentPrice}</p>
+                        <p>${this.state.currentPrice}</p>
                     </div>
                     <div className='indi-form-info'>
                         <label>Estimated {costCredit}</label>
@@ -155,9 +156,8 @@ class Form extends React.Component {
             transaction_type: trans,
             price: this.state.currentPrice,
             shares: this.state.input};
-        this.props.createTransaction(transactionInfo);
-
-        
+        this.props.createTransaction(transactionInfo)
+    
     }
 
     render () {
