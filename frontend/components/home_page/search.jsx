@@ -43,7 +43,7 @@ class Auto extends React.Component {
             if (matches.length === 0) {
                 matches.push("Breh, no matches");
             }
-            return matches.slice(0, 7);
+            return matches.slice(0, 5);
         }
     }
 
@@ -79,7 +79,7 @@ class Auto extends React.Component {
                     onChange={this.handleInput}
                     value={this.state.inputVal}
                     placeHolder="Search Stock"/>
-                <ul className='search-ul'>
+                <ul id='search-ul'>
                     {stocks}
                 </ul>
             </div>

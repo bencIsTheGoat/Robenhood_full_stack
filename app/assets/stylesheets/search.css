@@ -1,0 +1,37 @@
+.search {
+    position: absolute;
+    top: 20px;
+    left: 400px;;
+}
+
+#search-input {
+    width: 400px;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 5px 5px 10px #21ce99;
+    outline: none;
+}
+
+#search-input:hover {
+    box-shadow: 5px 5px 10px #119b71;
+}
+
+#search-input {
+    padding: 5px;
+    padding-left: 15px;
+}
+
+#search-ul {
+    color: black;
+    list-style: none;
+    margin-left: 15px;
+    transition-duration: 0.5s;
+}
+
+#search-ul #search-li:hover {
+    transition: 0.5s;
+    color: #21ce99;
+    font-size: 30px;
+    cursor: pointer;
+}
