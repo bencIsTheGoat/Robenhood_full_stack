@@ -19,6 +19,7 @@ class StockShow extends React.Component {
         this.renderInfo = this.renderInfo.bind(this);
         this.marketCapHelper = this.marketCapHelper.bind(this);
         this.peHelper = this.peHelper.bind(this);
+        this.handleHome = this.handleHome.bind(this);
     }
 
     componentDidMount () {
@@ -283,11 +284,16 @@ class StockShow extends React.Component {
         return ((high + low) / 2).toFixed(2);
     }
 
+    handleHome(e) {
+        e.preventDefault();
+        this.props.history.push('/home');
+    }
+
     render () {
         if (Object.keys(this.state).length === 9) {
             return (
                 <div>
-                    <div className='robenhood-header'>
+                    <div className='robenhood-header' onClick={this.handleHome}>
                         <h2 className='robenhood-h2'>
                             <i className="fas fa-feather-alt"></i>
                             robenhood

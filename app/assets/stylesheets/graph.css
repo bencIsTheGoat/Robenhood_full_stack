@@ -41,6 +41,26 @@
     font-weight: 900;
 }
 
+#logout-button {
+    padding: 0 24px;
+    background-color: #21ce99;
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    font-weight: 600;
+    height: 48px;
+    font-size: 15px;
+    position: absolute;
+    z-index: 5;
+    right: 50px;
+}
+
+#logout-button:hover {
+    background-color: #19ac80;
+    cursor: pointer;
+}
+
+
 
 
 

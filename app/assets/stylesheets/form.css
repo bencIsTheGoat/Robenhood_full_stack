@@ -79,4 +79,6 @@
 
 .robenhood-header {
     padding: 20px;
+    display: flex;
+    flex-direction: space-between;
 }
