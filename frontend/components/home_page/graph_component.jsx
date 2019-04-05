@@ -79,7 +79,7 @@ class Graph extends React.Component {
         let today = new Date();
         let past = new Date(date);
         let difference = Math.abs((today - past) / 1000 / 60 / 60 / 24 / 7 / 52 * 5 * 52);
-        return Math.floor(1257);
+        return Math.floor(1250);
 
     }
 

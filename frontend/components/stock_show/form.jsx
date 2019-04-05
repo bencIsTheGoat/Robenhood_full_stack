@@ -156,7 +156,6 @@ class Form extends React.Component {
             transaction_type: trans,
             price: this.state.currentPrice,
             shares: this.state.input};
-        debugger;
         this.props.createTransaction(transactionInfo).then(() => this.props.history.push('/home'))
     
     }
