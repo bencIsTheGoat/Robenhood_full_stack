@@ -89,10 +89,10 @@ class Form extends React.Component {
         return (
             <div className='form-div-trans'>
                 <div className='buy-sell-div'>
-                    <button className='buy' onClick={this.handleToggle}>
+                    <button className='buy' onClick={this.handleToggle('buy')}>
                         Buy {this.state.ticker.toUpperCase()}
                     </button>
-                    <button className='sell' onClick={this.handleToggle}>
+                    <button className='sell' onClick={this.handleToggle('sell')}>
                         Sell {this.state.ticker.toUpperCase()}
                     </button>
                 </div>
@@ -134,9 +134,16 @@ class Form extends React.Component {
         return this.state.numShares[id];
     }
 
-    handleToggle(e) {
-        e.preventDefault();
-        this.setState({buy: !this.state.buy});
+    handleToggle(name) {
+        return (e) => {
+            e.preventDefault()
+            if (name === 'buy') {
+                this.setState({buy: true});
+            } else {
+                this.setState({buy: false})
+            }
+        }
+
     }
 
     nameHelper (ticker) {
