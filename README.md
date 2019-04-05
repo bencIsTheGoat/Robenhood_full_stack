@@ -32,4 +32,10 @@ Professionally CSS styled splash page:
 
 ![https://robenhood.herokuapp.com/#/](https://github.com/bcutler94/robenhood-read-me-img/blob/master/splash.png)
 
+Full frontend logging in and signing up authentication with bcrypt password encryption technology
+
+![https://github.com/bcutler94/robenhood-read-me-img/blob/master/signup.png] Sign up
+
+
+
 
