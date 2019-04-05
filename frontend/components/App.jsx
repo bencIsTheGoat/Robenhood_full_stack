@@ -6,6 +6,7 @@ import HomePageContainer from './home_page/home_page_container';
 import { Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import StockShowContainer from './stock_show/stock_container';
+import {withRouter} from 'react-router-dom';
 
 const App = () => (
     <div>
@@ -24,4 +25,4 @@ const App = () => (
     </div>
 );
 
-export default App;
+export default withRouter(App);

@@ -3,6 +3,7 @@ import GraphContainer from './graph_container';
 import NewsContainer from './news_container';
 import StockIndexContainer from './stock_index_container';
 import Auto from './search';
+import {withRouter} from 'react-router-dom';
 
 class HomePage extends React.Component {
     
@@ -31,4 +32,4 @@ class HomePage extends React.Component {
 
 }
 
-export default HomePage;
+export default withRouter(HomePage);

@@ -2,7 +2,7 @@ import React from 'react';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { fetchCompanies } from '../../util/company_api_util';
 import { getCompanyInfo } from '../../util/company_api_util';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Form extends React.Component {
 
@@ -156,7 +156,8 @@ class Form extends React.Component {
             transaction_type: trans,
             price: this.state.currentPrice,
             shares: this.state.input};
-        this.props.createTransaction(transactionInfo)
+        debugger;
+        this.props.createTransaction(transactionInfo).then(() => this.props.history.push('/home'))
     
     }
 
@@ -175,4 +176,4 @@ class Form extends React.Component {
 
 }
 
-export default Form;
+export default withRouter(Form);

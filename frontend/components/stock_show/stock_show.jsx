@@ -3,6 +3,7 @@ import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts'
 import { getStockData, getCompanyInfo, getCompanyStats } from '../../util/company_api_util';
 import NewsContainer from '../home_page/news_container';
 import FormContainer from './form_container';
+import { withRouter } from 'react-router-dom';
 
 class StockShow extends React.Component {
     
@@ -321,4 +322,4 @@ class StockShow extends React.Component {
     }
 }
 
-export default StockShow;
+export default withRouter(StockShow);
