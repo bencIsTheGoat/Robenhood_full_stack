@@ -185,7 +185,7 @@ class StockIndex extends React.Component {
                                 {id}
                             </p>
                             <p className='shares'>
-                                {shares[companies[id]]} Shares
+                                {Math.abs(shares[companies[id]])} Shares
                             </p>
                         </div>
                         <div className='graph-percent-price-div'>
