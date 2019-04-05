@@ -28,5 +28,7 @@ Robenhood is a clone of Robinhood, the popular free stock trading application. R
 
 ### Features
 
-Splash Page
+Professionally CSS styled splash page
 ![https://robenhood.herokuapp.com/#/](https://github.com/bcutler94/robenhood-read-me-img/blob/master/splash.png)
+
+
