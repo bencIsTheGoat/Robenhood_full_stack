@@ -36,7 +36,7 @@ Full frontend logging in and signing up authentication with bcrypt password encr
 
 ![https://robenhood.herokuapp.com/#/signup] (https://github.com/bcutler94/robenhood-read-me-img/blob/master/signup.png)
 
-![https://robenhood.herokuapp.com/#/signup](https://github.com/bcutler94/robenhood-read-me-img/blob/master/login.png)
+![https://robenhood.herokuapp.com/#/login](https://github.com/bcutler94/robenhood-read-me-img/blob/master/login.png)
 
 
 
