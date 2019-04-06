@@ -40,7 +40,13 @@ Robenhood is a clone of Robinhood, the popular free stock trading application. R
 
 ![https://robenhood.herokuapp.com/#/home](https://github.com/bcutler94/robenhood-read-me-img/blob/master/portfolio.png)
 
+* Real-time security analysis along with ability for user to buy and sell stocks
 
+![https://robenhood.herokuapp.com/#/stocks/aapl](https://github.com/bcutler94/robenhood-read-me-img/blob/master/stockshow.png)
+
+* Real-time news specifically tailored to user's portfolio
+
+![https://robenhood.herokuapp.com/#/home](https://github.com/bcutler94/robenhood-read-me-img/blob/master/news.png)
 
 
 
