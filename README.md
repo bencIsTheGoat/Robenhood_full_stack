@@ -1,24 +1,52 @@
-# README
+# Robenhood
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Robenhood Live Link](https://robenhood.herokuapp.com/#/)
 
-Things you may want to cover:
 
-* Ruby version
+### Overview
 
-* System dependencies
+Robenhood is a clone of Robinhood, the popular free stock trading application. Robenhood uses Rails on the backend and React/Redux on the frontend.
 
-* Configuration
+## Tech
 
-* Database creation
+#### Frontend
+* React
+* Redux
+* Webpack
+* Javascript
 
-* Database initialization
+#### Backend
+* Rails
+* Ruby
+* Jbuilder
+* Postgresql
 
-* How to run the test suite
+#### External APIs
+* [IEX](https://iextrading.com/) for stock price information
+* [News API](https://newsapi.org/) for listing news articles
+* [Recharts](http://recharts.org/en-US/) for displaying stock performance with chart
 
-* Services (job queues, cache servers, search engines, etc.)
+### Features
 
-* Deployment instructions
+#### Professionally CSS styled splash page:
 
-* ...
+![https://robenhood.herokuapp.com/#/](https://github.com/bcutler94/robenhood-read-me-img/blob/master/splash.png)
+
+#### Full frontend logging in and signing up authentication with bcrypt password encryption technology
+
+![https://robenhood.herokuapp.com/#/login](https://github.com/bcutler94/robenhood-read-me-img/blob/master/login.png)
+
+#### Real-time portfolio analysis with time-responsive chart
+
+![https://robenhood.herokuapp.com/#/home](https://github.com/bcutler94/robenhood-read-me-img/blob/master/portfolio.png)
+
+#### Real-time security analysis along with ability for user to buy and sell stocks
+
+![https://robenhood.herokuapp.com/#/stocks/aapl](https://github.com/bcutler94/robenhood-read-me-img/blob/master/stockshow.png)
+
+#### Real-time news specifically tailored to user's portfolio
+
+![https://robenhood.herokuapp.com/#/home](https://github.com/bcutler94/robenhood-read-me-img/blob/master/news.png)
+
+
+
