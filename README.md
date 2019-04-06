@@ -34,8 +34,13 @@ Robenhood is a clone of Robinhood, the popular free stock trading application. R
 
 * Full frontend logging in and signing up authentication with bcrypt password encryption technology
 
-Login:
 ![https://robenhood.herokuapp.com/#/login](https://github.com/bcutler94/robenhood-read-me-img/blob/master/login.png)
+
+* Real-time portfolio analysis
+
+![https://robenhood.herokuapp.com/#/home](https://github.com/bcutler94/robenhood-read-me-img/blob/master/portfolio.png)
+
+
 
 
 
