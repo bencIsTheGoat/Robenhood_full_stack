@@ -50,7 +50,7 @@ class LoginForm extends React.Component {
     demoUser (e) {
       
         e.preventDefault();
-        this.props.login({email: 'demo@robenhood.com', password: 'robenhood'}).then(() => this.props.history.push('/home'))
+        this.props.login({email: 'anna@gmail.com', password: '123456'}).then(() => this.props.history.push('/home'))
     }
 
     forgotInfo (e) {
@@ -81,18 +81,20 @@ class LoginForm extends React.Component {
                             <button onClick={this.forgotInfo} className='link-button'>
                                 Forgot your username/password?
                             </button>
-                            <p className='link-p'>
-                                or
-                            </p>
                             <button onClick={this.demoUser} className='link-button'>
-                                Try Out a Demo Session!
+                                Try Demo Session
                             </button>
                         </div>
                         <div className='errors-ul'>
                             {this.renderErrors()}
                         </div>
-                        <button className='signin' onClick={this.handleSubmit}>Sign In</button>
+                        <div className='login-demo-buttons'>
+                            <button className='signin' onClick={this.handleSubmit}>Sign In</button>
+                            <button onClick={this.demoUser} className='signin'>
+                                Try Demo Session
+                            </button>
 
+                        </div>
                     </form>
                 </div>
             </div>

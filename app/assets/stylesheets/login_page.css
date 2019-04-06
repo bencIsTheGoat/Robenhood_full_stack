@@ -170,4 +170,13 @@
     margin: 5px;
 }
 
+.login-demo-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-demo-buttons button {
+    margin-right: 10px;
+}
+
 
