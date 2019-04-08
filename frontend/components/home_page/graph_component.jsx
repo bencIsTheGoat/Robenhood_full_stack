@@ -66,6 +66,7 @@ class Graph extends React.Component {
     sendPortData () {
 
         let currentValue = this.state.linedata[last].Price;
+        debugger;
         let percent = this.percentChange(currentValue);
         let gain = this.monetaryChange(currentValue);
         let portData = { currentValue: currentValue, percent: percent, gain: gain };
@@ -85,6 +86,8 @@ class Graph extends React.Component {
 
     // gets the transaction for each company { companyIds: [{transactions}, ...]}
 
+    // fix date issue
+
     getSharesObj () {
         let sharesObj = {};
         let transactions = this.state.transactions;
@@ -103,13 +106,17 @@ class Graph extends React.Component {
                     })
             }
         });
+        debugger
         return sharesObj;
     }
+
+    // fix shares timeline issue
 
     getNumShares () {
         let sharesObj = this.getSharesObj();
         let company_ids = Object.keys(sharesObj);
         let numSharesObj = {};
+        debugger
         company_ids.forEach(id => {
             numSharesObj[id] = {
                 rateOfChange: [...Array(sharesObj[id][0].date + 1)].fill(0),
@@ -195,7 +202,9 @@ class Graph extends React.Component {
         const companyObj = this.tickerToId();
         let sharesObj = {}
         sharesObj = this.getNumShares();
+        debugger;
         const portObj = {};
+
         Object.keys(sharesObj).forEach(companyId => {
             let ticker = companyObj[companyId]
             let priceData = this.dateToPrice(ticker);

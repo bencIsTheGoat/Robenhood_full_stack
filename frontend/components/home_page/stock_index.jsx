@@ -24,23 +24,6 @@ class StockIndex extends React.Component {
         
     }
 
-    // ajaxHelper () {
-    //     fetchCompanies()
-    //     .then(companies => {
-    //             this.companies = companies;
-    //             this.setState({companies: companies})
-    //             return getMultipleStockData(this.formatTickers(), '1d');
-    //         }).then(data => {
-          
-    //             this.prices = data
-    //             return fetchTransactions();
-    //         }).then(transactions => {
-           
-    //             this.numShares = this.transactionHelper(transactions);
-    //             this.setState({ numShares: this.numShares, companies: this.companies, prices: this.prices });
-    //     });
-    // }
-
     ajaxHelper() {
         fetchTransactions()
             .then((transactions) => {
@@ -154,18 +137,19 @@ class StockIndex extends React.Component {
     }
 
     uniqueCompanies (companies) {
-
+        this.state;
+   
         let companiesObj = {};
         Object.keys(companies).forEach(comp => {
-            companiesObj[comp] = 1
+            if (this.state.numShares[companies[comp]] !== 0) {
+                companiesObj[comp] = 1
+            }
         });
         return companiesObj;
     }
 
     renderStocks () {
-        let state = this.state;
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
-            
             return ''
         } else {
             let companies = this.state.companies;
@@ -173,10 +157,6 @@ class StockIndex extends React.Component {
             let shares = this.state.numShares;
        
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
-                let companyObj = this.uniqueCompanies(this.state.companies);
-        
-                // let companyId = companies[id].id;
-                let state = this.state;
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>
                     <Link to={`/stocks/${ticker}`}>
