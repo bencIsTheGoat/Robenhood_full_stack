@@ -34,14 +34,15 @@ class Auto extends React.Component {
         }
         
         if (this.state.companies) {
+
             this.state.companies.forEach(stock => {
-                if ((stock.ticker.includes(this.state.inputVal.toUpperCase())) || 
-                (stock.name.toUpperCase().includes(this.state.inputVal.toUpperCase()))) {
-                    matches.push(stock.ticker);
+                let nameSearch = stock.name.toLowerCase().slice(0, this.state.inputVal.length) === this.state.inputVal.toLowerCase()
+                if (nameSearch) {
+                    matches.push([stock.ticker, stock.name]);
                 }
-            });
+            })
             if (matches.length === 0) {
-                matches.push("Breh, no matches");
+                matches.push("No matches");
             }
             return matches.slice(0, 5);
         }
@@ -49,12 +50,13 @@ class Auto extends React.Component {
 
     selectStock (e) {
         let stock = e.target.innerText;
+        let ticker = stock.split(' ')[0];
         if (this.props.match.url.includes('home')) {
             this.setState({ inputVal: ''});
-            this.props.history.push(`/stocks/${stock}`)
+            this.props.history.push(`/stocks/${ticker}`)
         } else {
             this.setState({ inputVal: '' });
-            this.props.history.push(`/stocks/${stock}`)
+            this.props.history.push(`/stocks/${ticker}`)
         }
     }
 
@@ -66,7 +68,7 @@ class Auto extends React.Component {
                 this.matches().map((stock, i) => {
                     return (
                         <li key={i} onClick={this.selectStock} id='search-li'>
-                            {stock}
+                            {stock[0]}     {stock[1]}
                         </li>
                     );
                 })
@@ -78,8 +80,8 @@ class Auto extends React.Component {
                     type="text"
                     onChange={this.handleInput}
                     value={this.state.inputVal}
-                    placeHolder="Search Stock"/>
-                <ul id='search-ul'>
+                    placeHolder="Search Company Name"/>
+                    <ul id='search-ul'>
                     {stocks}
                 </ul>
             </div>

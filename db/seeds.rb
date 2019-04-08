@@ -12,7 +12,7 @@ Company.delete_all
 Transaction.delete_all
 User.delete_all
 
-csv_text = File.read(Rails.root.join('lib', 'companylist.csv'))
+csv_text = File.read(Rails.root.join('lib', 'newcomplist.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
     company = Company.create(ticker: row['ticker'], name: row['name'])

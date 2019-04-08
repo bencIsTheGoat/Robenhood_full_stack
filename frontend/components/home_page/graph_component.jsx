@@ -160,7 +160,6 @@ class Graph extends React.Component {
             output[companyId] = array;
         });
         this.props.sendSharesData(output);
-        debugger;
         return output;
     }
 
@@ -212,7 +211,6 @@ class Graph extends React.Component {
             });
 
         });
-        debugger
         return portObj;
        
     }
