@@ -6,7 +6,6 @@
     right: 150px;
     box-shadow: 0 0 20px lightgray;
     border-radius: 4px;
-    padding: 20px;
 }
 
 .stock-index-div h1 {
@@ -29,10 +28,12 @@
     align-items: center;
     color: black;
     width: 260px;
+    margin: 0px;
 }
 
 .stock-index-div .stock-index-ul a:hover {
-    background-color: lightgray;
+    transition: all 0.2s ease-in-out;
+    background-color: lightgrey;
 }
 
 .stock-index-div .stock-index-ul a .shares-ticker-div {
@@ -56,22 +57,25 @@
 }
 
 .graph-percent-price-div #price {
-     padding: 10px;
+    padding: 10px;
     font-size: 18px;
 }
 
-.graph-percent-price-div #percent-green {
-    padding: 10px;
+.stock-li .graph-percent-price-div #percent-green {
+    position: absolute;
+    left: 45%;
     font-size: 18px;
     color: #21ce99;
-    margin-right: 15px;
+    padding-top: 10px;
+    
 }
 
-.graph-percent-price-div #percent-red {
-    padding: 10px;
+.stock-li .graph-percent-price-div #percent-red {
+    position: absolute;
+    left: 45%;
     font-size: 18px;
     color: red;
-    margin-right: 15px;
+    padding-top: 10px;
 }
 
 
