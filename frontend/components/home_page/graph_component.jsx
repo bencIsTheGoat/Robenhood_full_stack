@@ -66,7 +66,6 @@ class Graph extends React.Component {
     sendPortData () {
 
         let currentValue = this.state.linedata[last].Price;
-        debugger;
         let percent = this.percentChange(currentValue);
         let gain = this.monetaryChange(currentValue);
         let portData = { currentValue: currentValue, percent: percent, gain: gain };
@@ -80,7 +79,7 @@ class Graph extends React.Component {
         let today = new Date();
         let past = new Date(date);
         let difference = Math.abs((today - past) / 1000 / 60 / 60 / 24 / 7 / 52 * 5 * 52);
-        return Math.floor(1250);
+        return Math.ceil(difference);
 
     }
 
@@ -106,7 +105,7 @@ class Graph extends React.Component {
                     })
             }
         });
-        debugger
+     
         return sharesObj;
     }
 
@@ -116,28 +115,29 @@ class Graph extends React.Component {
         let sharesObj = this.getSharesObj();
         let company_ids = Object.keys(sharesObj);
         let numSharesObj = {};
-        debugger
         company_ids.forEach(id => {
             numSharesObj[id] = {
                 rateOfChange: [...Array(sharesObj[id][0].date + 1)].fill(0),
                 integral: [...Array(sharesObj[id][0].date + 1)].fill(0)
             }; 
         });
+     
         let arr1;
         company_ids.forEach(id => {
             arr1 = numSharesObj[id]['rateOfChange'];
             sharesObj[id].forEach(trans => {
                 if (trans.transaction_type.toLowerCase() === 'buy') {
-                    arr1[arr1.length - trans.date - 1] += trans.shares;
+                    arr1[arr1.length - trans.date] += trans.shares;
                 } else {
-                    arr1[arr1.length - trans.date - 1] -= trans.shares;
+                    arr1[arr1.length - trans.date] -= trans.shares;
                 }
+                
             });
         });
-        let datesObj = {};
         let output = {};
         let tickersObj = this.tickerToId();
         company_ids.forEach(id => {
+            let datesObj = {};
             let companyTicker = tickersObj[id];
             let datesData = this.state.data[companyTicker];
             arr1 = numSharesObj[id]['rateOfChange'];
@@ -150,13 +150,8 @@ class Graph extends React.Component {
                     datesObj[date] = datesObj[dateBefore] + arr1[idx];
                 }
             })
-            if (output[id] === undefined) {
-                output[id] = datesObj;
-            } else {
-                output[id].push(datesObj)
-            }
-        
-
+            output[id] = datesObj;
+           
         });
         Object.keys(output).forEach((companyId) => {
             let array = Object.keys(output[companyId]).map((ele, idx) => {
@@ -165,6 +160,7 @@ class Graph extends React.Component {
             output[companyId] = array;
         });
         this.props.sendSharesData(output);
+        debugger;
         return output;
     }
 
@@ -202,7 +198,6 @@ class Graph extends React.Component {
         const companyObj = this.tickerToId();
         let sharesObj = {}
         sharesObj = this.getNumShares();
-        debugger;
         const portObj = {};
 
         Object.keys(sharesObj).forEach(companyId => {
@@ -217,6 +212,7 @@ class Graph extends React.Component {
             });
 
         });
+        debugger
         return portObj;
        
     }
