@@ -1,3 +1,28 @@
+.hidden {
+    position: relative;
+    visibility: hidden;
+    height: 0px;
+}
+
+#hidden-text {
+    position: absolute;
+    visibility: hidden;
+    padding: 0px;
+    margin-left: 0px;
+    font-size: 15px;
+    color: white;
+    margin-bottom: 0px;
+}
+
+#show-text {
+    margin-bottom: 10px;
+    transition: all 1s;
+    position: relative;
+    font-size: 15px;
+    color: grey;
+    visibility: visible;
+}
+
 .form-div-trans {
     position: absolute;
     left: 850px;
@@ -13,7 +38,9 @@
 .buy-sell-div {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     margin-bottom: 20px;
+    border-bottom: 1px solid lightgrey;
 }
 
 .form-info-div {
@@ -26,13 +53,14 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    height: 50px;
 }
 
 .buy-sell-div button {
     border: none;
-    margin-right: 20px; 
     font-weight: 900;
     font-size: 15px;
+    border-bottom: 2px solid white;
 }
 
 .buy-sell-div button:hover {
@@ -47,11 +75,30 @@
 }
 
 .indi-form-info #input-shares {
+    background-color: lightgrey;
+    border: 1px solid white;;
+    border-radius: 5px;
     width: 50px;
     height: 30px;
+    text-align: right;
+    padding-right: 5px;
+
 }
 
-.form-info-div button {
+.indi-form-info #input-shares:hover {
+    transition: all .1s ease-in-out;
+    border: 1px solid lightgrey;
+    background-color: white;
+    outline: none;
+}
+
+.indi-form-info #input-shares:focus {
+    outline: none;
+    border: 1px solid #21ce99;
+}
+
+
+.form-info-div .show {
     padding: 0 24px;
     background-color: #21ce99;
     border: 0;
@@ -73,8 +120,7 @@
 }
 
 .form-info-div p {
-    padding: 20px;
-    margin-left: 50px;
+    right: 0%;
 }
 
 .robenhood-header {
@@ -82,3 +128,17 @@
     display: flex;
     flex-direction: space-between;
 }
+
+#shares-avail {
+    padding: 5px;
+}
+
+.shares-div {
+    display: flex;
+    justify-content: center;
+}
+
+#market-price-div {
+    border-bottom: 1px solid lightgray;
+}
+

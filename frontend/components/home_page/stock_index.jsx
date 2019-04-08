@@ -16,6 +16,7 @@ class StockIndex extends React.Component {
         this.priceHelper = this.priceHelper.bind(this);
         this.percentHelper = this.percentHelper.bind(this);
         this.ajaxHelper = this.ajaxHelper.bind(this);
+        this.moneyFormat = this.moneyFormat.bind(this);
     }
 
     componentDidMount () {
@@ -118,7 +119,7 @@ class StockIndex extends React.Component {
         let output = arr[arr.length - 1].close;
         return (
             <p id='price'>
-                {`$${output.toFixed(2)}`}
+                {`${this.moneyFormat(output)}`}
             </p>
         )
     }
@@ -147,6 +148,16 @@ class StockIndex extends React.Component {
         });
         return companiesObj;
     }
+
+    moneyFormat(num) {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        });
+        return formatter.format(num);
+    }
+
 
     renderStocks () {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {

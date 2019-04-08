@@ -22,6 +22,8 @@ class Form extends React.Component {
         this.handleToggle = this.handleToggle.bind(this);
         this.handleReview = this.handleReview.bind(this);
         this.tickerToId = this.tickerToId.bind(this);
+        this.moneyFormat = this.moneyFormat.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount () {
@@ -78,47 +80,84 @@ class Form extends React.Component {
         }
     }
 
+    moneyFormat (num) {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        });
+        return formatter.format(num);
+    }
+
+
+
     renderForm () {
         let costCredit;
+        let buySell;
         if (this.state.buy) {
             costCredit = "Cost";
+            buySell = 'Buy';
         } else {
             costCredit = "Credit";
+            buySell = 'Sell';
         }
-
-        return (
-            <div className='form-div-trans'>
-                <div className='buy-sell-div'>
-                    <button className='buy' onClick={this.handleToggle('buy')}>
-                        Buy {this.state.ticker.toUpperCase()}
-                    </button>
-                    <button className='sell' onClick={this.handleToggle('sell')}>
-                        Sell {this.state.ticker.toUpperCase()}
-                    </button>
+        
+        if (this.state.currentPrice === null) {
+            return (
+                <div className='form-div-trans'>
+                    <p>Stock Unavaliable for Purchase</p>
                 </div>
-                <div className='form-info-div'>
-                    <div className='indi-form-info'>
-                        <label>Shares</label>
-                        <input id='input-shares' type="text" value={this.state.input} onChange={this.costHelper()}/>
+            )
+        } else {
+            return (
+                <div className='form-div-trans'>
+                    <div className='buy-sell-div'>
+                        <button className='buy' onClick={this.handleToggle('buy')}>
+                            Buy {this.state.ticker.toUpperCase()}
+                        </button>
+                        <button className='sell' onClick={this.handleToggle('sell')}>
+                            Sell {this.state.ticker.toUpperCase()}
+                        </button>
                     </div>
-                    <div className='indi-form-info'>
-                        <label>Market Price</label>
-                        <p>${this.state.currentPrice}</p>
-                    </div>
-                    <div className='indi-form-info'>
-                        <label>Estimated {costCredit}</label>
-                        <p>{this.state.cost}</p>
-                    </div>
-                    <button onClick={this.handleReview}>
-                        Review Order
-                    </button>
-                    <p>
-                        {this.sharesHelper()} Shares Available
-                    </p>
-                </div>
-            </div>
+                    <div className='form-info-div'>
+                        <div className='indi-form-info'>
+                            <label>Shares</label>
+                            <input id='input-shares' type="text" value={this.state.input} placeholder='0' onChange={this.costHelper()}/>
+                        </div>
+                        <div className='indi-form-info'>
+                            <label>Market Price</label>
+                            <p>{this.moneyFormat(this.state.currentPrice)}</p>
+                        </div>
+                        <div className='indi-form-info'>
+                            <label>Estimated {costCredit}</label>
+                            <p>{this.moneyFormat(this.state.cost)}</p>
+                        </div>
+                        <button onClick={this.handleReview} className='show'>
+                            Review Order
+                        </button>
+                        <span id='hidden-text'>You are placing a good for day market order to {buySell} {this.state.input} share(s) of {this.state.ticker.toUpperCase()}. Your order will be executed at the best available price.</span>
+                        <button onClick={this.handleSubmit} className='hidden' id='submit'>
+                            Submit {buySell}
+                        </button>
+                        <div className='shares-div'>
 
-        )
+                            <p id='shares-avail'>
+                                {this.sharesHelper()} Shares Available
+                            </p>
+                        </div>
+                    </div>
+                </div>
+    
+            )
+            
+        }
+    }
+
+    handleReview (e) {
+        e.preventDefault();
+        e.currentTarget.className = 'hidden';
+        document.getElementById('submit').className = 'show';
+        document.getElementById('hidden-text').id = 'show-text';
     }
 
     tickerToId(ticker) {
@@ -154,7 +193,7 @@ class Form extends React.Component {
         return obj[ticker];
     }
 
-    handleReview(e) {
+    handleSubmit(e) {
         e.preventDefault();
         let trans = this.state.buy ? 'buy' : 'sell';
         this.tickerToId(this.state.ticker)
