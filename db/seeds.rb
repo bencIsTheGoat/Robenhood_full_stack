@@ -18,7 +18,6 @@ csv.each do |row|
     company = Company.create(ticker: row['ticker'], name: row['name'])
     
 end
-puts Company.count
 
 anna = User.create(email: 'anna@gmail.com', password: '123456', first_name: 'anna', last_name: 'demo')
 
@@ -30,8 +29,12 @@ boa = Company.find_by(ticker: 'BAC')
 jpm = Company.find_by(ticker: 'JPM')
 facebook = Company.find_by(ticker: 'FB')
 
-Transaction.create(transaction_type: 'buy', company_id: apple.id, price: 100, shares: 50, user_id: anna.id, created_at = 3.years.ago)
-Transaction.create(transaction_type: 'buy', company_id: google.id, price: 100, shares: 10, user_id: anna.id, created_at = 3.years.ago)
-Transaction.create(transaction_type: 'buy', company_id: amazon.id, price: 100, shares: 10, user_id: anna.id, created_at = 3.years.ago)
-Transaction.create(transaction_type: 'buy', company_id: boa.id, price: 100, shares: 50, user_id: anna.id, created_at = 3.years.ago)
-Transaction.create(transaction_type: 'buy', company_id: facebook.id, price: 100, shares: 25, user_id: anna.id, created_at = 3.years.ago)
+record_timestamps = false
+Transaction.create(transaction_type: 'buy', company_id: apple.id, price: 100, shares: 50, user_id: anna.id, created_at: 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: google.id, price: 100, shares: 10, user_id: anna.id, created_at: 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: amazon.id, price: 100, shares: 10, user_id: anna.id, created_at: 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: boa.id, price: 100, shares: 50, user_id: anna.id, created_at: 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: facebook.id, price: 100, shares: 25, user_id: anna.id, created_at: 3.years.ago)
+record_timestamps = true
+
+puts Company.count
