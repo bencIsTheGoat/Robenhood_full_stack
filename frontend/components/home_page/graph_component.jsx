@@ -105,7 +105,6 @@ class Graph extends React.Component {
                     })
             }
         });
-     
         return sharesObj;
     }
 
@@ -116,9 +115,10 @@ class Graph extends React.Component {
         let company_ids = Object.keys(sharesObj);
         let numSharesObj = {};
         company_ids.forEach(id => {
+            let len = sharesObj[id].length - 1
             numSharesObj[id] = {
-                rateOfChange: [...Array(sharesObj[id][0].date + 1)].fill(0),
-                integral: [...Array(sharesObj[id][0].date + 1)].fill(0)
+                rateOfChange: [...Array(sharesObj[id][len].date)].fill(0),
+                integral: [...Array(sharesObj[id][len].date)].fill(0)
             }; 
         });
      
@@ -142,11 +142,12 @@ class Graph extends React.Component {
             let datesData = this.state.data[companyTicker];
             arr1 = numSharesObj[id]['rateOfChange'];
             arr1.forEach((ele, idx) => {
-                let date = datesData.chart[idx].date;
+                let arrIdx = datesData.chart.length - arr1.length + idx
+                let date = datesData.chart[arrIdx].date;
                 if (idx === 0) {
                     datesObj[date] = arr1[idx];
                 } else {
-                    let dateBefore = datesData.chart[idx - 1].date;
+                    let dateBefore = datesData.chart[arrIdx - 1].date;
                     datesObj[date] = datesObj[dateBefore] + arr1[idx];
                 }
             })
@@ -185,6 +186,7 @@ class Graph extends React.Component {
 
     dateToPrice (ticker) {
         let priceObj = {};
+        this.state.data;
         Object.values(this.state.data[ticker]).forEach(data => {
             data.forEach(dataPoint => {
                 priceObj[dataPoint.date] = dataPoint.close;
@@ -198,14 +200,15 @@ class Graph extends React.Component {
         let sharesObj = {}
         sharesObj = this.getNumShares();
         const portObj = {};
-
         Object.keys(sharesObj).forEach(companyId => {
             let ticker = companyObj[companyId]
             let priceData = this.dateToPrice(ticker);
             Object.values(sharesObj[companyId]).forEach((dataPair, idx) => {
                 if (portObj[dataPair.date] === undefined) {
+                 
                     portObj[dataPair.date] = dataPair.shares * priceData[dataPair.date]
                 } else {
+               
                     portObj[dataPair.date] += dataPair.shares * priceData[dataPair.date]
                 }
             });
@@ -230,9 +233,28 @@ class Graph extends React.Component {
                 Price: data[day]
             }
         })
-        this.setState({linedata: newData, line: newData});
+        debugger
+        let sorted = this.quickSort(newData);
+        debugger
+        this.setState({linedata: sorted, line: sorted});
     }
 
+    quickSort(array) {
+        if (array.length <= 1) return array;
+        let first = array[0];
+        let left = [];
+        let right = [];
+        for (let i = 1; i < array.length; i++) {
+            if (new Date (first.Date) > new Date (array[i].Date)) {
+            
+                left.push(array[i]);
+            } else {
+             
+                right.push(array[i]);
+            }
+        }
+        return this.quickSort(left).concat([first]).concat(this.quickSort(right));
+    }
 
 
     // performance
@@ -256,7 +278,7 @@ class Graph extends React.Component {
 
     lineRender() {
         return (
-            <LineChart width={676} height={196} data={this.state.linedata}>
+            <LineChart width={800} height={196} data={this.state.linedata}>
                 <Line 
                     type='monotone' 
                     dataKey='Price' 

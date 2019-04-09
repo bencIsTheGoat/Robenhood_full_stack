@@ -1,7 +1,7 @@
 import React from 'react';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { fetchCompanies } from '../../util/company_api_util';
-import { getCompanyInfo } from '../../util/company_api_util';
+import { getCompanyInfo, getStockData } from '../../util/company_api_util';
 import { withRouter } from 'react-router-dom';
 
 class Form extends React.Component {
@@ -24,16 +24,37 @@ class Form extends React.Component {
         this.tickerToId = this.tickerToId.bind(this);
         this.moneyFormat = this.moneyFormat.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.sharesTextHelper = this.sharesTextHelper.bind(this);
     }
 
     componentDidMount () {
-            fetchTransactions().then(trans => {
-                return this.setState({ numShares: this.transactionHelper(trans) });
-            });
-            fetchCompanies().then(companies => {
-                return this.setState({ companies: companies })
-            });
+        fetchTransactions().then(trans => {
+            return this.setState({ numShares: this.transactionHelper(trans) });
+        });
+        fetchCompanies().then(companies => {
+            return this.setState({ companies: companies })
+        });
     
+    }
+
+    componentWillUpdate (prevProps) {
+       if (this.props.match.params.ticker !== prevProps.match.params.ticker) {
+           let propsTicker = prevProps.match.params.ticker.toLowerCase();
+           getStockData(propsTicker, '1d')
+           .then(data => {
+               this.setState({ oneDay: data })
+               let last = this.state.oneDay;
+               let price = last[last.length - 1].close
+               this.setState({
+                   currentPrice: price,
+                   buy: true,
+                   ticker: prevProps.match.params.ticker,
+                   cost: 0,
+               });
+           })
+           
+          
+       }
     }
 
     transactionHelper(transactions) {
@@ -140,16 +161,26 @@ class Form extends React.Component {
                             Submit {buySell}
                         </button>
                         <div className='shares-div'>
-
-                            <p id='shares-avail'>
-                                {this.sharesHelper()} Shares Available
-                            </p>
+                            {this.sharesTextHelper()}
                         </div>
                     </div>
                 </div>
     
             )
             
+        }
+    }
+
+    sharesTextHelper () {
+        let num = this.sharesHelper();
+        if (num !== 0) {
+            return(<p id='shares-avail'>
+                {num} Shares Available
+            </p>)
+        } else {
+            return(<p id='shares-avail'>
+                No Shares Available
+            </p>)
         }
     }
 

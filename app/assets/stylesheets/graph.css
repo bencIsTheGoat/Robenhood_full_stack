@@ -4,6 +4,7 @@
     flex-direction: column;
     position: absolute;
     top: 225px;
+    left: 125px;
 }
 
 .graph-button-div {
@@ -52,7 +53,7 @@
     font-size: 15px;
     position: absolute;
     z-index: 5;
-    right: 50px;
+    left: 1300px;
 }
 
 #logout-button:hover {

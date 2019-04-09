@@ -130,11 +130,15 @@ class StockIndex extends React.Component {
         let first = arr[0].close
         let difference = (last - first) / first * 100
         let percent = difference.toFixed(2);
-        return (
-            <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
-                {percent + '%'}
-            </p>
-        )
+        if (percent === undefined) {
+            return "0.00%"
+        } else {
+            return (
+                <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
+                    {percent + '%'}
+                </p>
+            )
+        }
     }
 
     uniqueCompanies (companies) {

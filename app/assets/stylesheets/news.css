@@ -1,7 +1,7 @@
 .news-div {
     position: absolute;
     top: 600px;
-    left: 100px;
+    left: 225px;
     display: flex;
     flex-direction: column;
 }
@@ -19,7 +19,7 @@
 .article {
     display: flex;
     flex-direction: row;
-    width: 600px;
+    width: 750px;
     padding-top: 30px;
     padding-bottom: 30px;
     border-radius: 2px;

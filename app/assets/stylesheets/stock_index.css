@@ -3,7 +3,7 @@
     flex-direction: column;
     position: absolute;
     top: 150px;
-    right: 150px;
+    left: 1100px;;
     box-shadow: 0 0 20px lightgray;
     border-radius: 4px;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { fetchCompanies } from '../../util/company_api_util';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 
 
 class Auto extends React.Component {
@@ -51,13 +51,8 @@ class Auto extends React.Component {
     selectStock (e) {
         let stock = e.target.innerText;
         let ticker = stock.split(' ')[0];
-        if (this.props.match.url.includes('home')) {
-            this.setState({ inputVal: ''});
-            this.props.history.push(`/stocks/${ticker}`)
-        } else {
-            this.setState({ inputVal: '' });
-            this.props.history.push(`/stocks/${ticker}`)
-        }
+        this.setState({ inputVal: '' });
+        this.props.history.push(`/stocks/${ticker}`);
     }
 
     render () {
@@ -68,7 +63,7 @@ class Auto extends React.Component {
                 this.matches().map((stock, i) => {
                     return (
                         <li key={i} onClick={this.selectStock} id='search-li'>
-                            {stock[0]}     {stock[1]}
+                            {stock[0]} {stock[1]}
                         </li>
                     );
                 })

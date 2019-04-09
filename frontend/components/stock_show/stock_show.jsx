@@ -4,6 +4,7 @@ import { getStockData, getCompanyInfo, getCompanyStats } from '../../util/compan
 import NewsContainer from '../home_page/news_container';
 import FormContainer from './form_container';
 import { withRouter } from 'react-router-dom';
+import Auto from '../home_page/search';
 
 class StockShow extends React.Component {
     
@@ -27,7 +28,8 @@ class StockShow extends React.Component {
         let today = new Date ();
         let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
         let month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`
-        let lastWeekString = `${lastWeek.getFullYear()}${month}${lastWeek.getDate()}`
+        let day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`
+        let lastWeekString = `${lastWeek.getFullYear()}${month}${day}`
         getStockData(this.ticker, '1m').then(data => this.setState({ oneMonth: data }));
         getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data}))
         getStockData(this.ticker, '3m').then(data => this.setState({ threeMonth: data }));
@@ -38,6 +40,8 @@ class StockShow extends React.Component {
         getCompanyInfo(this.ticker).then(data => this.setState({ info: data}));
         getCompanyStats(this.ticker).then(data => this.setState({ stats: data}));
         this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
+        this.setState({ props: this.props.history.location.pathname })
+        
     }
 
     componentWillUnmount () {
@@ -46,6 +50,28 @@ class StockShow extends React.Component {
 
     ajaxHelper (ticker) {
         getStockData(ticker, '1d').then(data => this.setState({ oneDay: data }));
+    }
+
+    componentDidUpdate (prevProps) {
+        if (this.props.match.params.ticker !== prevProps.match.params.ticker) {
+            clearInterval(this.intervalId);
+            this.ticker = this.props.match.params.ticker;
+            let today = new Date();
+            let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+            let month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`
+            let day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`
+            let lastWeekString = `${lastWeek.getFullYear()}${month}${day}`
+            getStockData(this.ticker, '1m').then(data => this.setState({ oneMonth: data }));
+            getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data }))
+            getStockData(this.ticker, '3m').then(data => this.setState({ threeMonth: data }));
+            getStockData(this.ticker, '1y').then(data => (this.setState({ oneYear: data })));
+            getStockData(this.ticker, '5y').then(data => this.setState({ fiveYear: data }));
+            getStockData(this.ticker, '1m').then(data => this.setState({ data: data }));
+            getStockData(this.ticker, '1d').then(data => this.setState({ oneDay: data }));
+            getCompanyInfo(this.ticker).then(data => this.setState({ info: data }));
+            getCompanyStats(this.ticker).then(data => this.setState({ stats: data }));
+            this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
+        }
     }
 
     formatData(data) {
@@ -105,9 +131,9 @@ class StockShow extends React.Component {
 
     renderStock () {
         
-            let newData = this.formatData(this.state.data)
+            let newData = this.formatData(this.state.data);
             return (
-                <LineChart width={676} height={196} data={newData}>
+                <LineChart width={800} height={196} data={newData}>
                     <Line
                         type='monotone'
                         dataKey='Price'
@@ -290,14 +316,14 @@ class StockShow extends React.Component {
     }
 
     render () {
-        if (Object.keys(this.state).length === 9) {
+        if (Object.keys(this.state).length === 10) {
             return (
                 <div>
                     <div className='robenhood-header' onClick={this.handleHome}>
                         <h2 className='robenhood-h2'>
                             <i className="fas fa-feather-alt"></i>
                             robenhood
-                    </h2>
+                        </h2>
                     </div>
                     <div className='stock-show-div'>
                         <div className='company-name'>
