@@ -22,8 +22,16 @@ puts Company.count
 
 anna = User.create(email: 'anna@gmail.com', password: '123456', first_name: 'anna', last_name: 'demo')
 
-User.create(email: 'demo@robenhood.com', password: 'robenhood', first_name: 'demo', last_name: 'user')
 
-Transaction.create(transaction_type: 'buy', company_id: 50086, price: 100, shares: 25, user_id: anna.id)
+apple = Company.find_by(ticker: 'AAPL')
+google = Company.find_by(ticker: 'GOOG')
+amazon = Company.find_by(ticker: 'AMZN')
+boa = Company.find_by(ticker: 'BAC')
+jpm = Company.find_by(ticker: 'JPM')
+facebook = Company.find_by(ticker: 'FB')
 
-Transaction.create(transaction_type: 'buy', company_id: 51430, price: 100, shares: 25, user_id: anna.id)
+Transaction.create(transaction_type: 'buy', company_id: apple.id, price: 100, shares: 50, user_id: anna.id, created_at = 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: google.id, price: 100, shares: 10, user_id: anna.id, created_at = 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: amazon.id, price: 100, shares: 10, user_id: anna.id, created_at = 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: boa.id, price: 100, shares: 50, user_id: anna.id, created_at = 3.years.ago)
+Transaction.create(transaction_type: 'buy', company_id: facebook.id, price: 100, shares: 25, user_id: anna.id, created_at = 3.years.ago)

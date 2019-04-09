@@ -233,9 +233,7 @@ class Graph extends React.Component {
                 Price: data[day]
             }
         })
-        debugger
         let sorted = this.quickSort(newData);
-        debugger
         this.setState({linedata: sorted, line: sorted});
     }
 
@@ -246,10 +244,8 @@ class Graph extends React.Component {
         let right = [];
         for (let i = 1; i < array.length; i++) {
             if (new Date (first.Date) > new Date (array[i].Date)) {
-            
                 left.push(array[i]);
             } else {
-             
                 right.push(array[i]);
             }
         }

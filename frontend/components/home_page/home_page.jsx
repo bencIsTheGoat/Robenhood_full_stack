@@ -3,7 +3,7 @@ import GraphContainer from './graph_container';
 import NewsContainer from './news_container';
 import StockIndexContainer from './stock_index_container';
 import Auto from './search';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import {logout} from '../../actions/session_actions';
 import {connect} from 'react-redux';
 
@@ -37,6 +37,9 @@ class HomePage extends React.Component {
                         <i className="fas fa-feather-alt"></i>
                         robenhood
                     </h2>
+                    <Link to='/account'>
+                        Account
+                    </Link>
                     <button onClick={this.handleLogout} id='logout-button'>
                         Logout
                     </button>

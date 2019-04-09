@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import StockHome from './stock_show/stock_home';
 import {withRouter} from 'react-router-dom';
+import Account from './account/account';
 
 const App = () => (
     <div>
@@ -21,6 +22,7 @@ const App = () => (
             <AuthRoute exact path='/login' component={LoginFormContainer} />
             <ProtectedRoute exact path='/home' component={HomePageContainer} />
             <ProtectedRoute exact path="/stocks/:ticker" component={StockHome} />
+            <ProtectedRoute exact path='/account' component={Account} />
         </Switch>
     </div>
 );
