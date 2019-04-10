@@ -1,9 +1,14 @@
 import Account from './account';
 import {connect} from 'react-redux';
+import {logout} from '../../actions/session_actions';
 
 const msp = state => ({
     users: state.entities.users,
     userId: state.session.id
 });
 
-export default connect(msp, null)(Account);
+const mdp = dispatch => ({
+    logout: () => dispatch(logout())
+})
+
+export default connect(msp, mdp)(Account);

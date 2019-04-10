@@ -81,9 +81,6 @@ class LoginForm extends React.Component {
                             <button onClick={this.forgotInfo} className='link-button'>
                                 Forgot your username/password?
                             </button>
-                            <button onClick={this.demoUser} className='link-button'>
-                                Try Demo Session
-                            </button>
                         </div>
                         <div className='errors-ul'>
                             {this.renderErrors()}

@@ -6,6 +6,18 @@ import {Link} from 'react-router-dom';
 
 
 class StockHome extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout(e) {
+        e.preventDefault();
+        debugger
+        this.props.logout().then(() => this.props.history.push('/'))
+    }
+
     render () {
         return (
             <div className='stock-show'>

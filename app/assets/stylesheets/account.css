@@ -17,6 +17,7 @@
 .stock-show #logout-button {
     top: 20px;
     position: absolute;
+    outline: none;
 }
 
 .account-header {

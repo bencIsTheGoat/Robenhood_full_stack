@@ -10,3 +10,7 @@ html, body, p, div, span, h1, h2, h3, h4, a, ol, ul, li, form, label, article, a
 input {
   font-size: 15px;
 }
+
+#logout-button {
+  outline: none;
+}

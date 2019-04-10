@@ -50,12 +50,15 @@
     border: none;
     font-weight: 525;
     font-size: 15px;
+    outline: none;
 }
 
 #logout-button:hover {
     color: #19ac80;
     cursor: pointer;
 }
+
+
 
 
 

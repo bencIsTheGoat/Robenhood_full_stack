@@ -233,7 +233,6 @@ class Account extends React.Component {
                             <RadarChart outerRadius={180} width={730} height={400} data={this.formatPortData()}>
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="subject" />
-                                {/* <PolarRadiusAxis angle={30} domain={[0, 100%]} /> */}
                                 <Radar dataKey="value" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
                                 <Legend formatter={value => 'Portfolio Diversity (%)'} />
                                 <Tooltip />
@@ -255,6 +254,7 @@ class Account extends React.Component {
 
     handleLogout(e) {
         e.preventDefault();
+        debugger
         this.props.logout().then(() => this.props.history.push('/'))
     }
 
