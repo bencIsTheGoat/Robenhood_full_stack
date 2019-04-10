@@ -19,7 +19,7 @@ csv.each do |row|
     
 end
 
-anna = User.create(email: 'anna@gmail.com', password: '123456', first_name: 'anna', last_name: 'demo')
+anna = User.create(email: 'anna@gmail.com', password: '123456', first_name: 'michael', last_name: 'bloomberg')
 
 
 apple = Company.find_by(ticker: 'AAPL')
