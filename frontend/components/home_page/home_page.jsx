@@ -37,9 +37,11 @@ class HomePage extends React.Component {
                         <i className="fas fa-feather-alt"></i>
                         robenhood
                     </h2>
-                    <Link to='/account'>
-                        Account
-                    </Link>
+                    <div class='account'>
+                        <Link to='/account'>
+                            Account
+                        </Link>
+                    </div>
                     <button onClick={this.handleLogout} id='logout-button'>
                         Logout
                     </button>

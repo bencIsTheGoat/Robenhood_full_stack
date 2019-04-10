@@ -1,0 +1,19 @@
+.account a {
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+    position: absolute;
+    left: 85%;
+}
+
+.account a:hover {
+    color: #21ce99;
+}
+
+.stock-show .account a {
+    top: 20px;
+}
+
+.stock-show #logout-button {
+    top: 20px;
+}
