@@ -64,7 +64,7 @@ class LoginForm extends React.Component {
         return (
             <div className='login-page'>
                 <div className='background-image'>
-                    <img src = {window.backgroundImage}/>;
+                    <img src = {window.backgroundImage}/>
                 </div>
                 <div className='login-form-div'>
                     <form className='form-div'>
