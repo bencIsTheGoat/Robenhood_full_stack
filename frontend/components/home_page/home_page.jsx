@@ -37,14 +37,27 @@ class HomePage extends React.Component {
                         <i className="fas fa-feather-alt"></i>
                         robenhood
                     </h2>
-                    <div class='account'>
-                        <Link to='/account'>
-                            Account
-                        </Link>
+                    <div className='account-links'>
+                        <div className='account'>
+                            <Link to='/account'>
+                                Account
+                            </Link>
+                        </div>
+                        <button onClick={this.handleLogout} id='logout-button'>
+                            Logout
+                        </button>
+                        <span className='links'>
+                            Checkout my
+                                <div>
+                                <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
+                                    <i className="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://github.com/bcutler94" id='github'>
+                                    <i className="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </span>
                     </div>
-                    <button onClick={this.handleLogout} id='logout-button'>
-                        Logout
-                    </button>
                 </div>
                 <div className='home-page-div'>
                     <Auto />

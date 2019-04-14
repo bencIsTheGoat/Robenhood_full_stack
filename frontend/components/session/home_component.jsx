@@ -49,7 +49,18 @@ class Home extends React.Component {
                     <img src='/assets/phone_images-7840ce35b41e034c6cd343a97aab2ede84882c31f67a44da6bda9d325b58ce9c.png' alt="two phones displaying stock info"/>
                 </div>
             </div>
-
+           
+            <span class='links'>
+                Checkout my
+                <div>
+                    <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/bcutler94" id='github'>
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </span>
         </div>
         )
     }

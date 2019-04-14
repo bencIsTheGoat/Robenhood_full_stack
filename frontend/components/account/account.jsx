@@ -223,7 +223,17 @@ class Account extends React.Component {
                         <button onClick={this.handleLogout} id='logout-button'>
                             Logout
                         </button>
-
+                        <span className='links'>
+                            Checkout my
+                                <div>
+                                <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
+                                    <i className="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://github.com/bcutler94" id='github'>
+                                    <i className="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </span>
                     </div>
                     <div className='chart-table-div'>
                         <div className='user-info'>
