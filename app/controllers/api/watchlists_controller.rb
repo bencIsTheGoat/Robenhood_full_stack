@@ -7,7 +7,6 @@ class Api::WatchlistsController < ApplicationController
 
     def index
         @watchlist_items = Watchlist.includes(:user).where(user_id: current_user.id)
-        debugger
     end
 
     def create
