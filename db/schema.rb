@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_121023) do
+ActiveRecord::Schema.define(version: 2019_04_15_134529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2019_03_29_121023) do
     t.index ["last_name"], name: "index_users_on_last_name"
     t.index ["port_value"], name: "index_users_on_port_value"
     t.index ["session_token"], name: "index_users_on_session_token"
+  end
+
+  create_table "watchlists", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "company_id", null: false
+    t.string "ticker", null: false
+    t.index ["company_id"], name: "index_watchlists_on_company_id"
+    t.index ["ticker"], name: "index_watchlists_on_ticker"
+    t.index ["user_id"], name: "index_watchlists_on_user_id"
   end
 
 end

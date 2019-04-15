@@ -264,12 +264,10 @@ class Account extends React.Component {
 
     handleLogout(e) {
         e.preventDefault();
-        debugger
         this.props.logout().then(() => this.props.history.push('/'))
     }
 
     handleHome(e) {
-        debugger;
         e.preventDefault();
         this.props.history.push('/home');
     }

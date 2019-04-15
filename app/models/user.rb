@@ -12,6 +12,8 @@ class User < ApplicationRecord
     has_many :companies,
         through: :transactions,
         source: :company
+
+    has_many :watchlists
     
     def password=(password)
         @password = password

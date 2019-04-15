@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as SessUtils from './actions/session_actions';
 import * as NewsUtils from './actions/news_actions';
+import * as WatchUtils from './actions/watchlist_actions';
 import configureStore from './store/store';
 import Root from './components/root';
 
@@ -26,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.logout = SessUtils.logout;
     window.getState = store.getState;
     window.dispatch = store.dispatch;
+    window.index = WatchUtils.fetchWatchlistIndex;
+    window.create = WatchUtils.createWatchlistItem;
+    window.delete1 = WatchUtils.deleteWatchlistItem;
     // TEST
 
     ReactDOM.render(<Root store={ store } />, root)
