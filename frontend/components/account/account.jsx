@@ -2,7 +2,7 @@ import React from 'react';
 import { getStockData } from '../../util/company_api_util';
 import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
-import { withRouter} from 'react-router-dom';
+import { withRouter, Link} from 'react-router-dom';
 import { Radar, RadarChart, PolarGrid, Legend,
     PolarAngleAxis, PolarRadiusAxis, Tooltip} from 'recharts';
 
@@ -220,9 +220,21 @@ class Account extends React.Component {
                             <i className="fas fa-feather-alt"></i>
                             robenhood
                         </h2>
-                        <button onClick={this.handleLogout} id='logout-button'>
-                            Logout
+                        <div className='nav-links-acc'>
+                            <div className='account'>
+                                <Link to='/home'>
+                                    Home
+                            </Link>
+                            </div>
+                            <div className='account'>
+                                <Link to='/account'>
+                                    Account
+                            </Link>
+                            </div>
+                            <button onClick={this.handleLogout} id='logout-button'>
+                                Logout
                         </button>
+                        </div>
                         <span className='links'>
                             Checkout my
                                 <div>

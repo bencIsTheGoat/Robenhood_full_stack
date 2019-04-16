@@ -131,3 +131,14 @@
     width: 230px;
     justify-content: space-between;
 }
+
+.nav-links-acc {
+    position: absolute;
+    left: 80%;
+    top: 32%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 230px;
+    justify-content: space-between;
+}
