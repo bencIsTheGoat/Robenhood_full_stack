@@ -9,7 +9,12 @@ export const watchlistReducer = (state = {}, action) => {
             return Object.assign({}, state, {[action.item.id]: action.item});
         case (REMOVE_WATCHLIST_ITEM):
             let newState = Object.assign({}, state);
-            delete newState[action.id];
+            let ticker = action.id.ticker;
+            Object.keys(newState).forEach(id => {
+                if (ticker === newState[id].ticker) {
+                    delete newState[id];
+                }
+            });
             return newState;
         default:
             return state;

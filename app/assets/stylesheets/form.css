@@ -24,7 +24,7 @@
 }
 
 .form-div-trans {
-    position: absolute;
+    position: relative;
     left: 1000px;
     top: 100px;
     display: flex;

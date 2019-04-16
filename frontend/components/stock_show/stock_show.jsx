@@ -327,7 +327,7 @@ class StockShow extends React.Component {
     
     idHelper() {
         for (let i = 0; i < this.props.companies.length; i++) {
-            if (this.props.companies[i].ticker.toLowerCase() === this.ticker) {
+            if (this.props.companies[i].ticker.toLowerCase() === this.ticker.toLowerCase()) {
                 return this.props.companies[i].id
             }
         }
@@ -337,8 +337,9 @@ class StockShow extends React.Component {
         e.preventDefault(e);
         Object.values(this.props.watchlistItems).forEach(ele => {
             if (ele.ticker.toLowerCase() === this.ticker.toLowerCase()) {
-                this.props.deleteWatchlistItem(ele.id)
-                this.setState({watchlist: false})
+                this.props.deleteWatchlistItem(ele.id).then(() => {
+                    this.setState({watchlist: false})
+                })
             }
         });
     }
@@ -356,8 +357,9 @@ class StockShow extends React.Component {
         company_id: this.idHelper(),
         ticker: this.ticker.toLowerCase()}
         if (this.validAdd()) {
-            this.props.createWatchlistItem(newItem);
-            this.setState({watchlist: true})
+            this.props.createWatchlistItem(newItem).then(() => {
+                this.setState({watchlist: true})
+            });
         }
     } 
 
@@ -371,13 +373,13 @@ class StockShow extends React.Component {
     renderWatchButton() {
             if (this.state.watchlist) {
                 return (
-                    <button onClick={this.removeItem}>
+                    <button onClick={this.removeItem} id='watch-button'>
                         Remove from Watchlist
                     </button>
                 )
             } else if (!this.state.watchlist) {
                 return (
-                    <button onClick={this.addItem}>
+                    <button onClick={this.addItem} id='watch-button'>
                         Add to Watchlist
                     </button>
                 )
@@ -412,7 +414,7 @@ class StockShow extends React.Component {
                         <div>
                             <FormContainer props={this.state} ticker={this.ticker} />
                         </div>
-                        <div>
+                        <div className='watch-button-div'>
                             {this.renderWatchButton()}
                         </div>
                         <div className='show-news'>

@@ -33,12 +33,20 @@ class Watchlist extends React.Component {
 
     priceHelper(prices) {
         let arr = prices.filter((ele) => ele.close);
-        let output = arr[arr.length - 1].close;
-        return (
-            <p id='price'>
-                {`${this.moneyFormat(output)}`}
-            </p>
-        )
+        if (arr.length > 0) {
+            let output = arr[arr.length - 1].close;
+            return (
+                <p id='price'>
+                    {`${this.moneyFormat(output)}`}
+                </p>
+            )
+        } else {
+            return (
+                <p id='price'>
+                    N/A
+                </p>
+            )
+        }
     }
 
     moneyFormat(num) {
@@ -53,16 +61,24 @@ class Watchlist extends React.Component {
 
     percentHelper(prices) {
         let arr = prices.filter((ele) => ele.close);
-        let last = arr[arr.length - 1].close;
-        let first = arr[0].close
-        let difference = (last - first) / first * 100
-        let percent = difference.toFixed(2);
-        if (percent === undefined) {
-            return "0.00%"
+        if (arr.length > 0) {
+            let last = arr[arr.length - 1].close;
+            let first = arr[0].close
+            let difference = (last - first) / first * 100
+            let percent = difference.toFixed(2);
+            if (percent === undefined) {
+                return "0.00%"
+            } else {
+                return (
+                    <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
+                        {percent + '%'}
+                    </p>
+                )
+            }
         } else {
             return (
-                <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
-                    {percent + '%'}
+                <p id='percent-red'>
+                    0.00%
                 </p>
             )
         }
@@ -82,7 +98,8 @@ class Watchlist extends React.Component {
 
     renderWatchlist () {
         let prices;
-        let lis = Object.values(this.uniqueCompanies(this.state.companies)).map((ele, idx) => {
+        let comps = this.uniqueCompanies(this.state.companies);
+        let lis = Object.values(comps).map((ele, idx) => {
             prices = this.state.prices;
             return(<li className='stock-li' key={idx}>
                 <Link to={`/stocks/${ele.ticker}`}>

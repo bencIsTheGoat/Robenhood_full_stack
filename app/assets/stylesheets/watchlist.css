@@ -1,0 +1,25 @@
+.watch-button-div {
+    position: relative;
+    left: 1020px;
+    top: 120px;
+}
+
+.watch-button-div #watch-button {
+    border: 1px solid #21ce99;
+    border-radius: 5px;
+    width: 250px;
+    height: 50px;
+    color: #21ce99;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.watch-button-div #watch-button:focus {
+    outline: none;
+}
+
+.watch-button-div #watch-button:hover {
+    border: 1px solid #29e6ad;
+    color:  #29e6ad;
+    cursor: pointer;
+}
