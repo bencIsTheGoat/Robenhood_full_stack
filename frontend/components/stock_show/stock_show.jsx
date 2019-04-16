@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Auto from '../home_page/search';
 
 class StockShow extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -21,38 +21,41 @@ class StockShow extends React.Component {
         this.marketCapHelper = this.marketCapHelper.bind(this);
         this.peHelper = this.peHelper.bind(this);
         this.handleHome = this.handleHome.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.ticker = this.props.ticker.toLowerCase();
-        let today = new Date ();
+        let today = new Date();
         let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
         let month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`
         let day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`
         let lastWeekString = `${lastWeek.getFullYear()}${month}${day}`
         getStockData(this.ticker, '1m').then(data => this.setState({ oneMonth: data }));
-        getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data}))
+        getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data }))
         getStockData(this.ticker, '3m').then(data => this.setState({ threeMonth: data }));
         getStockData(this.ticker, '1y').then(data => (this.setState({ oneYear: data })));
         getStockData(this.ticker, '5y').then(data => this.setState({ fiveYear: data }));
         getStockData(this.ticker, '1m').then(data => this.setState({ data: data }));
         getStockData(this.ticker, '1d').then(data => this.setState({ oneDay: data }));
-        getCompanyInfo(this.ticker).then(data => this.setState({ info: data}));
-        getCompanyStats(this.ticker).then(data => this.setState({ stats: data}));
+        getCompanyInfo(this.ticker).then(data => this.setState({ info: data }));
+        getCompanyStats(this.ticker).then(data => this.setState({ stats: data }));
         this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
         this.setState({ props: this.props.history.location.pathname })
-        
+        this.props.fetchCompanies()
+        this.props.fetchWatchlistIndex()
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearInterval(this.intervalId);
     }
 
-    ajaxHelper (ticker) {
+    ajaxHelper(ticker) {
         getStockData(ticker, '1d').then(data => this.setState({ oneDay: data }));
     }
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
         if (this.props.match.params.ticker !== prevProps.match.params.ticker) {
             clearInterval(this.intervalId);
             this.ticker = this.props.match.params.ticker;
@@ -80,9 +83,9 @@ class StockShow extends React.Component {
                 let jsDate = new Date(dataPoint.date);
                 let dateArr = jsDate.toDateString().slice(4).split(' ');
                 let newDate = dateArr[0] + ' ' + dateArr[1] + ', ' + dateArr[2];
-                return {Date: newDate, Price: dataPoint.close}
+                return { Date: newDate, Price: dataPoint.close }
             } else {
-                return {Date: dataPoint.label, Price: dataPoint.close}
+                return { Date: dataPoint.label, Price: dataPoint.close }
             }
         })
         return newData;
@@ -108,7 +111,7 @@ class StockShow extends React.Component {
         let newData;
         if (timePeriod === '1m') {
             newData = this.state.oneMonth;
-            this.setState({ data: newData});
+            this.setState({ data: newData });
         } else if (timePeriod === '1w') {
             newData = this.state.oneWeek;
             this.setState({ data: newData });
@@ -129,89 +132,89 @@ class StockShow extends React.Component {
 
 
 
-    renderStock () {
-        
-            let newData = this.formatData(this.state.data);
-            return (
-                <LineChart width={800} height={196} data={newData}>
-                    <Line
-                        type='monotone'
-                        dataKey='Price'
-                        stroke='#21ce99'
-                        dot={false}
-                        strokeWidth={2}
-                    />
-                    <XAxis dataKey='Date' hide={true} width={676} />
-                    <YAxis
-                        type='number'
-                        domain={['dataMin', 'dataMax']}
-                        stroke="white"
-                    >
+    renderStock() {
 
-                    </YAxis>
+        let newData = this.formatData(this.state.data);
+        return (
+            <LineChart width={800} height={196} data={newData}>
+                <Line
+                    type='monotone'
+                    dataKey='Price'
+                    stroke='#21ce99'
+                    dot={false}
+                    strokeWidth={2}
+                />
+                <XAxis dataKey='Date' hide={true} width={676} />
+                <YAxis
+                    type='number'
+                    domain={['dataMin', 'dataMax']}
+                    stroke="white"
+                >
 
-
-                    <Tooltip
-                        className='tooltip'
-                        contentStyle={{ border: '0', backgroundColor: 'transparent' }}
-                        position={{ y: -120, x: 50 }}
-                        isAnimationActive={false}
-                        labelFormatter={value => <div className='date-div'>{value}</div>}
-                        active={true}
-                        formatter={value => {
-                            value = value.toFixed(2);
-                            let percent = this.percentChange(value);
-                            let money = this.monetaryChange(value);
-                            return [
-                                <div className='tooltip-value-div'>
-                                    <p className='portval-p'>
-                                        {'$' + new Intl.NumberFormat('en').format(value)}
-                                    </p>
-                                    <div className='tooltip-change-div'>
-                                        <p>{money} {percent}</p>
-                                    </div>
-                                </div>, null
-                            ]
-                        }}
-
-                    />
-                    <Tooltip
-
-                    />
+                </YAxis>
 
 
-                </LineChart>
-            )
-       
-        
+                <Tooltip
+                    className='tooltip'
+                    contentStyle={{ border: '0', backgroundColor: 'transparent' }}
+                    position={{ y: -120, x: 50 }}
+                    isAnimationActive={false}
+                    labelFormatter={value => <div className='date-div'>{value}</div>}
+                    active={true}
+                    formatter={value => {
+                        value = value.toFixed(2);
+                        let percent = this.percentChange(value);
+                        let money = this.monetaryChange(value);
+                        return [
+                            <div className='tooltip-value-div'>
+                                <p className='portval-p'>
+                                    {'$' + new Intl.NumberFormat('en').format(value)}
+                                </p>
+                                <div className='tooltip-change-div'>
+                                    <p>{money} {percent}</p>
+                                </div>
+                            </div>, null
+                        ]
+                    }}
+
+                />
+                <Tooltip
+
+                />
+
+
+            </LineChart>
+        )
+
+
     }
 
-    renderButtons () {
+    renderButtons() {
         return (
             <div className='graph-button-div'>
-                    <button className='graph-button' onClick={() => this.handleClick('1d')}>
+                <button className='graph-button' onClick={() => this.handleClick('1d')}>
                     1D
                     </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1w')}>
-                        1W
+                <button className='graph-button' onClick={() => this.handleClick('1w')}>
+                    1W
                     </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1m')}>
-                        1M
+                <button className='graph-button' onClick={() => this.handleClick('1m')}>
+                    1M
                     </button>
-                    <button className='graph-button' onClick={() => this.handleClick('3m')}>
-                        3M
+                <button className='graph-button' onClick={() => this.handleClick('3m')}>
+                    3M
                     </button>
-                    <button className='graph-button' onClick={() => this.handleClick('1y')}>
-                        1Y
+                <button className='graph-button' onClick={() => this.handleClick('1y')}>
+                    1Y
                     </button>
-                    <button className='graph-button' onClick={() => this.handleClick('all')}>
-                        ALL
+                <button className='graph-button' onClick={() => this.handleClick('all')}>
+                    ALL
                     </button>
             </div>
-            )
+        )
     }
 
-    renderInfo () {
+    renderInfo() {
         return (
             <div className='total-info-div'>
                 <div className='company-about-div'>
@@ -255,7 +258,7 @@ class StockShow extends React.Component {
                                     {this.state.info.website.slice(7)}
                                 </a>
                             </p>
-                        </div> 
+                        </div>
                     </div>
                     <div className='info-div'>
                         <div className='indi-info-div'>
@@ -290,13 +293,13 @@ class StockShow extends React.Component {
                                 {this.state.stats.latestEPS.toFixed(2)}
                             </p>
                         </div>
-                </div>
+                    </div>
                 </div>
             </div>
         )
     }
 
-    marketCapHelper (marketCap) {
+    marketCapHelper(marketCap) {
         if (marketCap > 1000000000) {
             return (marketCap / 1000000000).toFixed(2) + 'B';
         } else if (marketCap > 1000000) {
@@ -306,7 +309,7 @@ class StockShow extends React.Component {
         }
     }
 
-    peHelper (low, high) {
+    peHelper(low, high) {
         return ((high + low) / 2).toFixed(2);
     }
 
@@ -315,7 +318,61 @@ class StockShow extends React.Component {
         this.props.history.push('/home');
     }
 
-    render () {
+    
+    idHelper() {
+        for (let i = 0; i < this.props.companies.length; i++) {
+            if (this.props.companies[i].ticker.toLowerCase() === this.ticker) {
+                return this.props.companies[i].id
+            }
+        }
+    }
+    
+    removeItem(e) {
+        e.preventDefault(e);
+        Object.values(this.props.watchlistItems).forEach(ele => {
+            if (ele.ticker.toLowerCase() === this.ticker.toLowerCase()) {
+                this.props.deleteWatchlistItem(ele.id)
+            }
+        });
+    }
+
+    validAdd () {
+        let watchlistTickers = Object.values(this.props.watchlistItems).map(ele => {
+            return ele.ticker.toLowerCase();
+        });
+        return !watchlistTickers.includes(this.ticker.toLowerCase());
+    }
+
+    addItem(e) {
+        e.preventDefault(e);
+        let newItem = {user_id: this.props.currentUser,
+        company_id: this.idHelper(),
+        ticker: this.ticker.toLowerCase()}
+        if (this.validAdd()) {
+            this.props.createWatchlistItem(newItem);
+        }
+    }
+
+    renderWatchButton() {
+        let watchedCompanies = Object.values(this.props.watchlistItems).map(ele => {
+            return ele.ticker.toLowerCase();
+        });
+        if (watchedCompanies.includes(this.ticker)) {
+            return (
+                <button onClick={this.removeItem}>
+                    Remove from Watchlist
+                </button>
+            )
+        } else {
+            return (
+                <button onClick={this.addItem}>
+                    Add to Watchlist
+                </button>
+            )
+        }
+    }
+
+    render() {
         if (Object.keys(this.state).length === 10) {
             return (
                 <div>
@@ -340,7 +397,10 @@ class StockShow extends React.Component {
                             {this.renderInfo()}
                         </div>
                         <div>
-                            <FormContainer props={this.state} ticker={this.ticker}/>
+                            <FormContainer props={this.state} ticker={this.ticker} />
+                        </div>
+                        <div>
+                            {this.renderWatchButton()}
                         </div>
                         <div className='show-news'>
                             <NewsContainer />
