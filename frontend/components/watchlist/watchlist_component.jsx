@@ -88,7 +88,7 @@ class Watchlist extends React.Component {
                 <Link to={`/stocks/${ele.ticker}`}>
                     <div className='shares-ticker-div'>
                         <p className='ticker'>
-                            {ele.ticker}
+                            {ele.ticker.toUpperCase()}
                         </p>
                     </div>
                     <div className='graph-percent-price-div'>
@@ -111,7 +111,7 @@ class Watchlist extends React.Component {
         } else {
             return (
                 <div className='watchlist-div'>
-                    <h1>Watch List</h1>
+                    <h1>Watchlist</h1>
                     {this.renderWatchlist()}
                 </div>
             )

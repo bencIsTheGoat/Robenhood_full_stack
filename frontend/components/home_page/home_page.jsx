@@ -65,7 +65,6 @@ class HomePage extends React.Component {
                     <GraphContainer />
                     <NewsContainer />
                     <StockIndexContainer />
-                    <WatchlistContainer />
                 </div>
             </div>
         )

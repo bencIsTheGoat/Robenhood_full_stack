@@ -3,6 +3,7 @@ import { getStockData } from '../../util/company_api_util';
 import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { Link } from 'react-router-dom';
+import WatchlistContainer from '../watchlist/watchlist_container';
 
 class StockIndex extends React.Component {
 
@@ -204,6 +205,7 @@ class StockIndex extends React.Component {
             <div className='stock-index-div'>
                 <h1>Stocks</h1>
                 {this.renderStocks()}
+                <WatchlistContainer />
             </div>
         );
     }

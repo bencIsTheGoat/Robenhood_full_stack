@@ -76,6 +76,10 @@ class StockShow extends React.Component {
             getCompanyInfo(this.ticker).then(data => this.setState({ info: data }));
             getCompanyStats(this.ticker).then(data => this.setState({ stats: data }));
             this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
+            this.props.fetchCompanies()
+            this.props.fetchWatchlistIndex().then(() => {
+                this.watchlistBool() ? this.setState({ watchlist: true }) : this.setState({ watchlist: false })
+            })
         }
     }
 
@@ -366,14 +370,12 @@ class StockShow extends React.Component {
 
     renderWatchButton() {
             if (this.state.watchlist) {
-                this.setState({watchlist: true})
                 return (
                     <button onClick={this.removeItem}>
                         Remove from Watchlist
                     </button>
                 )
             } else if (!this.state.watchlist) {
-                this.setState({watchlist: false})
                 return (
                     <button onClick={this.addItem}>
                         Add to Watchlist
