@@ -1,7 +1,7 @@
 .news-div {
     position: absolute;
     top: 600px;
-    left: 225px;
+    left: 200px;
     display: flex;
     flex-direction: column;
 }

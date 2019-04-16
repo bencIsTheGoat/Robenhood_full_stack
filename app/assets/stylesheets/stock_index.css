@@ -1,11 +1,13 @@
 .stock-index-div {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: 150px;
-    left: 1100px;;
+    left: 1100px;
     box-shadow: 0 0 20px lightgray;
     border-radius: 4px;
+    overflow-y: scroll;
+    height: 80%;
 }
 
 .stock-index-div h1 {
@@ -59,23 +61,29 @@
 .graph-percent-price-div #price {
     padding: 10px;
     font-size: 18px;
+    padding-right: 20px;
 }
 
 .stock-li .graph-percent-price-div #percent-green {
     position: absolute;
-    left: 45%;
+    right: 40%;
     font-size: 18px;
     color: #21ce99;
     padding-top: 10px;
+    
     
 }
 
 .stock-li .graph-percent-price-div #percent-red {
     position: absolute;
-    left: 45%;
+    right: 40%;
     font-size: 18px;
     color: red;
     padding-top: 10px;
+}
+
+.stock-li {
+    display: flex;
 }
 
 
