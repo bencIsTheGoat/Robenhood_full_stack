@@ -43,9 +43,9 @@
 }
 
 #logout-button {
-    position: absolute;
     left: 92%;
-    padding: none;
+    padding: 0px;
+    padding-bottom: 5px;
     margin: none;
     border: none;
     font-weight: 525;

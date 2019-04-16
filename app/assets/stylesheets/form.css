@@ -25,7 +25,7 @@
 
 .form-div-trans {
     position: relative;
-    left: 1000px;
+    left: 1050px;
     top: 100px;
     display: flex;
     flex-direction: column;
@@ -140,5 +140,9 @@
 
 #market-price-div {
     border-bottom: 1px solid lightgray;
+}
+
+.form-watch-div {
+    position: fixed;
 }
 

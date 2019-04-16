@@ -2,7 +2,6 @@
     text-decoration: none;
     color: black;
     font-weight: 900;
-    position: absolute;
     left: 85%;
 }
 
@@ -12,12 +11,6 @@
 
 .stock-show .account a {
     top: 20px;
-}
-
-.stock-show #logout-button {
-    top: 20px;
-    position: absolute;
-    outline: none;
 }
 
 .account-header {

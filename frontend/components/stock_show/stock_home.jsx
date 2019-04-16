@@ -20,11 +20,20 @@ class StockHome extends React.Component {
     render () {
         return (
             <div className='stock-show'>
-               
-                    <div className='account'>
-                        <Link to='/account'>
-                            Account
-                        </Link>
+                    <div className='nav-links'>
+                        <div className='account'>
+                            <Link to='/home'>
+                                Home
+                            </Link>
+                        </div>
+                        <div className='account'>
+                            <Link to='/account'>
+                                Account
+                            </Link>
+                        </div>
+                        <button onClick={this.handleLogout} id='logout-button'>
+                            Logout
+                        </button>
                     </div>
                 <span className='links'>
                     Checkout my
@@ -37,9 +46,7 @@ class StockHome extends React.Component {
                         </a>
                     </div>
                 </span>
-                    <button onClick={this.handleLogout} id='logout-button'>
-                        Logout
-                    </button>
+                    
     
                 <Auto props={this.props.history.location}/>
                 <StockShowContainer />

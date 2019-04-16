@@ -120,3 +120,14 @@
     animation: fadeIn 3s 1;
     animation: scale 6s infinite 0s;
 }
+
+.nav-links {
+    position: absolute;
+    left: 80%;
+    top: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 230px;
+    justify-content: space-between;
+}

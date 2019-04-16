@@ -411,11 +411,13 @@ class StockShow extends React.Component {
                             {this.renderButtons()}
                             {this.renderInfo()}
                         </div>
-                        <div>
-                            <FormContainer props={this.state} ticker={this.ticker} />
-                        </div>
-                        <div className='watch-button-div'>
-                            {this.renderWatchButton()}
+                        <div className='form-watch-div'>
+                            <div>
+                                <FormContainer props={this.state} ticker={this.ticker} />
+                            </div>
+                            <div className='watch-button-div'>
+                                {this.renderWatchButton()}
+                            </div>
                         </div>
                         <div className='show-news'>
                             <NewsContainer />

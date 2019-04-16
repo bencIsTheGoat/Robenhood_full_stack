@@ -39,14 +39,21 @@ class HomePage extends React.Component {
                         robenhood
                     </h2>
                     <div className='account-links'>
-                        <div className='account'>
-                            <Link to='/account'>
-                                Account
-                            </Link>
+                        <div className='nav-links'>
+                            <div className='account'>
+                                <Link to='/home'>
+                                    Home
+                                </Link>
+                            </div>
+                            <div className='account'>
+                                <Link to='/account'>
+                                    Account
+                                </Link>
+                            </div>
+                            <button onClick={this.handleLogout} id='logout-button'>
+                                Logout
+                            </button>
                         </div>
-                        <button onClick={this.handleLogout} id='logout-button'>
-                            Logout
-                        </button>
                         <span className='links'>
                             Checkout my
                                 <div>
