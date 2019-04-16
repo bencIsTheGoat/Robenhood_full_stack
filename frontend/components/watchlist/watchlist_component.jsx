@@ -68,11 +68,13 @@ class Watchlist extends React.Component {
         }
     }
 
+    // fix this!
+
     uniqueCompanies(companies) {
         let companiesObj = {};
-        Object.keys(companies).forEach(comp => {
-            if (companiesObj[comp.company_id] === undefined) {
-                companiesObj[comp.company_id] = comp
+        Object.values(companies).forEach(comp => {
+            if (companiesObj[comp.ticker] === undefined) {
+                companiesObj[comp.ticker] = comp
             }
         });
         return companiesObj;
@@ -81,7 +83,6 @@ class Watchlist extends React.Component {
     renderWatchlist () {
         let prices;
         let lis = Object.values(this.uniqueCompanies(this.state.companies)).map((ele, idx) => {
-            debugger;
             prices = this.state.prices;
             return(<li className='stock-li' key={idx}>
                 <Link to={`/stocks/${ele.ticker}`}>

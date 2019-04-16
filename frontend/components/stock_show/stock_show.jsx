@@ -44,7 +44,9 @@ class StockShow extends React.Component {
         this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
         this.setState({ props: this.props.history.location.pathname })
         this.props.fetchCompanies()
-        this.props.fetchWatchlistIndex()
+        this.props.fetchWatchlistIndex().then(() => {
+            this.watchlistBool() ? this.setState({ watchlist: true }) : this.setState({ watchlist: false })
+        })
     }
 
     componentWillUnmount() {
@@ -332,6 +334,7 @@ class StockShow extends React.Component {
         Object.values(this.props.watchlistItems).forEach(ele => {
             if (ele.ticker.toLowerCase() === this.ticker.toLowerCase()) {
                 this.props.deleteWatchlistItem(ele.id)
+                this.setState({watchlist: false})
             }
         });
     }
@@ -350,30 +353,38 @@ class StockShow extends React.Component {
         ticker: this.ticker.toLowerCase()}
         if (this.validAdd()) {
             this.props.createWatchlistItem(newItem);
+            this.setState({watchlist: true})
         }
-    }
+    } 
 
-    renderWatchButton() {
+    watchlistBool () {
         let watchedCompanies = Object.values(this.props.watchlistItems).map(ele => {
             return ele.ticker.toLowerCase();
         });
-        if (watchedCompanies.includes(this.ticker)) {
-            return (
-                <button onClick={this.removeItem}>
-                    Remove from Watchlist
-                </button>
-            )
-        } else {
-            return (
-                <button onClick={this.addItem}>
-                    Add to Watchlist
-                </button>
-            )
-        }
+        return watchedCompanies.includes(this.ticker)
+    }
+
+    renderWatchButton() {
+            if (this.state.watchlist) {
+                this.setState({watchlist: true})
+                return (
+                    <button onClick={this.removeItem}>
+                        Remove from Watchlist
+                    </button>
+                )
+            } else if (!this.state.watchlist) {
+                this.setState({watchlist: false})
+                return (
+                    <button onClick={this.addItem}>
+                        Add to Watchlist
+                    </button>
+                )
+            }
+        
     }
 
     render() {
-        if (Object.keys(this.state).length === 10) {
+        if (Object.keys(this.state).length === 11) {
             return (
                 <div>
                     <div className='robenhood-header' onClick={this.handleHome}>
