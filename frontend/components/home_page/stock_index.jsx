@@ -1,6 +1,6 @@
 import React from 'react';
 import { getStockData } from '../../util/company_api_util';
-import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
+import { fetchCompanies, getMultipleLastPrice } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { Link } from 'react-router-dom';
 import WatchlistContainer from '../watchlist/watchlist_container';
@@ -33,18 +33,26 @@ class StockIndex extends React.Component {
                 this.setState({ transactions: transactions, numShares: this.numShares })
             })
             .then(() => fetchCompanies().then(companies => {
-         
                 this.setState({ companies: this.userCompanies(companies) })
             }))
             .then(() => {
-          
-                return getMultipleStockData(this.formatTickers(), '1d').then(data => {
-           
+                return getMultipleLastPrice(this.formatTickers()).then(data => {
                     this.setState({ prices: data })
                 })
             })
             this.setState();
 
+    }
+
+    dateAjaxHelper () {
+        let date = new Date ();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        if (date.getDay() === 6) day -= 1;
+        if (date.getDay() === 7) day -= 2;
+        if (date.getMonth < 10) month = `0${month}`;
+        if (day < 10) day = `0${day}`;
+        return `${date.getFullYear()}${month}${day}`
     }
 
     userCompanies (companies) {
@@ -115,22 +123,17 @@ class StockIndex extends React.Component {
         return numShares;
     }
 
-    priceHelper (prices) {
-        let arr = prices.filter((ele) => ele.close);
-        let output = arr[arr.length - 1].close;
+    priceHelper (price) { 
         return (
             <p id='price'>
-                {`${this.moneyFormat(output)}`}
+                {`${this.moneyFormat(price)}`}
             </p>
         )
     }
 
-    percentHelper (prices) {
-        let arr = prices.filter((ele) => ele.close);
-        let last = arr[arr.length - 1].close;
-        let first = arr[0].close
-        let difference = (last - first) / first * 100
-        let percent = difference.toFixed(2);
+    percentHelper (percent) {
+        let difference = percent * 100
+        percent = difference.toFixed(2);
         if (percent === undefined) {
             return "0.00%"
         } else {
@@ -140,6 +143,7 @@ class StockIndex extends React.Component {
                 </p>
             )
         }
+        
     }
 
     uniqueCompanies (companies) {
@@ -185,8 +189,8 @@ class StockIndex extends React.Component {
                             </p>
                         </div>
                         <div className='graph-percent-price-div'>
-                            {this.percentHelper(prices[id].chart)}
-                            {this.priceHelper(prices[id].chart)}
+                            {this.percentHelper(prices[id.toUpperCase()].quote.changePercent)}
+                            {this.priceHelper(prices[id.toUpperCase()].quote.latestPrice)}
                         </div>
                     </Link>
                 </li>)

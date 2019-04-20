@@ -27,6 +27,14 @@ export const getMultipleStockData = (tickers, time) => (
     })
 );
 
+export const getMultipleLastPrice = (tickers) => (
+    $.ajax({
+        method: 'GET',
+        url: `https://api.iextrading.com/1.0/stock/market/batch?symbols=${tickers}&types=quote`
+    })
+);
+
+
 export const fetchCompanies = () => (
     $.ajax({
         method: 'GET',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getMultipleStockData } from '../../util/company_api_util';
+import { getMultipleLastPrice } from '../../util/company_api_util';
 import { Link } from 'react-router-dom';
 
 
@@ -25,28 +25,18 @@ class Watchlist extends React.Component {
     componentDidMount () {
         this.props.fetchWatchlistIndex().then(() => {
             this.setState({companies: this.props.items})
-            getMultipleStockData(this.formatCompanies(), '1d').then(data => {
+            getMultipleLastPrice(this.formatCompanies()).then(data => {
                 this.setState({ prices: data })
             });
         })
     }
 
-    priceHelper(prices) {
-        let arr = prices.filter((ele) => ele.close);
-        if (arr.length > 0) {
-            let output = arr[arr.length - 1].close;
-            return (
-                <p id='price'>
-                    {`${this.moneyFormat(output)}`}
-                </p>
-            )
-        } else {
-            return (
-                <p id='price'>
-                    N/A
-                </p>
-            )
-        }
+    priceHelper(price) {
+        return (
+            <p id='price'>
+                {`${this.moneyFormat(price)}`}
+            </p>
+        )
     }
 
     moneyFormat(num) {
@@ -59,32 +49,19 @@ class Watchlist extends React.Component {
         return formatter.format(num);
     }
 
-    percentHelper(prices) {
-        let arr = prices.filter((ele) => ele.close);
-        if (arr.length > 0) {
-            let last = arr[arr.length - 1].close;
-            let first = arr[0].close
-            let difference = (last - first) / first * 100
-            let percent = difference.toFixed(2);
-            if (percent === undefined) {
-                return "0.00%"
-            } else {
-                return (
-                    <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
-                        {percent + '%'}
-                    </p>
-                )
-            }
+    percentHelper(percent) {
+        let difference = percent * 100
+        percent = difference.toFixed(2);
+        if (percent === undefined) {
+            return "0.00%"
         } else {
             return (
-                <p id='percent-red'>
-                    0.00%
+                <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
+                    {percent + '%'}
                 </p>
             )
         }
     }
-
-    // fix this!
 
     uniqueCompanies(companies) {
         let companiesObj = {};
@@ -109,8 +86,8 @@ class Watchlist extends React.Component {
                         </p>
                     </div>
                     <div className='graph-percent-price-div'>
-                        {this.percentHelper(prices[ele.ticker.toUpperCase()].chart)}
-                        {this.priceHelper(prices[ele.ticker.toUpperCase()].chart)}
+                        {this.percentHelper(prices[ele.ticker.toUpperCase()].quote.changePercent)}
+                        {this.priceHelper(prices[ele.ticker.toUpperCase()].quote.latestPrice)}
                     </div>
                 </Link>
             </li>)

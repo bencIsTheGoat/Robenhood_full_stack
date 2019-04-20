@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStockData } from '../../util/company_api_util';
+import { getStockData, getMultipleLastPrice } from '../../util/company_api_util';
 import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { withRouter, Link} from 'react-router-dom';
@@ -21,7 +21,6 @@ class Account extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
         this.ajaxHelper = this.ajaxHelper.bind(this);
         this.portValueTable = this.portValueTable.bind(this);
-        this.priceHelper = this.priceHelper.bind(this);
         this.nameFormatter = this.nameFormatter.bind(this);
     }
 
@@ -40,7 +39,7 @@ class Account extends React.Component {
                 this.setState({ companies: this.userCompanies(companies) })
             }))
             .then(() => {
-                return getMultipleStockData(this.formatTickers(), '1d').then(data => {
+                return getMultipleLastPrice(this.formatTickers()).then(data => {
                     this.setState({ prices: data })
                 })
             })
@@ -118,17 +117,13 @@ class Account extends React.Component {
         return companies;
     }
 
-    priceHelper(prices) {
-        let arr = prices.filter((ele) => ele.close);
-        return arr[arr.length - 1].close;
-    }
 
     portValueTable () {
         let numShares = this.state.numShares;
         let prices = this.state.prices;
         let tickerObj = this.tickerToId();
         let trs = Object.keys(this.state.numShares).map(id => {
-            let price = this.priceHelper(prices[tickerObj[id]].chart);
+            let price = prices[tickerObj[id]].quote.latestPrice;
             let ticker = tickerObj[id];
             return (
                 <tr>
@@ -180,7 +175,7 @@ class Account extends React.Component {
         let prices = this.state.prices;
         let numShares = this.state.numShares;
         Object.keys(this.state.numShares).forEach(id => {
-            let price = this.priceHelper(prices[tickerObj[id]].chart);
+            let price = prices[tickerObj[id]].quote.latestPrice;
             let next = numShares[id] * price;
             total += next;
             if (next > this.max) {
@@ -188,7 +183,7 @@ class Account extends React.Component {
             } 
         })
         return Object.keys(this.state.numShares).map(id => {
-            let price = this.priceHelper(prices[tickerObj[id]].chart)
+            let price = prices[tickerObj[id]].quote.latestPrice
             let percent = ((numShares[id] * price) / total * 100).toFixed(2);
             return { 
                 subject: tickerObj[id] + " " + percent + "%",

@@ -9,7 +9,12 @@ class Form extends React.Component {
     constructor(props) {
         super(props);
         let last = this.props.props.oneDay;
-        let price = last[last.length - 1].close
+        let price = ''
+
+        debugger;
+        if (last.length > 0) {
+            price = last[last.length - 1].close
+        }
         this.state = {
             currentPrice: price,
             buy: true, 
@@ -102,12 +107,16 @@ class Form extends React.Component {
     }
 
     moneyFormat (num) {
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 2
-        });
-        return formatter.format(num);
+        if (num) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            });
+            return formatter.format(num);
+        } else {
+            return 'Market Closed'
+        }
     }
 
 
@@ -126,7 +135,7 @@ class Form extends React.Component {
         if (this.state.currentPrice === null) {
             return (
                 <div className='form-div-trans'>
-                    <p>Stock Unavaliable for Purchase</p>
+                    <p>Stock Unavaliable for Purchase on Robenhood Network</p>
                 </div>
             )
         } else {
