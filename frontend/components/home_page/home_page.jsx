@@ -16,7 +16,6 @@ class HomePage extends React.Component {
     
     constructor(props) {
         super(props);
-        
         this.handleLogout = this.handleLogout.bind(this);
         this.handleHome = this.handleHome.bind(this);
     }

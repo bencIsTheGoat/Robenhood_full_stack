@@ -6,14 +6,12 @@ class loadingAnimation extends React.Component {
         if (this.props.loading === true) {
             return (
                 <div className='loading-div'>
-                    LOADING
+                    <img src={window.moneyGif} />
                 </div>
             )
         } else {
             return (
-                <div className='loading-div'>
-                    NOT LOADING
-                </div>
+               ''
             )
         }
     }

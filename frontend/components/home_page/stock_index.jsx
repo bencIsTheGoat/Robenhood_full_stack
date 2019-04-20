@@ -21,6 +21,7 @@ class StockIndex extends React.Component {
     }
 
     componentDidMount () {
+        this.props.startLoad();
         this.ajaxHelper();
         this.intervalId = setInterval(this.ajaxHelper, 10000);
         
@@ -176,6 +177,7 @@ class StockIndex extends React.Component {
             let companies = this.state.companies;
             let prices = this.state.prices;
             let shares = this.state.numShares;
+            this.props.stopLoad();
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>

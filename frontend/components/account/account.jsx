@@ -26,6 +26,7 @@ class Account extends React.Component {
 
     componentDidMount () {
         this.ajaxHelper();
+        this.props.startLoad();
         this.interval = setInterval(() => this.ajaxHelper(), 10000)
     }
 
@@ -208,6 +209,7 @@ class Account extends React.Component {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
             return ''
         } else {
+            this.props.stopLoad();
             return (
                 <div className='account-render-div'>
                     <div className='account-header'> 

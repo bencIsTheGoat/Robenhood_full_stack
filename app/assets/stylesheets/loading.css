@@ -1,0 +1,13 @@
+.loading-div {
+    position: absolute;
+    z-index: 5;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+.loading-div img {
+    margin:auto;
+    width: 50%;
+    padding: 20%
+}

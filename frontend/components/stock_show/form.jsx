@@ -11,7 +11,6 @@ class Form extends React.Component {
         let last = this.props.props.oneDay;
         let price = ''
 
-        debugger;
         if (last.length > 0) {
             price = last[last.length - 1].close
         }
@@ -33,6 +32,7 @@ class Form extends React.Component {
     }
 
     componentDidMount () {
+        this.props.startLoad();
         fetchTransactions().then(trans => {
             return this.setState({ numShares: this.transactionHelper(trans) });
         });
@@ -250,6 +250,7 @@ class Form extends React.Component {
         if (this.state.companies.length === 0 || this.state.numShares === 0) {
             return '';
         } else {
+            this.props.stopLoad();
             return (
                 this.renderForm()
             );

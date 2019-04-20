@@ -7,7 +7,7 @@ const msp = state => ({
 });
 
 const mdp = dispatch => ({
-    startload: () => dispatch(startLoad()),
+    startLoad: () => dispatch(startLoad()),
     stopLoad: () => dispatch(stopLoad())
 });
 
