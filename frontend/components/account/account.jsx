@@ -42,10 +42,10 @@ class Account extends React.Component {
         .then(() => {
             return getMultipleLastPrice(this.formatTickers()).then(data => {
                 this.setState({ prices: data })
-                this.props.stopLoad();
-                })
             })
-        }
+        })
+        this.props.stopLoad();
+    }
 
     componentWillUnmount () {
         clearInterval(this.interval);
@@ -208,9 +208,46 @@ class Account extends React.Component {
 
     render () {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
-            return ''
+            return (
+                <div>
+                    <div className='account-header'>
+                        <h2 className='robenhood-h2' onClick={this.handleHome}>
+                            <i className="fas fa-feather-alt"></i>
+                            robenhood
+                        </h2>
+                        <div className='nav-links-acc'>
+                            <div className='account'>
+                                <Link to='/home'>
+                                    Home
+                            </Link>
+                            </div>
+                            <div className='account'>
+                                <Link to='/account'>
+                                    Account
+                            </Link>
+                            </div>
+                            <button onClick={this.handleLogout} id='logout-button'>
+                                Logout
+                        </button>
+                        </div>
+                        <span className='links'>
+                            Checkout my
+                                <div>
+                                <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
+                                    <i className="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://github.com/bcutler94" id='github'>
+                                    <i className="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </span>
+                    </div>
+                    <h1 className='buy-stocks-h1'>
+                        Please Buy Some Stocks on Robenhood Network
+                    </h1>
+                </div>
+            )
         } else {
-            
             return (
                 <div className='account-render-div'>
                     <div className='account-header'> 

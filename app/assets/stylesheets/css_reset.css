@@ -41,3 +41,13 @@ color: blue;
 .links #github {
 color: black;
 }
+
+.buy-stocks-h1 {
+  padding: 20%;
+  font-size: 30px;
+}
+
+.graph-message {
+  font-size: 30px;
+  padding: 20px;
+}
