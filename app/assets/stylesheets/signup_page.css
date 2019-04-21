@@ -154,14 +154,15 @@
 }
 
 .login-form .error-li {
-    margin-bottom: 8px;
+ 
     min-width: 300px;
-    top: 200px;
+    padding: 5px;
+
     
 }
 
 .errors-ul {
-    position: absolute;
+    position: relative;
     animation: errorFade 5s 1;
 }
 
