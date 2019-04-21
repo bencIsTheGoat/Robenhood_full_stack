@@ -75,7 +75,7 @@ class Auto extends React.Component {
                     type="text"
                     onChange={this.handleInput}
                     value={this.state.inputVal}
-                    placeHolder="Search Company Name"/>
+                    placeHolder="Search"/>
                     <ul id='search-ul'>
                     {stocks}
                 </ul>
