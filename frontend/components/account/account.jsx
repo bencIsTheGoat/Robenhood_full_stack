@@ -42,9 +42,9 @@ class Account extends React.Component {
         .then(() => {
             return getMultipleLastPrice(this.formatTickers()).then(data => {
                 this.setState({ prices: data })
-            })
+                this.props.stopLoad()
+            }), this.props.stopLoad()
         })
-        this.props.stopLoad();
     }
 
     componentWillUnmount () {
