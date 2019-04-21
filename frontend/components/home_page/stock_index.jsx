@@ -26,20 +26,21 @@ class StockIndex extends React.Component {
         this.intervalId = setInterval(this.ajaxHelper, 10000);
         
     }
-
+    
     ajaxHelper() {
         fetchTransactions()
-            .then((transactions) => {
-                this.numShares = this.transactionHelper(transactions) 
-                this.setState({ transactions: transactions, numShares: this.numShares })
+        .then((transactions) => {
+            this.numShares = this.transactionHelper(transactions) 
+            this.setState({ transactions: transactions, numShares: this.numShares })
+        })
+        .then(() => fetchCompanies().then(companies => {
+            this.setState({ companies: this.userCompanies(companies) })
+        }))
+        .then(() => {
+            return getMultipleLastPrice(this.formatTickers()).then(data => {
+                this.setState({ prices: data })
+                this.props.stopLoad();
             })
-            .then(() => fetchCompanies().then(companies => {
-                this.setState({ companies: this.userCompanies(companies) })
-            }))
-            .then(() => {
-                return getMultipleLastPrice(this.formatTickers()).then(data => {
-                    this.setState({ prices: data })
-                })
             })
             this.setState();
 
@@ -177,7 +178,7 @@ class StockIndex extends React.Component {
             let companies = this.state.companies;
             let prices = this.state.prices;
             let shares = this.state.numShares;
-            this.props.stopLoad();
+            
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>

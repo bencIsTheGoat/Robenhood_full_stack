@@ -29,22 +29,23 @@ class Account extends React.Component {
         this.props.startLoad();
         this.interval = setInterval(() => this.ajaxHelper(), 10000)
     }
-
+    
     ajaxHelper() {
         fetchTransactions()
-            .then((transactions) => {
-                this.numShares = this.transactionHelper(transactions)
-                this.setState({ transactions: transactions, numShares: this.numShares })
-            })
-            .then(() => fetchCompanies().then(companies => {
-                this.setState({ companies: this.userCompanies(companies) })
-            }))
-            .then(() => {
-                return getMultipleLastPrice(this.formatTickers()).then(data => {
-                    this.setState({ prices: data })
+        .then((transactions) => {
+            this.numShares = this.transactionHelper(transactions)
+            this.setState({ transactions: transactions, numShares: this.numShares })
+        })
+        .then(() => fetchCompanies().then(companies => {
+            this.setState({ companies: this.userCompanies(companies) })
+        }))
+        .then(() => {
+            return getMultipleLastPrice(this.formatTickers()).then(data => {
+                this.setState({ prices: data })
+                this.props.stopLoad();
                 })
             })
-    }
+        }
 
     componentWillUnmount () {
         clearInterval(this.interval);
@@ -209,7 +210,7 @@ class Account extends React.Component {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
             return ''
         } else {
-            this.props.stopLoad();
+            
             return (
                 <div className='account-render-div'>
                     <div className='account-header'> 
