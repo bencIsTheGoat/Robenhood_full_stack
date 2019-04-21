@@ -142,7 +142,7 @@ class StockShow extends React.Component {
 
         let newData = this.formatData(this.state.data);
         return (
-            <LineChart width={800} height={196} data={newData}>
+            <LineChart width={675} height={196} data={newData}>
                 <Line
                     type='monotone'
                     dataKey='Price'
