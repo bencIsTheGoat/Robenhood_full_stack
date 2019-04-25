@@ -233,7 +233,9 @@ class Account extends React.Component {
                         <span className='links'>
                             Checkout my
                                 <div>
-                                <a href="https://bencutler.dev/" id='site'>Site</a>
+                                <a href="https://bencutler.dev/">
+                                    <i class="fas fa-globe-americas"></i>
+                                </a>
                                 <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
                                     <i class="fab fa-linkedin"></i>
                                 </a>
@@ -278,7 +280,9 @@ class Account extends React.Component {
                         <span className='links'>
                             Checkout my
                                 <div>
-                                <a href="https://bencutler.dev/" id='site'>Site</a>
+                                <a href="https://bencutler.dev/" id='site'><i class="fas fa-globe-americas"></i>
+
+</a>
                                 <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
                                     <i class="fab fa-linkedin"></i>
                                 </a>
