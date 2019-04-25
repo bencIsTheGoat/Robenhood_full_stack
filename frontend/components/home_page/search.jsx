@@ -1,6 +1,7 @@
 import React from 'react';
 import { fetchCompanies } from '../../util/company_api_util';
 import {withRouter, Redirect} from 'react-router-dom';
+import { startLoad, stopLoad } from '../../actions/ui_actions';
 
 
 class Auto extends React.Component {
@@ -52,6 +53,7 @@ class Auto extends React.Component {
         let stock = e.target.innerText;
         let ticker = stock.split(' ')[0];
         this.setState({ inputVal: '' });
+        dispatch(startLoad());
         this.props.history.push(`/stocks/${ticker}`);
     }
 
@@ -75,7 +77,8 @@ class Auto extends React.Component {
                     type="text"
                     onChange={this.handleInput}
                     value={this.state.inputVal}
-                    placeHolder='Search'/>
+                    placeHolder='Search'
+                    autoComplete='off'/>
                     <ul id='search-ul'>
                     {stocks}
                 </ul>
