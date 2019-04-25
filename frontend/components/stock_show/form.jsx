@@ -107,15 +107,21 @@ class Form extends React.Component {
     }
 
     moneyFormat (num) {
-        if (num) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 2
-            });
+        let time = new Date ();
+        let hour = time.getHours();
+        let mins = time.getMinutes();
+        let format = hour + (mins / 60);
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        });
+        if (format > 16.5) {
+            return 'Market Closed'
+        } else if (num) {
             return formatter.format(num);
         } else {
-            return 'Market Closed'
+            return formatter.format(0);
         }
     }
 
