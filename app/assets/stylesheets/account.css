@@ -67,3 +67,7 @@ tr:hover {
 #table-ticker {
     font-weight: 900;
 }
+
+.recharts-wrapper {
+    position: relative;
+}

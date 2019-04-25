@@ -39,8 +39,7 @@ class StockIndex extends React.Component {
         .then(() => {
             return getMultipleLastPrice(this.formatTickers()).then(data => {
                 this.setState({ prices: data })
-                this.props.stopLoad()
-            }), this.props.stopLoad()})
+        })})
     }
 
     dateAjaxHelper () {
@@ -171,14 +170,12 @@ class StockIndex extends React.Component {
     renderStocks () {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
             return <h1>
-
-                Please Buy Some Stocks on Robenhood Network
+                
             </h1>
         } else {
             let companies = this.state.companies;
             let prices = this.state.prices;
             let shares = this.state.numShares;
-            
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>

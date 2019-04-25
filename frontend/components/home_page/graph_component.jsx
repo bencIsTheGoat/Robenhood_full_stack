@@ -28,6 +28,7 @@ class Graph extends React.Component {
     // then fetches 5yr data and puts into local state then(() => this.getData('5yr'))
 
     componentDidMount() {
+        this.props.startLoad();
         fetchTransactions()
         .then((transactions) => {
             this.setState({transactions: transactions})})
@@ -360,10 +361,10 @@ class Graph extends React.Component {
         if (this.state.companies.length === 0 || this.state.transactions.length === 0 || this.state.data.length === 0) {
             return (<div className='graph-div'>
                     <h1 className='graph-message'>
-                        Search a stock above to make your first purchase!
                     </h1>
             </div>)
         } else {
+            this.props.stopLoad();
             return (
                 <div className='graph-div'>
                     

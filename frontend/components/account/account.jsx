@@ -201,7 +201,7 @@ class Account extends React.Component {
         last = last[0].toUpperCase() + last.slice(1, last.length).toLowerCase();
         return (
             <h2 id='info-text'>
-                {first + ' ' + last + "'s Portfolio Information"}
+                {first + ' ' + last + "'s Portfolio Diversity"}
             </h2>
         )
     }
@@ -243,7 +243,7 @@ class Account extends React.Component {
                         </span>
                     </div>
                     <h1 className='buy-stocks-h1'>
-                        Please Buy Some Stocks on Robenhood Network
+                        
                     </h1>
                 </div>
             )
@@ -291,7 +291,7 @@ class Account extends React.Component {
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="subject" />
                                 <Radar dataKey="value" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
-                                <Legend formatter={value => 'Portfolio Diversity (%)'} />
+                                {/* <Legend formatter={value => 'Portfolio Diversity (%)'} /> */}
                                 <Tooltip />
                             </RadarChart>
                         </div>
