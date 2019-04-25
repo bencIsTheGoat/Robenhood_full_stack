@@ -1,9 +1,18 @@
+.graph-div-show {
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+    position: absolute;
+    top: 225px;
+    left: 12%;
+}
+
 #company-name {
     font-weight: 900;
     font-size: 35px;
     position: absolute;
     top: 90px;
-    left: 195px;
+    left: 20%;
 }
 
 .total-info-div {
@@ -56,4 +65,5 @@
 .show-news {
     position: absolute;
     top: 350px;
+    left: 20%
 }

@@ -403,7 +403,7 @@ class StockShow extends React.Component {
                                 {this.state.info.companyName}
                             </h1>
                         </div>
-                        <div className='graph-div'>
+                        <div className='graph-div-show'>
 
                             <div className='line-div'>
                                 {this.renderStock()}

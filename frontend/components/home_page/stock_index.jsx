@@ -179,7 +179,7 @@ class StockIndex extends React.Component {
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>
-                    <Link to={`/stocks/${ticker}`}>
+                    <Link to={`/stocks/${ticker}`} onClick={() => this.props.startLoad()}>
                         <div className='shares-ticker-div'>
                             <p className='ticker'>
                                 {id}
