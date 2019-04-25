@@ -1,14 +1,14 @@
 .search {
     position: absolute;
     top: 20px;
-    left: 200px;
+    left: 17%;
     z-index: 5;
 }
 
 #search-input {
     width: 400px;
     height: 20px;
-    border-radius: 2px;
+    border-radius: 3px;
     border: 2px solid lightgray;
     outline: none;
 }

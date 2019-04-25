@@ -275,7 +275,7 @@ class Graph extends React.Component {
 
     lineRender() {
         return (
-            <LineChart width={675} height={196} data={this.state.linedata}>
+            <LineChart width={700} height={196} data={this.state.linedata}>
                 <Line 
                     type='monotone' 
                     dataKey='Price' 

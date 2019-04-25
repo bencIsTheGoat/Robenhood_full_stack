@@ -61,22 +61,23 @@
 .login-text {
     display: flex;
     flex-direction: column;
-    width: 800px;
+    width: 100%;
 }
 
 .login-text h1 {
-    font-size: 60px;
+    font-size: 80px;
     font-weight: 900;
     margin-top: 100px;
     margin-left: 20px;
     margin-bottom: 30px;
     white-space: pre;
+    width: 100%
 }
 
 .login-text p {
     margin-left: 20px;
     line-height: 27px;
-    font-size: 20px;
+    font-size: 25px;
     white-space: pre;
 }
 
@@ -113,9 +114,9 @@
 }
 
 .body-text-img img {
-    width: 900px;
-    height: 700px;
-    margin-left: -10%;
+    width: 120%;
+    height: auto;
+    margin-left: -20%;
     -webkit-animation: fadein 5s;
     animation: fadeIn 3s 1;
     animation: scale 6s infinite 0s;
