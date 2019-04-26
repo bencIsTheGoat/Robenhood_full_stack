@@ -11,14 +11,11 @@ class SignupForm extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault();
-        this.props.signup(this.state).then(() => this.props.history.push('/home'))
-       
+        this.props.signup(this.state).then(() => this.props.history.push('/home'));
     }
 
     handleChange (type) {
-        return (e) => (
-            this.setState({ [type]: e.target.value})
-        );
+        return (e) => this.setState({ [type]: e.target.value});
     }
 
     componentWillUnmount () {
@@ -26,7 +23,6 @@ class SignupForm extends React.Component {
     }
 
     renderErrors (type) {
-        // include symbol in error list
         if (this.props.errors[type] !== undefined) {
             let arr = type.split('_').join(' ');
             return (

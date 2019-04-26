@@ -1,19 +1,16 @@
 import React from 'react';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { fetchCompanies } from '../../util/company_api_util';
-import { getCompanyInfo, getStockData } from '../../util/company_api_util';
+import { getStockData } from '../../util/company_api_util';
 import { withRouter } from 'react-router-dom';
 
 class Form extends React.Component {
 
     constructor(props) {
         super(props);
-        let last = this.props.props.oneDay;
-        let price = ''
-
-        if (last.length > 0) {
-            price = last[last.length - 1].close
-        }
+        const last = this.props.props.oneDay;
+        let price = '';
+        if (last.length > 0) price = last[last.length - 1].close
         this.state = {
             currentPrice: price,
             buy: true, 
@@ -37,57 +34,54 @@ class Form extends React.Component {
             return this.setState({ numShares: this.transactionHelper(trans) });
         });
         fetchCompanies().then(companies => {
-            return this.setState({ companies: companies })
+            return this.setState({ companies: companies });
         });
     
     }
 
     componentWillUpdate (prevProps) {
        if (this.props.match.params.ticker !== prevProps.match.params.ticker) {
-           let propsTicker = prevProps.match.params.ticker.toLowerCase();
+           const propsTicker = prevProps.match.params.ticker.toLowerCase();
            getStockData(propsTicker, '1d')
            .then(data => {
                this.setState({ oneDay: data })
-               let last = this.state.oneDay;
-               let price = last[last.length - 1].close
+               const last = this.state.oneDay;
+               const price = last[last.length - 1].close
                this.setState({
                    currentPrice: price,
                    buy: true,
                    ticker: prevProps.match.params.ticker,
                    cost: 0,
                });
-           })
-           
-          
+           });
        }
     }
 
     transactionHelper(transactions) {
-        let sharesObj = {};
+        const sharesObj = {};
         transactions.forEach(trans => {
             if (sharesObj[trans.company_id] === undefined) {
                 sharesObj[trans.company_id] = [{
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                }]
+                }];
             } else {
                 sharesObj[trans.company_id].push({
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                })
+                });
             }
         });
-        let numShares = {};
+        const numShares = {};
         Object.keys(sharesObj).forEach(id => {
             numShares[id] = 0;
             sharesObj[id].forEach(trans => {
-
                 if (trans.transaction_type === 'buy') {
                     numShares[id] += trans.shares
                 } else {
                     numShares[id] -= trans.shares
                 }
-            })
+            });
         });
         return numShares;
     }
@@ -98,7 +92,7 @@ class Form extends React.Component {
             this.setState({input: e.target.value});
             let value = parseInt(e.target.value);
             if (String(value) === "NaN") {
-                this.setState({cost: 0})
+                this.setState({cost: 0});
             } else {
                 let cost = value * this.state.currentPrice;
                 this.setState({cost: cost.toFixed(2)});
@@ -107,17 +101,17 @@ class Form extends React.Component {
     }
 
     moneyFormat (num) {
-        let time = new Date ();
-        let hour = time.getHours();
-        let mins = time.getMinutes();
-        let format = hour + (mins / 60);
+        const time = new Date ();
+        const hour = time.getHours();
+        const mins = time.getMinutes();
+        const format = hour + (mins / 60);
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
             minimumFractionDigits: 2
         });
         if (format > 16.5) {
-            return 'Market Closed'
+            return 'Market Closed';
         } else if (num) {
             return formatter.format(num);
         } else {
@@ -137,13 +131,12 @@ class Form extends React.Component {
             costCredit = "Credit";
             buySell = 'Sell';
         }
-        
         if (this.state.currentPrice === null) {
             return (
                 <div className='form-div-trans'>
                     <p>Stock Unavaliable for Purchase on Robenhood Network</p>
                 </div>
-            )
+            );
         } else {
             return (
                 <div className='form-div-trans'>
@@ -180,14 +173,12 @@ class Form extends React.Component {
                         </div>
                     </div>
                 </div>
-    
-            )
-            
+            );  
         }
     }
 
     sharesTextHelper () {
-        let num = this.sharesHelper();
+        const num = this.sharesHelper();
         if (num !== 0) {
             return(<p id='shares-avail'>
                 {num} Shares Available
@@ -207,7 +198,7 @@ class Form extends React.Component {
     }
 
     tickerToId(ticker) {
-        let obj = {};
+        const obj = {};
         this.state.companies.forEach(comp => {
             obj[comp.ticker] = comp.id;
         });
@@ -215,7 +206,7 @@ class Form extends React.Component {
     }
 
     sharesHelper() {
-        let id = this.tickerToId(this.state.ticker);
+        const id = this.tickerToId(this.state.ticker);
         return this.state.numShares[id];
     }
 
@@ -228,11 +219,10 @@ class Form extends React.Component {
                 this.setState({buy: false})
             }
         }
-
     }
 
     nameHelper (ticker) {
-        let obj = {};
+        const obj = {};
         this.state.companies.forEach(comp => {
             obj[comp.ticker] = comp.name;
         });
@@ -241,15 +231,14 @@ class Form extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let trans = this.state.buy ? 'buy' : 'sell';
-        this.tickerToId(this.state.ticker)
-        let transactionInfo = {
+        const trans = this.state.buy ? 'buy' : 'sell';
+        this.tickerToId(this.state.ticker);
+        const transactionInfo = {
             company_id: this.tickerToId(this.state.ticker),
             transaction_type: trans,
             price: this.state.currentPrice,
             shares: this.state.input};
-        this.props.createTransaction(transactionInfo).then(() => this.props.history.push('/home'))
-    
+        this.props.createTransaction(transactionInfo).then(() => this.props.history.push('/home'));
     }
 
     render () {
@@ -257,14 +246,9 @@ class Form extends React.Component {
             return '';
         } else {
             this.props.stopLoad();
-            return (
-                this.renderForm()
-            );
+            return this.renderForm();
         }
-            
-        
     }
-
 
 }
 

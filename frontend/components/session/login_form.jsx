@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 class LoginForm extends React.Component {
     
@@ -16,14 +15,13 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit (e) {
-     
         e.preventDefault();
         this.props.login(this.state).then(() => this.props.history.push('/home'));
     }
 
     handleChange (type) {
         return (e) => {
-            this.setState( { [type]: e.target.value } )
+            this.setState( { [type]: e.target.value } );
         };
     }
 
@@ -32,7 +30,6 @@ class LoginForm extends React.Component {
     }
 
     renderErrors () {
-        // include symbol in error list
         if (this.props.errors !== undefined) {
             return (<ul>
                 {this.props.errors.map((error, i) => {
@@ -43,24 +40,21 @@ class LoginForm extends React.Component {
                         </li>
                     );
                 })}
-            </ul>)
+            </ul>);
         }
     }
 
     demoUser (e) {
-      
         e.preventDefault();
-        this.props.login({email: 'anna@gmail.com', password: '123456'}).then(() => this.props.history.push('/home'))
+        this.props.login({email: 'anna@gmail.com', password: '123456'}).then(() => this.props.history.push('/home'));
     }
 
     forgotInfo (e) {
-       
         e.preventDefault();
-        this.props.history.push('/signup')
+        this.props.history.push('/signup');
     }
     
     render () {
-        
         return (
             <div className='login-page'>
                 <div className='background-image'>
@@ -90,7 +84,6 @@ class LoginForm extends React.Component {
                             <button onClick={this.demoUser} className='signin'>
                                 Try Demo Session
                             </button>
-
                         </div>
                     </form>
                 </div>
