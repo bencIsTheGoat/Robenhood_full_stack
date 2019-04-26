@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchPortfolioNews} from '../../util/news_api_util';
+import { fetchPortfolioNews } from '../../util/news_api_util';
 
 class News extends React.Component {
 
@@ -11,7 +11,6 @@ class News extends React.Component {
     }
 
     componentDidMount () {
-      
         fetchPortfolioNews()
         .then(response => this.setState({news: response}))
     }
@@ -33,11 +32,10 @@ class News extends React.Component {
     }
 
     renderNews (numArticles = 20) {
-    
         if (this.state.news.length === 0) {
             return ''
         } else {
-            let articles = this.state.news.articles.slice(0, numArticles);
+            const articles = this.state.news.articles.slice(0, numArticles);
             return articles.map(article => {
                 return (
                     <a href={article.url}>

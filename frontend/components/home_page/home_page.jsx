@@ -3,14 +3,7 @@ import GraphContainer from './graph_container';
 import NewsContainer from './news_container';
 import StockIndexContainer from './stock_index_container';
 import Auto from './search';
-import WatchlistContainer from '../watchlist/watchlist_container';
 import {withRouter, Link} from 'react-router-dom';
-import {logout} from '../../actions/session_actions';
-import {connect} from 'react-redux';
-
-const mdp = dispatch => ({
-    logout: () => dispatch(logout())
-})
 
 class HomePage extends React.Component {
     
@@ -86,4 +79,4 @@ class HomePage extends React.Component {
 
 }
 
-export default withRouter(connect(null, mdp)(HomePage));
+export default withRouter(HomePage);

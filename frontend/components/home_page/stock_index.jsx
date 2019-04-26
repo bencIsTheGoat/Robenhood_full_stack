@@ -1,5 +1,4 @@
 import React from 'react';
-import { getStockData } from '../../util/company_api_util';
 import { fetchCompanies, getMultipleLastPrice } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,7 @@ class StockIndex extends React.Component {
         this.state = {
             companies: [],
             numShares: [],
-            prices: []}
+            prices: []};
         this.renderStocks = this.renderStocks.bind(this);
         this.priceHelper = this.priceHelper.bind(this);
         this.percentHelper = this.percentHelper.bind(this);
@@ -30,49 +29,46 @@ class StockIndex extends React.Component {
     ajaxHelper() {
         fetchTransactions()
         .then((transactions) => {
-            this.numShares = this.transactionHelper(transactions) 
-            this.setState({ transactions: transactions, numShares: this.numShares })
+            this.numShares = this.transactionHelper(transactions);
+            this.setState({ transactions: transactions, numShares: this.numShares });
         })
         .then(() => fetchCompanies().then(companies => {
-            this.setState({ companies: this.userCompanies(companies) })
+            this.setState({ companies: this.userCompanies(companies) });
         }))
         .then(() => {
             return getMultipleLastPrice(this.formatTickers()).then(data => {
-                this.setState({ prices: data })
+                this.setState({ prices: data });
         })})
     }
 
     dateAjaxHelper () {
-        let date = new Date ();
+        const date = new Date ();
         let day = date.getDate();
-        let month = date.getMonth() + 1;
+        const month = date.getMonth() + 1;
         if (date.getDay() === 6) day -= 1;
         if (date.getDay() === 7) day -= 2;
         if (date.getMonth < 10) month = `0${month}`;
         if (day < 10) day = `0${day}`;
-        return `${date.getFullYear()}${month}${day}`
+        return `${date.getFullYear()}${month}${day}`;
     }
 
     userCompanies (companies) {
-        let companiesObj = {};
+        const companiesObj = {};
         this.state.transactions.forEach(trans => {
             for (let i = 0; i < companies.length - 1; i++) {
                 if (companies[i].id === trans.company_id) {
                     companiesObj[companies[i].ticker] = trans.company_id;
-                }
+                };
             }
         })
-        return companiesObj
+        return companiesObj;
     }
 
     formatTickers() {
-        let companiesObj = {};
+        const companiesObj = {};
         this.state.transactions.forEach(trans => {
-
-            let companies = this.state.companies;
-
+            const companies = this.state.companies;
             for (let i = 0; i < Object.keys(companies).length; i++) {
-
                 if (companies[Object.keys(companies)[i]] === trans.company_id) {
                     companiesObj[Object.keys(companies)[i]] = trans.company_id;
                 }
@@ -169,9 +165,7 @@ class StockIndex extends React.Component {
 
     renderStocks () {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
-            return <h1>
-                
-            </h1>
+            return ''
         } else {
             let companies = this.state.companies;
             let prices = this.state.prices;

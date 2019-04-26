@@ -1,7 +1,7 @@
 import React from 'react';
 import { fetchCompanies } from '../../util/company_api_util';
-import {withRouter, Redirect} from 'react-router-dom';
-import { startLoad, stopLoad } from '../../actions/ui_actions';
+import { withRouter } from 'react-router-dom';
+import { startLoad } from '../../actions/ui_actions';
 
 
 class Auto extends React.Component {
@@ -17,7 +17,7 @@ class Auto extends React.Component {
     }
 
     handleInput (e) {
-        this.setState({inputVal: e.target.value})
+        this.setState({inputVal: e.target.value});
     }
 
     componentDidMount () {
@@ -30,12 +30,8 @@ class Auto extends React.Component {
 
     matches() {
         const matches = [];
-        if (this.state.inputVal.length === 0) {
-            return null;
-        }
-        
+        if (this.state.inputVal.length === 0) return null;
         if (this.state.companies) {
-
             this.state.companies.forEach(stock => {
                 let nameSearch = stock.name.toLowerCase().slice(0, this.state.inputVal.length) === this.state.inputVal.toLowerCase()
                 if (nameSearch) {
@@ -50,8 +46,8 @@ class Auto extends React.Component {
     }
 
     selectStock (e) {
-        let stock = e.target.innerText;
-        let ticker = stock.split(' ')[0];
+        const stock = e.target.innerText;
+        const ticker = stock.split(' ')[0];
         this.setState({ inputVal: '' });
         dispatch(startLoad());
         this.props.history.push(`/stocks/${ticker}`);

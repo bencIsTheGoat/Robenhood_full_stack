@@ -2,6 +2,7 @@ import { getStockData, fetchCompany, createCompany } from '../../actions/company
 import { startLoad, stopLoad } from '../../actions/ui_actions';
 import { connect } from 'react-redux';
 import HomePage from './home_page';
+import { logout } from '../../actions/session_actions';
 
 const msp = state => ({
     user: state.entities.users[state.session.id]
@@ -12,7 +13,8 @@ const mdp = dispatch => ({
     fetchCompany: (company) => dispatch(fetchCompany(company)),
     createCompany: (company) => dispatch(createCompany(company)),
     startload: () => dispatch(startLoad()),
-    stopLoad: () => dispatch(stopLoad())
+    stopLoad: () => dispatch(stopLoad()),
+    logout: () => dispatch(logout())
 
 });
 
