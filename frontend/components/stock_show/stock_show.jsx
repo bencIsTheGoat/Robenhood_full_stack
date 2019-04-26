@@ -1,10 +1,10 @@
 import React from 'react';
-import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
+import { LineChart, Line, Tooltip, XAxis, YAxis } from 'recharts';
 import { getStockData, getCompanyInfo, getCompanyStats } from '../../util/company_api_util';
 import NewsContainer from '../home_page/news_container';
 import FormContainer from './form_container';
 import { withRouter } from 'react-router-dom';
-import Auto from '../home_page/search';
+
 
 class StockShow extends React.Component {
 
@@ -329,21 +329,22 @@ class StockShow extends React.Component {
 
     addItem(e) {
         e.preventDefault(e);
-        let newItem = {user_id: this.props.currentUser,
-        company_id: this.idHelper(),
-        ticker: this.ticker.toLowerCase()}
+        const newItem = {user_id: this.props.currentUser,
+            company_id: this.idHelper(),
+            ticker: this.ticker.toLowerCase()
+        };
         if (this.validAdd()) {
             this.props.createWatchlistItem(newItem).then(() => {
-                this.setState({watchlist: true})
+                this.setState({watchlist: true});
             });
         }
     } 
 
     watchlistBool () {
-        let watchedCompanies = Object.values(this.props.watchlistItems).map(ele => {
+        const watchedCompanies = Object.values(this.props.watchlistItems).map(ele => {
             return ele.ticker.toLowerCase();
         });
-        return watchedCompanies.includes(this.ticker)
+        return watchedCompanies.includes(this.ticker);
     }
 
     renderWatchButton() {
@@ -352,13 +353,13 @@ class StockShow extends React.Component {
                     <button onClick={this.removeItem} id='watch-button'>
                         Remove from Watchlist
                     </button>
-                )
+                );
             } else if (!this.state.watchlist) {
                 return (
                     <button onClick={this.addItem} id='watch-button'>
                         Add to Watchlist
                     </button>
-                )
+                );
             }
         
     }
@@ -380,7 +381,6 @@ class StockShow extends React.Component {
                             </h1>
                         </div>
                         <div className='graph-div-show'>
-
                             <div className='line-div'>
                                 {this.renderStock()}
                             </div>
@@ -400,9 +400,9 @@ class StockShow extends React.Component {
                         </div>
                     </div>
                 </div>
-            )
+            );
         } else {
-            return ''
+            return '';
         }
     }
 }
