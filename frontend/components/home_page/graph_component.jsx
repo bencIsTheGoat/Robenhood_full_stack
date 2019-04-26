@@ -1,6 +1,6 @@
 import React from 'react';
 import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts';
-import { getStockData, fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
+import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 
 
@@ -31,21 +31,23 @@ class Graph extends React.Component {
         this.props.startLoad();
         fetchTransactions()
         .then((transactions) => {
-            this.setState({transactions: transactions})})
+            this.setState({transactions: transactions});
+        })
         .then(() => fetchCompanies().then(companies => {
-            this.setState({companies: companies})}))
+            this.setState({companies: companies});
+        }))
         .then(() => {
             return getMultipleStockData(this.formatTickers(), '5y').then(data => {
-                this.setState({data: data})
-            })})
+                this.setState({data: data});
+            })
+        })
         .then(() => {
-
-            this.formatData(this.portValueObj())})
-          
+            this.formatData(this.portValueObj());
+        })   
     }
 
     formatTickers() {
-        let companiesObj = {};
+        const companiesObj = {};
         this.state.transactions.forEach(trans => {
             let companies = this.state.companies;
             for (let i = 0; i < companies.length - 1; i++) {
@@ -54,67 +56,54 @@ class Graph extends React.Component {
                 }
             }
         })
-
-        let tickers = Object.keys(companiesObj).map(ticker => {
+        const tickers = Object.keys(companiesObj).map(ticker => {
             return ticker.toLowerCase();
         })
-
-        return tickers.join(',')
-        
+        return tickers.join(','); 
     }
 
 
     sendPortData () {
-
-        let currentValue = this.state.linedata[last].Price;
-        let percent = this.percentChange(currentValue);
-        let gain = this.monetaryChange(currentValue);
-        let portData = { currentValue: currentValue, percent: percent, gain: gain };
+        const currentValue = this.state.linedata.last.Price;
+        const percent = this.percentChange(currentValue);
+        const gain = this.monetaryChange(currentValue);
+        const portData = { currentValue: currentValue, percent: percent, gain: gain };
         this.props.sendPortData(portData);
         this.setState({ linedata: newData, line: newData, portData: portData });
     }
 
-    // TEST
-
     dateHelper (date) {
-        let today = new Date();
-        let past = new Date(date);
-        let difference = Math.abs((today - past) / 1000 / 60 / 60 / 24 / 7 / 52 * 5 * 52);
+        const today = new Date();
+        const past = new Date(date);
+        const difference = Math.abs((today - past) / 1000 / 60 / 60 / 24 / 7 / 52 * 5 * 52);
         return Math.ceil(difference);
-
     }
 
-    // gets the transaction for each company { companyIds: [{transactions}, ...]}
-
-    // fix date issue
-
     getSharesObj () {
-        let sharesObj = {};
-        let transactions = this.state.transactions;
+        const sharesObj = {};
+        const { transactions } = this.state;
         transactions.forEach(trans => {
             if (sharesObj[trans.company_id] === undefined) {
                 sharesObj[trans.company_id] = [{ 
                     transaction_type: trans.transaction_type,
                     date: this.dateHelper(trans.date),
                     shares: trans.shares
-                 }]
+                }];
             } else {
                 sharesObj[trans.company_id].push({
                         transaction_type: trans.transaction_type,
                         date: this.dateHelper(trans.date),
                         shares: trans.shares
-                    })
+                });
             }
         });
         return sharesObj;
     }
 
-    // fix shares timeline issue
-
     getNumShares () {
-        let sharesObj = this.getSharesObj();
-        let company_ids = Object.keys(sharesObj);
-        let numSharesObj = {};
+        const sharesObj = this.getSharesObj();
+        const company_ids = Object.keys(sharesObj);
+        const numSharesObj = {};
         company_ids.forEach(id => {
             let len = sharesObj[id].length - 1
             numSharesObj[id] = {
@@ -122,7 +111,6 @@ class Graph extends React.Component {
                 integral: [...Array(sharesObj[id][len].date)].fill(0)
             }; 
         });
-     
         let arr1;
         company_ids.forEach(id => {
             arr1 = numSharesObj[id]['rateOfChange'];
@@ -131,16 +119,15 @@ class Graph extends React.Component {
                     arr1[arr1.length - trans.date] += trans.shares;
                 } else {
                     arr1[arr1.length - trans.date] -= trans.shares;
-                }
-                
+                };
             });
         });
-        let output = {};
-        let tickersObj = this.tickerToId();
+        const output = {};
+        const tickersObj = this.tickerToId();
         company_ids.forEach(id => {
-            let datesObj = {};
-            let companyTicker = tickersObj[id];
-            let datesData = this.state.data[companyTicker];
+            const datesObj = {};
+            const companyTicker = tickersObj[id];
+            const datesData = this.state.data[companyTicker];
             arr1 = numSharesObj[id]['rateOfChange'];
             arr1.forEach((ele, idx) => {
                 let arrIdx = datesData.chart.length - arr1.length + idx
@@ -153,7 +140,6 @@ class Graph extends React.Component {
                 }
             })
             output[id] = datesObj;
-           
         });
         Object.keys(output).forEach((companyId) => {
             let array = Object.keys(output[companyId]).map((ele, idx) => {
@@ -166,32 +152,21 @@ class Graph extends React.Component {
     }
 
     tickerToId() {
-        let companies = {}
-        this.state.companies.forEach(company => {
-            companies[company.id] = company.ticker
-        });
+        const companies = {};
+        this.state.companies.forEach(company => companies[company.id] = company.ticker);
         return companies;
     }
-
-    // gets unique companies from state
 
     uniqueCompanies () {
-        let companies = {}
-        this.state.companies.forEach(company => (
-            companies[company.ticker] = company.id
-        ));
+        const companies = {};
+        this.state.companies.forEach(company => companies[company.ticker] = company.id)
         return companies;
     }
 
-    // portfolio value
-
     dateToPrice (ticker) {
-        let priceObj = {};
-        this.state.data;
+        const priceObj = {};
         Object.values(this.state.data[ticker]).forEach(data => {
-            data.forEach(dataPoint => {
-                priceObj[dataPoint.date] = dataPoint.close;
-            })
+            data.forEach(dataPoint => priceObj[dataPoint.date] = dataPoint.close)
         });
         return priceObj;
     }

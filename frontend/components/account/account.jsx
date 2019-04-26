@@ -1,10 +1,9 @@
 import React from 'react';
-import { getStockData, getMultipleLastPrice } from '../../util/company_api_util';
-import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
+import { getMultipleLastPrice } from '../../util/company_api_util';
+import { fetchCompanies } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 import { withRouter, Link} from 'react-router-dom';
-import { Radar, RadarChart, PolarGrid, Legend,
-    PolarAngleAxis, PolarRadiusAxis, Tooltip} from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis,Tooltip} from 'recharts';
 
 
 class Account extends React.Component {
@@ -15,7 +14,7 @@ class Account extends React.Component {
             companies: [],
             numShares: [],
             prices: []
-        }
+        };
         this.formatPortData = this.formatPortData.bind(this);
         this.handleHome = this.handleHome.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -27,24 +26,24 @@ class Account extends React.Component {
     componentDidMount () {
         this.ajaxHelper();
         this.props.startLoad();
-        this.interval = setInterval(() => this.ajaxHelper(), 10000)
+        this.interval = setInterval(() => this.ajaxHelper(), 10000);
     }
     
     ajaxHelper() {
         fetchTransactions()
         .then((transactions) => {
-            this.numShares = this.transactionHelper(transactions)
-            this.setState({ transactions: transactions, numShares: this.numShares })
+            this.numShares = this.transactionHelper(transactions);
+            this.setState({ transactions: transactions, numShares: this.numShares });
         })
         .then(() => fetchCompanies().then(companies => {
             this.setState({ companies: this.userCompanies(companies) })
         }))
         .then(() => {
             return getMultipleLastPrice(this.formatTickers()).then(data => {
-                this.setState({ prices: data })
-                this.props.stopLoad()
+                this.setState({ prices: data });
+                this.props.stopLoad();
             }), this.props.stopLoad()
-        })
+        });
     }
 
     componentWillUnmount () {
@@ -52,7 +51,7 @@ class Account extends React.Component {
     }
 
     userCompanies(companies) {
-        let companiesObj = {};
+        const companiesObj = {};
         this.state.transactions.forEach(trans => {
             for (let i = 0; i < companies.length - 1; i++) {
                 if (companies[i].id === trans.company_id) {
@@ -64,29 +63,28 @@ class Account extends React.Component {
     }
 
     transactionHelper(transactions) {
-        let sharesObj = {};
+        const sharesObj = {};
         transactions.forEach(trans => {
             if (sharesObj[trans.company_id] === undefined) {
                 sharesObj[trans.company_id] = [{
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                }]
+                }];
             } else {
                 sharesObj[trans.company_id].push({
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                })
+                });
             }
         });
-        let numShares = {};
+        const numShares = {};
         Object.keys(sharesObj).forEach(id => {
             numShares[id] = 0;
             sharesObj[id].forEach(trans => {
-
                 if (trans.transaction_type === 'buy') {
-                    numShares[id] += trans.shares
+                    numShares[id] += trans.shares;
                 } else {
-                    numShares[id] -= trans.shares
+                    numShares[id] -= trans.shares;
                 }
             })
         });
@@ -94,25 +92,25 @@ class Account extends React.Component {
     }
 
     formatTickers() {
-        let companiesObj = {};
+        const companiesObj = {};
         this.state.transactions.forEach(trans => {
-            let companies = this.state.companies;
-            for (let i = 0; i < Object.keys(companies).length; i++) {
-                if (companies[Object.keys(companies)[i]] === trans.company_id) {
-                    companiesObj[Object.keys(companies)[i]] = trans.company_id;
+            const { companies } = this.state;
+            let convertArray = Object.keys(companies);
+            for (let i = 0; i < convertArray.length; i++) {
+                if (companies[convertArray[i]] === trans.company_id) {
+                    companiesObj[convertArray[i]] = trans.company_id;
                 }
             }
         })
 
-        let tickers = Object.keys(companiesObj).map(ticker => {
+        const tickers = Object.keys(companiesObj).map(ticker => {
             return ticker.toLowerCase();
         })
         return tickers.join(',')
     }
 
     tickerToId() {
-        let companies = {}
-        this.state;
+        const companies = {}
         Object.keys(this.state.companies).forEach(ticker => {
             companies[this.state.companies[ticker]] = ticker;
         });
@@ -121,10 +119,9 @@ class Account extends React.Component {
 
 
     portValueTable () {
-        let numShares = this.state.numShares;
-        let prices = this.state.prices;
-        let tickerObj = this.tickerToId();
-        let trs = Object.keys(this.state.numShares).map(id => {
+        const { prices, numShares } = this.state;
+        const tickerObj = this.tickerToId();
+        let trs = Object.keys(numShares).map(id => {
             let price = prices[tickerObj[id]].quote.latestPrice;
             let ticker = tickerObj[id];
             return (
@@ -173,10 +170,9 @@ class Account extends React.Component {
     formatPortData () {
         this.max = 0;
         let total = 0;
-        let tickerObj = this.tickerToId();
-        let prices = this.state.prices;
-        let numShares = this.state.numShares;
-        Object.keys(this.state.numShares).forEach(id => {
+        const tickerObj = this.tickerToId();
+        const { prices, numShares } = this.state;
+        Object.keys(numShares).forEach(id => {
             let price = prices[tickerObj[id]].quote.latestPrice;
             let next = numShares[id] * price;
             total += next;
@@ -184,14 +180,14 @@ class Account extends React.Component {
                 this.max = next;
             } 
         })
-        return Object.keys(this.state.numShares).map(id => {
-            let price = prices[tickerObj[id]].quote.latestPrice
+        return Object.keys(numShares).map(id => {
+            let price = prices[tickerObj[id]].quote.latestPrice;
             let percent = ((numShares[id] * price) / total * 100).toFixed(2);
             return { 
                 subject: tickerObj[id] + " " + percent + "%",
                 value: (numShares[id] * price) / total,
                 fullMark: this.max}
-        })
+            });
     }
 
     nameFormatter () {
@@ -208,52 +204,7 @@ class Account extends React.Component {
 
     render () {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
-            return (
-                <div>
-                    <div className='account-header'>
-                        <h2 className='robenhood-h2' onClick={this.handleHome}>
-                            <i className="fas fa-feather-alt"></i>
-                            robenhood
-                        </h2>
-                        <div className='nav-links-acc'>
-                            <div className='account'>
-                                <Link to='/home'>
-                                    Home
-                            </Link>
-                            </div>
-                            <div className='account'>
-                                <Link to='/account'>
-                                    Account
-                            </Link>
-                            </div>
-                            <button onClick={this.handleLogout} id='logout-button'>
-                                Logout
-                        </button>
-                        </div>
-                        <span className='links'>
-                            Checkout my
-                                <div>
-                                <a href="https://bencutler.dev/">
-                                    <i class="fas fa-globe-americas"></i>
-                                </a>
-                                <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="https://github.com/bcutler94" id='github'>
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://angel.co/ben-cutler-1?al_content=view+your+profile&al_source=transaction_feed%2Fnetwork_sidebar">
-                                    <i class="fab fa-angellist"></i>
-
-                                </a>
-                            </div>
-                        </span>
-                    </div>
-                    <h1 className='buy-stocks-h1'>
-                        
-                    </h1>
-                </div>
-            )
+            return ''
         } else {
             return (
                 <div className='account-render-div'>
@@ -280,9 +231,9 @@ class Account extends React.Component {
                         <span className='links'>
                             Checkout my
                                 <div>
-                                <a href="https://bencutler.dev/" id='site'><i class="fas fa-globe-americas"></i>
-
-</a>
+                                <a href="https://bencutler.dev/" id='site'>
+                                    <i class="fas fa-globe-americas"></i>
+                                </a>
                                 <a href="https://www.linkedin.com/in/ben-cutler-783447b5/" id='linkedin'>
                                     <i class="fab fa-linkedin"></i>
                                 </a>
@@ -305,7 +256,6 @@ class Account extends React.Component {
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="subject" />
                                 <Radar dataKey="value" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
-                                {/* <Legend formatter={value => 'Portfolio Diversity (%)'} /> */}
                                 <Tooltip />
                             </RadarChart>
                         </div>
