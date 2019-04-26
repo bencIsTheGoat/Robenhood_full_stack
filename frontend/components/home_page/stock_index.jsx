@@ -68,19 +68,17 @@ class StockIndex extends React.Component {
         const companiesObj = {};
         this.state.transactions.forEach(trans => {
             const companies = this.state.companies;
-            for (let i = 0; i < Object.keys(companies).length; i++) {
-                if (companies[Object.keys(companies)[i]] === trans.company_id) {
-                    companiesObj[Object.keys(companies)[i]] = trans.company_id;
+            let array = Object.keys(companies);
+            for (let i = 0; i < array.length; i++) {
+                if (companies[array[i]] === trans.company_id) {
+                    companiesObj[array[i]] = trans.company_id;
                 }
             }
         })
-
-        let tickers = Object.keys(companiesObj).map(ticker => {
+        const tickers = Object.keys(companiesObj).map(ticker => {
             return ticker.toLowerCase();
         })
-
-        return tickers.join(',')
-
+        return tickers.join(',');
     }
 
     componentWillUnmount () {
@@ -88,29 +86,28 @@ class StockIndex extends React.Component {
     }
 
     transactionHelper (transactions) {
-        let sharesObj = {};
+        const sharesObj = {};
         transactions.forEach(trans => {
             if (sharesObj[trans.company_id] === undefined) {
                 sharesObj[trans.company_id] = [{
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                }]
+                }];
             } else {
                 sharesObj[trans.company_id].push({
                     transaction_type: trans.transaction_type,
                     shares: trans.shares
-                })
+                });
             }
         });
         let numShares = {};
         Object.keys(sharesObj).forEach(id => {
             numShares[id] = 0;
             sharesObj[id].forEach(trans => {
-              
                 if (trans.transaction_type === 'buy') {
-                    numShares[id] += trans.shares
+                    numShares[id] += trans.shares;
                 } else {
-                    numShares[id] -= trans.shares
+                    numShares[id] -= trans.shares;
                 }
             })
         });
@@ -126,10 +123,10 @@ class StockIndex extends React.Component {
     }
 
     percentHelper (percent) {
-        let difference = percent * 100
+        let difference = percent * 100;
         percent = difference.toFixed(2);
         if (percent === undefined) {
-            return "0.00%"
+            return "0.00%";
         } else {
             return (
                 <p id={percent >= 0 ? 'percent-green' : 'percent-red'}>
@@ -137,13 +134,10 @@ class StockIndex extends React.Component {
                 </p>
             )
         }
-        
     }
 
     uniqueCompanies (companies) {
-        this.state;
-   
-        let companiesObj = {};
+        const companiesObj = {};
         Object.keys(companies).forEach(comp => {
             if (this.state.numShares[companies[comp]] !== 0) {
                 companiesObj[comp] = 1
@@ -167,9 +161,8 @@ class StockIndex extends React.Component {
         if (this.state.companies.length === 0 || this.state.prices.length === 0 || this.state.numShares.length === 0) {
             return ''
         } else {
-            let companies = this.state.companies;
-            let prices = this.state.prices;
-            let shares = this.state.numShares;
+            const { companies, prices } = this.state;
+            const shares = this.state.numShares;
             let stocks = Object.keys(this.uniqueCompanies(this.state.companies)).map((id, idx) => {
                 let ticker = id;
                 return (<li className='stock-li' key={idx}>
