@@ -173,51 +173,45 @@ class Graph extends React.Component {
 
     portValueObj () {
         const companyObj = this.tickerToId();
-        let sharesObj = {}
-        sharesObj = this.getNumShares();
+        const sharesObj = this.getNumShares();
         const portObj = {};
         Object.keys(sharesObj).forEach(companyId => {
             let ticker = companyObj[companyId]
             let priceData = this.dateToPrice(ticker);
             Object.values(sharesObj[companyId]).forEach((dataPair, idx) => {
                 if (portObj[dataPair.date] === undefined) {
-                 
                     portObj[dataPair.date] = dataPair.shares * priceData[dataPair.date]
                 } else {
-               
                     portObj[dataPair.date] += dataPair.shares * priceData[dataPair.date]
                 }
             });
-
         });
         return portObj;
        
     }
 
     // turns data into array so line can render and setState with formatted data
-    // const USD = value => currency(value, {symbol: 'S', precision: 2});
 
     formatData(data) {
-        let days = Object.keys(data);
-        let newData = days.map(day => {
+        const days = Object.keys(data);
+        const newData = days.map(day => {
             let jsDate = new Date(day);
             let dateArr = jsDate.toDateString().slice(4).split(' ');
             let newDate = dateArr[0] + ' ' + dateArr[1] + ', ' + dateArr[2];
-            
             return {
                 Date: newDate,
                 Price: data[day]
-            }
+            };
         })
-        let sorted = this.quickSort(newData);
+        const sorted = this.quickSort(newData);
         this.setState({linedata: sorted, line: sorted});
     }
 
     quickSort(array) {
         if (array.length <= 1) return array;
-        let first = array[0];
-        let left = [];
-        let right = [];
+        const first = array[0];
+        const left = [];
+        const right = [];
         for (let i = 1; i < array.length; i++) {
             if (new Date (first.Date) > new Date (array[i].Date)) {
                 left.push(array[i]);
@@ -228,18 +222,17 @@ class Graph extends React.Component {
         return this.quickSort(left).concat([first]).concat(this.quickSort(right));
     }
 
-
     // performance
 
     percentChange (currentValue) {
-        let initialPrice = this.state.linedata[0].Price;
-        let percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
+        const initialPrice = this.state.linedata[0].Price;
+        const percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
         return `(${percent}%)`
     }
 
     monetaryChange (currentValue) {
-        let initialPrice = this.state.linedata[0].Price;
-        let change = (currentValue - initialPrice).toFixed(2);
+        const initialPrice = this.state.linedata[0].Price;
+        const change = (currentValue - initialPrice).toFixed(2);
         if (change > 0) {
             return `+$${Math.abs(change)}`;
         } else {
@@ -264,10 +257,7 @@ class Graph extends React.Component {
                     domain={['dataMin', 'dataMax']} 
                     stroke="white" 
                 >
-
                 </YAxis>
-                
-                
                 <Tooltip 
                     className='tooltip'
                     contentStyle={{border: '0', backgroundColor: 'transparent'}}
@@ -277,8 +267,8 @@ class Graph extends React.Component {
                     active={true}
                     formatter={value => {
                         value = value.toFixed(2);
-                        let percent = this.percentChange(value);
-                        let money = this.monetaryChange(value);
+                        const percent = this.percentChange(value);
+                        const money = this.monetaryChange(value);
                         return [
                             <div className='tooltip-value-div'>
                                 <p className='portval-p'>
@@ -289,14 +279,8 @@ class Graph extends React.Component {
                                 </div>
                             </div>, null
                         ]
-                    }}
-                    
+                    }} 
                 />
-                <Tooltip
-
-                />
-                
-                
             </LineChart>
         )
     }
@@ -306,8 +290,8 @@ class Graph extends React.Component {
     handleClick(timePeriod) {
         Object.freeze(this.state.line);
         let data = this.state.line;
-        let line = this.state.line
-        let dataLength = this.state.line.length;
+        let { line } = this.state;
+        let dataLength = line.length;
         let newData;
         if (timePeriod === '1m') {
             newData = data.slice(dataLength - 22);
@@ -342,7 +326,6 @@ class Graph extends React.Component {
             this.props.stopLoad();
             return (
                 <div className='graph-div'>
-                    
                     <div className='line-div'>
                         {this.lineRender()}
                     </div>
