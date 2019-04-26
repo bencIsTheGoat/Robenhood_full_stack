@@ -25,15 +25,15 @@ class StockShow extends React.Component {
         this.removeItem = this.removeItem.bind(this);
     }
 
-    componentDidMount() {
+    componentHelper () {
         this.ticker = this.props.ticker.toLowerCase();
-        let today = new Date();
-        let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-        let month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`
-        let day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`
-        let lastWeekString = `${lastWeek.getFullYear()}${month}${day}`
+        const today = new Date();
+        const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+        const month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`;
+        const day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`;
+        const lastWeekString = `${lastWeek.getFullYear()}${month}${day}`;
         getStockData(this.ticker, '1m').then(data => this.setState({ oneMonth: data }));
-        getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data }))
+        getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data }));
         getStockData(this.ticker, '3m').then(data => this.setState({ threeMonth: data }));
         getStockData(this.ticker, '1y').then(data => (this.setState({ oneYear: data })));
         getStockData(this.ticker, '5y').then(data => this.setState({ fiveYear: data }));
@@ -42,11 +42,15 @@ class StockShow extends React.Component {
         getCompanyInfo(this.ticker).then(data => this.setState({ info: data }));
         getCompanyStats(this.ticker).then(data => this.setState({ stats: data }));
         this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
-        this.setState({ props: this.props.history.location.pathname })
-        this.props.fetchCompanies()
+        this.setState({ props: this.props.history.location.pathname });
+        this.props.fetchCompanies();
         this.props.fetchWatchlistIndex().then(() => {
             this.watchlistBool() ? this.setState({ watchlist: true }) : this.setState({ watchlist: false })
-        })
+        });
+    }
+
+    componentDidMount() {
+        this.componentHelper();
     }
 
     componentWillUnmount() {
@@ -60,52 +64,33 @@ class StockShow extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.match.params.ticker !== prevProps.match.params.ticker) {
             clearInterval(this.intervalId);
-            this.ticker = this.props.match.params.ticker;
-            let today = new Date();
-            let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-            let month = lastWeek.getMonth() < 10 ? `0${lastWeek.getMonth() + 1}` : `${lastWeek.getMonth() + 1}`
-            let day = lastWeek.getDate() < 10 ? `0${lastWeek.getDate()}` : `${lastWeek.getDate()}`
-            let lastWeekString = `${lastWeek.getFullYear()}${month}${day}`
-            getStockData(this.ticker, '1m').then(data => this.setState({ oneMonth: data }));
-            getStockData(this.ticker, `date/${lastWeekString}`).then(data => this.setState({ oneWeek: data }))
-            getStockData(this.ticker, '3m').then(data => this.setState({ threeMonth: data }));
-            getStockData(this.ticker, '1y').then(data => (this.setState({ oneYear: data })));
-            getStockData(this.ticker, '5y').then(data => this.setState({ fiveYear: data }));
-            getStockData(this.ticker, '1m').then(data => this.setState({ data: data }));
-            getStockData(this.ticker, '1d').then(data => this.setState({ oneDay: data }));
-            getCompanyInfo(this.ticker).then(data => this.setState({ info: data }));
-            getCompanyStats(this.ticker).then(data => this.setState({ stats: data }));
-            this.intervalId = setInterval(() => this.ajaxHelper(this.ticker), 10000);
-            this.props.fetchCompanies()
-            this.props.fetchWatchlistIndex().then(() => {
-                this.watchlistBool() ? this.setState({ watchlist: true }) : this.setState({ watchlist: false })
-            })
+            this.componentHelper();
         }
     }
 
     formatData(data) {
-        let newData = data.map(dataPoint => {
+        const newData = data.map(dataPoint => {
             if (dataPoint.date[4] === '-') {
                 let jsDate = new Date(dataPoint.date);
                 let dateArr = jsDate.toDateString().slice(4).split(' ');
                 let newDate = dateArr[0] + ' ' + dateArr[1] + ', ' + dateArr[2];
-                return { Date: newDate, Price: dataPoint.close }
+                return { Date: newDate, Price: dataPoint.close };
             } else {
-                return { Date: dataPoint.label, Price: dataPoint.close }
+                return { Date: dataPoint.label, Price: dataPoint.close };
             }
         })
         return newData;
     }
 
     percentChange(currentValue) {
-        let initialPrice = this.state.data[0].close;
-        let percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
-        return `(${percent}%)`
+        const initialPrice = this.state.data[0].close;
+        const percent = (((currentValue - initialPrice) / initialPrice) * 100).toFixed(2);
+        return `(${percent}%)`;
     }
 
     monetaryChange(currentValue) {
-        let initialPrice = this.state.data[0].close;
-        let change = (currentValue - initialPrice).toFixed(2);
+        const initialPrice = this.state.data[0].close;
+        const change = (currentValue - initialPrice).toFixed(2);
         if (change > 0) {
             return `+$${Math.abs(change)}`;
         } else {
@@ -139,7 +124,6 @@ class StockShow extends React.Component {
 
 
     renderStock() {
-
         let newData = this.formatData(this.state.data);
         return (
             <LineChart width={675} height={196} data={newData}>
@@ -156,10 +140,7 @@ class StockShow extends React.Component {
                     domain={['dataMin', 'dataMax']}
                     stroke="white"
                 >
-
                 </YAxis>
-
-
                 <Tooltip
                     className='tooltip'
                     contentStyle={{ border: '0', backgroundColor: 'transparent' }}
@@ -184,11 +165,6 @@ class StockShow extends React.Component {
                     }}
 
                 />
-                <Tooltip
-
-                />
-
-
             </LineChart>
         )
 
@@ -217,7 +193,7 @@ class StockShow extends React.Component {
                     ALL
                     </button>
             </div>
-        )
+        );
     }
 
     renderInfo() {
@@ -302,7 +278,7 @@ class StockShow extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 
     marketCapHelper(marketCap) {
@@ -328,7 +304,7 @@ class StockShow extends React.Component {
     idHelper() {
         for (let i = 0; i < this.props.companies.length; i++) {
             if (this.props.companies[i].ticker.toLowerCase() === this.ticker.toLowerCase()) {
-                return this.props.companies[i].id
+                return this.props.companies[i].id;
             }
         }
     }
@@ -338,14 +314,14 @@ class StockShow extends React.Component {
         Object.values(this.props.watchlistItems).forEach(ele => {
             if (ele.ticker.toLowerCase() === this.ticker.toLowerCase()) {
                 this.props.deleteWatchlistItem(ele.id).then(() => {
-                    this.setState({watchlist: false})
+                    this.setState({watchlist: false});
                 })
             }
         });
     }
 
     validAdd () {
-        let watchlistTickers = Object.values(this.props.watchlistItems).map(ele => {
+        const watchlistTickers = Object.values(this.props.watchlistItems).map(ele => {
             return ele.ticker.toLowerCase();
         });
         return !watchlistTickers.includes(this.ticker.toLowerCase());

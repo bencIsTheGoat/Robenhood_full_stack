@@ -14,7 +14,7 @@ class StockHome extends React.Component {
 
     handleLogout(e) {
         e.preventDefault();
-        this.props.logout().then(() => this.props.history.push('/'))
+        this.props.logout().then(() => this.props.history.push('/'));
     }
 
     render () {
@@ -37,7 +37,7 @@ class StockHome extends React.Component {
                     </div>
                 <span className='links'>
                     Checkout my
-                                <div>
+                    <div>
                         <a href="https://bencutler.dev/" id='site'>
                             <i class="fas fa-globe-americas"></i>
                         </a>
@@ -53,12 +53,10 @@ class StockHome extends React.Component {
                         </a>
                     </div>
                 </span>
-                    
-    
                 <Auto props={this.props.history.location}/>
                 <StockShowContainer />
             </div>
-        )
+        );
     }
 }
 
