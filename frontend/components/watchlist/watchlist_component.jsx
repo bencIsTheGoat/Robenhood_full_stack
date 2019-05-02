@@ -16,7 +16,7 @@ class Watchlist extends React.Component {
     }
 
     formatCompanies () {
-        let array = Object.values(this.state.companies).map(ele => {
+        const array = Object.values(this.state.companies).map(ele => {
             return ele.ticker.toLowerCase();
         });
         return array.join(',');
@@ -75,8 +75,8 @@ class Watchlist extends React.Component {
 
     renderWatchlist () {
         let prices;
-        let comps = this.uniqueCompanies(this.state.companies);
-        let lis = Object.values(comps).map((ele, idx) => {
+        const comps = this.uniqueCompanies(this.state.companies);
+        const lis = Object.values(comps).map((ele, idx) => {
             prices = this.state.prices;
             return(<li className='stock-li' key={idx}>
                 <Link to={`/stocks/${ele.ticker}`}>
@@ -101,14 +101,14 @@ class Watchlist extends React.Component {
 
     render () {
         if (this.state.prices.length === 0) {
-            return ''
+            return '';
         } else {
             return (
                 <div className='watchlist-div'>
                     <h1>Watchlist</h1>
                     {this.renderWatchlist()}
                 </div>
-            )
+            );
         }
     }
 }

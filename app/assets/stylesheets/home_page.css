@@ -69,15 +69,15 @@
     font-weight: 900;
     margin-top: 100px;
     margin-left: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
     white-space: pre;
     width: 100%
 }
 
 .login-text p {
     margin-left: 20px;
-    line-height: 27px;
-    font-size: 25px;
+    line-height: 25px;
+    font-size: 20px;
     white-space: pre;
 }
 
