@@ -3,10 +3,6 @@ import { LineChart, Line, Tooltip, XAxis, YAxis, Label, Legend } from 'recharts'
 import { fetchCompanies, getMultipleStockData } from '../../util/company_api_util';
 import { fetchTransactions } from '../../util/transaction_api_util';
 
-
-
-
-
 class Graph extends React.Component {
 
     constructor(props) {

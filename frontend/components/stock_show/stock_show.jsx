@@ -5,7 +5,6 @@ import NewsContainer from '../home_page/news_container';
 import FormContainer from './form_container';
 import { withRouter } from 'react-router-dom';
 
-
 class StockShow extends React.Component {
 
     constructor(props) {
