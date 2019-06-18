@@ -271,7 +271,7 @@ class StockShow extends React.Component {
                                 EPS
                             </p>
                             <p id='info'>
-                                {this.state.stats.latestEPS.toFixed(2)}
+                                {this.state.stats.ttmEPS.toFixed(2)}
                             </p>
                         </div>
                     </div>
