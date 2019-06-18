@@ -318,6 +318,7 @@ class Graph extends React.Component {
         if (this.state.companies.length === 0 || this.state.transactions.length === 0 || this.state.data.length === 0) {
             return (<div className='graph-div'>
                     <h1 className='graph-message'>
+                        Please buy some stocks on the Robenhood platform
                     </h1>
             </div>)
         } else {

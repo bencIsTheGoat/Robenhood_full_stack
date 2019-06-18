@@ -255,7 +255,7 @@ class StockShow extends React.Component {
                                 Dividend
                             </p>
                             <p id='info'>
-                                {this.state.stats.dividendYield.toFixed(2)}
+                                {this.state.stats.dividendYield ? this.state.stats.dividendYield.toFixed(2) : 'No Dividend'}
                             </p>
                         </div>
                         <div className='indi-info-div'>
@@ -263,7 +263,7 @@ class StockShow extends React.Component {
                                 Price-Earnings Ratio
                             </p>
                             <p id='info'>
-                                {this.peHelper(this.state.stats.peRatioHigh, this.state.stats.peRatioLow)}
+                                {this.peHelper(this.state.stats.peRatio, this.state.stats.peRatio)}
                             </p>
                         </div>
                         <div className='indi-info-div'>
