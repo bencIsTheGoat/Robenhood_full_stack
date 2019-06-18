@@ -20,7 +20,7 @@ class StockIndex extends React.Component {
     }
 
     componentDidMount () {
-        this.props.startLoad();
+        // this.props.startLoad();
         this.ajaxHelper();
         this.intervalId = setInterval(this.ajaxHelper, 10000);
         

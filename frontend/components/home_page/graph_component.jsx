@@ -24,7 +24,7 @@ class Graph extends React.Component {
     // then fetches 5yr data and puts into local state then(() => this.getData('5yr'))
 
     componentDidMount() {
-        this.props.startLoad();
+        // this.props.startLoad();
         fetchTransactions()
         .then((transactions) => {
             this.setState({transactions: transactions});
@@ -39,7 +39,9 @@ class Graph extends React.Component {
         })
         .then(() => {
             this.formatData(this.portValueObj());
-        })   
+            
+        }) 
+        this.props.stopLoad();  
     }
 
     formatTickers() {

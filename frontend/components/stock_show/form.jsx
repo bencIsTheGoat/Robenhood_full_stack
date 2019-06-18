@@ -29,7 +29,7 @@ class Form extends React.Component {
     }
 
     componentDidMount () {
-        this.props.startLoad();
+        // this.props.startLoad();
         fetchTransactions().then(trans => {
             return this.setState({ numShares: this.transactionHelper(trans) });
         });
